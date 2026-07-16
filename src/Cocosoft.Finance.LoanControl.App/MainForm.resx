@@ -1,0 +1,771 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--
+    Microsoft ResX Schema 
+
+    Version 2.0
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
+    associated with the data types.
+
+    Example:
+
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+
+    There are any number of "resheader" rows that contain simple
+    name/value pairs.
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
+    mimetype set.
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
+    extensible. For a given mimetype the value must be set accordingly:
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
+    read any of the formats listed below.
+
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="feeTextBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>53, 135</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="newBalanceDataGridColumn.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="disbursementDateLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;debtorNameTextBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;newBalanceDataGridColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;feeLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="debtorInfoGroupBox.Text" xml:space="preserve">
+    <value>Debtor</value>
+  </data>
+  <data name="homeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>64, 24</value>
+  </data>
+  <data name="&gt;&gt;initialLoanLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;debtorNameTextBox.Parent" xml:space="preserve">
+    <value>debtorInfoGroupBox</value>
+  </data>
+  <data name="exitToolStripMenuItem.Text" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="addPaymentButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>109, 29</value>
+  </data>
+  <data name="initialLoanLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 20</value>
+  </data>
+  <data name="&gt;&gt;disbursementDateLabel.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="currentDebtLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>95, 20</value>
+  </data>
+  <data name="&gt;&gt;exitToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="feeLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="debtorNameLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;interestcollectedTextBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="mainMenuStrip.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="instalmentsPaidTextBox.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="feeLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 138</value>
+  </data>
+  <data name="interestcollectedTextBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>125, 27</value>
+  </data>
+  <data name="debtorNameTextBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>125, 27</value>
+  </data>
+  <data name="&gt;&gt;paymentsDataGridView.Name" xml:space="preserve">
+    <value>paymentsDataGridView</value>
+  </data>
+  <data name="&gt;&gt;addLoanToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="interestTextBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>145, 27</value>
+  </data>
+  <data name="&gt;&gt;instalmentsPaidTextBox.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="addPaymentButton.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="currentDebtLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="currentDebtLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;interestLabel.Parent" xml:space="preserve">
+    <value>debtorInfoGroupBox</value>
+  </data>
+  <data name="initialLoanLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="debtorInfoGroupBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 28</value>
+  </data>
+  <data name="openLoanToolStripMenuItem.Text" xml:space="preserve">
+    <value>Load Loan</value>
+  </data>
+  <data name="disbursementDateTextBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>149, 82</value>
+  </data>
+  <data name="&gt;&gt;disbursementDateTextBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;currentDebtTextBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="debtorNameTextBox.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;debtorInfoGroupBox.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;addPaymentButton.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;interestcollectedTextBox.Name" xml:space="preserve">
+    <value>interestcollectedTextBox</value>
+  </data>
+  <data name="disbursementDateLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 85</value>
+  </data>
+  <data name="&gt;&gt;disbursementDateLabel.Name" xml:space="preserve">
+    <value>disbursementDateLabel</value>
+  </data>
+  <data name="interestTextBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>357, 82</value>
+  </data>
+  <data name="debtorNameLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;debtorInfoGroupBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;currentDebtTextBox.Name" xml:space="preserve">
+    <value>currentDebtTextBox</value>
+  </data>
+  <data name="interestLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;openLoanToolStripMenuItem.Name" xml:space="preserve">
+    <value>openLoanToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;instalmentsLabel.Parent" xml:space="preserve">
+    <value>debtorInfoGroupBox</value>
+  </data>
+  <data name="&gt;&gt;disbursementDateLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;mainMenuStrip.Name" xml:space="preserve">
+    <value>mainMenuStrip</value>
+  </data>
+  <data name="debtorNameLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 23</value>
+  </data>
+  <data name="mainMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
+    <value>800, 28</value>
+  </data>
+  <data name="interestLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>61, 20</value>
+  </data>
+  <data name="&gt;&gt;feeLabel.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;instalmentsLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;exitToolStripMenuItem.Name" xml:space="preserve">
+    <value>exitToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;mainMenuStrip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="feeLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>35, 20</value>
+  </data>
+  <data name="&gt;&gt;debtorInfoGroupBox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;feeTextBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;instalmentsLabel.Name" xml:space="preserve">
+    <value>instalmentsLabel</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Loan Control</value>
+  </data>
+  <data name="addPaymentButton.Text" xml:space="preserve">
+    <value>Add payment</value>
+  </data>
+  <data name="&gt;&gt;amountDataGridColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;currentDebtLabel.Parent" xml:space="preserve">
+    <value>debtorInfoGroupBox</value>
+  </data>
+  <data name="&gt;&gt;currentDebtTextBox.Parent" xml:space="preserve">
+    <value>debtorInfoGroupBox</value>
+  </data>
+  <data name="&gt;&gt;instalmentsLabel.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="instalmentsLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>518, 85</value>
+  </data>
+  <data name="&gt;&gt;interestTextBox.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="currentDebtLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>542, 23</value>
+  </data>
+  <data name="&gt;&gt;disbursementDateTextBox.Parent" xml:space="preserve">
+    <value>debtorInfoGroupBox</value>
+  </data>
+  <data name="&gt;&gt;debtorNameLabel.ZOrder" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <data name="interestLabel.Text" xml:space="preserve">
+    <value>Interest:</value>
+  </data>
+  <data name="initialLoanTextBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>125, 27</value>
+  </data>
+  <data name="paymentsDataGridView.Size" type="System.Drawing.Size, System.Drawing">
+    <value>800, 253</value>
+  </data>
+  <data name="initialLoanLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>258, 23</value>
+  </data>
+  <data name="&gt;&gt;paymentsDataGridView.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;interestTextBox.Parent" xml:space="preserve">
+    <value>debtorInfoGroupBox</value>
+  </data>
+  <data name="feeLabel.Text" xml:space="preserve">
+    <value>Fee:</value>
+  </data>
+  <data name="&gt;&gt;debtorNameLabel.Parent" xml:space="preserve">
+    <value>debtorInfoGroupBox</value>
+  </data>
+  <data name="openLoanToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>224, 26</value>
+  </data>
+  <data name="debtorNameLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>52, 20</value>
+  </data>
+  <data name="&gt;&gt;homeToolStripMenuItem.Name" xml:space="preserve">
+    <value>homeToolStripMenuItem</value>
+  </data>
+  <data name="paymentsDataGridView.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 197</value>
+  </data>
+  <data name="disbursementDateLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>137, 20</value>
+  </data>
+  <data name="&gt;&gt;instalmentsPaidTextBox.Parent" xml:space="preserve">
+    <value>debtorInfoGroupBox</value>
+  </data>
+  <data name="currentDebtTextBox.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="interestDataGridColumn.HeaderText" xml:space="preserve">
+    <value>Interest</value>
+  </data>
+  <data name="disbursementDateLabel.Text" xml:space="preserve">
+    <value>Disbursement date:</value>
+  </data>
+  <data name="interestDataGridColumn.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;interestcollectedTextBox.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;initialLoanTextBox.Name" xml:space="preserve">
+    <value>initialLoanTextBox</value>
+  </data>
+  <data name="interestLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="initialLoanTextBox.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;debtorNameTextBox.Name" xml:space="preserve">
+    <value>debtorNameTextBox</value>
+  </data>
+  <data name="&gt;&gt;paymentsDataGridView.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="collectedInterestLabel.Text" xml:space="preserve">
+    <value>Interest collected:</value>
+  </data>
+  <data name="&gt;&gt;addLoanToolStripMenuItem.Name" xml:space="preserve">
+    <value>addLoanToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;interestDataGridColumn.Name" xml:space="preserve">
+    <value>interestDataGridColumn</value>
+  </data>
+  <data name="&gt;&gt;paymentsDataGridView.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="mainMenuStrip.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="instalmentsPaidTextBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>125, 27</value>
+  </data>
+  <data name="interestLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>290, 85</value>
+  </data>
+  <data name="&gt;&gt;dateDataGridColumn.Name" xml:space="preserve">
+    <value>dateDataGridColumn</value>
+  </data>
+  <data name="addPaymentButton.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;newBalanceDataGridColumn.Name" xml:space="preserve">
+    <value>newBalanceDataGridColumn</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>MainForm</value>
+  </data>
+  <data name="paymentsDataGridView.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="homeToolStripMenuItem.Text" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="currentDebtTextBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>645, 20</value>
+  </data>
+  <data name="&gt;&gt;capitalDataGridColumn.Name" xml:space="preserve">
+    <value>capitalDataGridColumn</value>
+  </data>
+  <data name="initialLoanLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;collectedInterestLabel.Parent" xml:space="preserve">
+    <value>debtorInfoGroupBox</value>
+  </data>
+  <data name="&gt;&gt;disbursementDateLabel.Parent" xml:space="preserve">
+    <value>debtorInfoGroupBox</value>
+  </data>
+  <data name="&gt;&gt;amountDataGridColumn.Name" xml:space="preserve">
+    <value>amountDataGridColumn</value>
+  </data>
+  <data name="feeTextBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>125, 27</value>
+  </data>
+  <data name="capitalDataGridColumn.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;debtorNameLabel.Name" xml:space="preserve">
+    <value>debtorNameLabel</value>
+  </data>
+  <data name="addLoanToolStripMenuItem.Text" xml:space="preserve">
+    <value>Add Loan</value>
+  </data>
+  <data name="&gt;&gt;capitalDataGridColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;instalmentsPaidTextBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;homeToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="collectedInterestLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>126, 20</value>
+  </data>
+  <data name="&gt;&gt;feeLabel.Parent" xml:space="preserve">
+    <value>debtorInfoGroupBox</value>
+  </data>
+  <data name="capitalDataGridColumn.HeaderText" xml:space="preserve">
+    <value>Capital</value>
+  </data>
+  <data name="interestcollectedTextBox.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;interestTextBox.Name" xml:space="preserve">
+    <value>interestTextBox</value>
+  </data>
+  <data name="instalmentsLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>121, 20</value>
+  </data>
+  <data name="&gt;&gt;debtorNameTextBox.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;dateDataGridColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="debtorNameTextBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>64, 20</value>
+  </data>
+  <data name="disbursementDateTextBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>125, 27</value>
+  </data>
+  <data name="&gt;&gt;feeTextBox.Parent" xml:space="preserve">
+    <value>debtorInfoGroupBox</value>
+  </data>
+  <data name="&gt;&gt;interestcollectedTextBox.Parent" xml:space="preserve">
+    <value>debtorInfoGroupBox</value>
+  </data>
+  <data name="disbursementDateLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;interestDataGridColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="currentDebtTextBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>125, 27</value>
+  </data>
+  <data name="instalmentsLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="interestcollectedTextBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>390, 135</value>
+  </data>
+  <data name="&gt;&gt;collectedInterestLabel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="instalmentsLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;interestTextBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;currentDebtLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;interestLabel.Name" xml:space="preserve">
+    <value>interestLabel</value>
+  </data>
+  <data name="instalmentsLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>8, 20</value>
+  </data>
+  <data name="&gt;&gt;currentDebtLabel.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;addPaymentButton.Parent" xml:space="preserve">
+    <value>debtorInfoGroupBox</value>
+  </data>
+  <data name="&gt;&gt;interestLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;addPaymentButton.Name" xml:space="preserve">
+    <value>addPaymentButton</value>
+  </data>
+  <data name="&gt;&gt;interestLabel.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="paymentsDataGridView.RowHeadersWidth" type="System.Int32, mscorlib">
+    <value>51</value>
+  </data>
+  <data name="dateDataGridColumn.HeaderText" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="&gt;&gt;feeTextBox.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="feeLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="debtorInfoGroupBox.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="collectedInterestLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="currentDebtLabel.Text" xml:space="preserve">
+    <value>Current debt:</value>
+  </data>
+  <data name="instalmentsLabel.Text" xml:space="preserve">
+    <value>Instalments paid:</value>
+  </data>
+  <data name="&gt;&gt;initialLoanLabel.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="newBalanceDataGridColumn.HeaderText" xml:space="preserve">
+    <value>New balance</value>
+  </data>
+  <data name="debtorNameLabel.Text" xml:space="preserve">
+    <value>Name:</value>
+  </data>
+  <data name="&gt;&gt;disbursementDateTextBox.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="collectedInterestLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>258, 138</value>
+  </data>
+  <data name="&gt;&gt;initialLoanLabel.Parent" xml:space="preserve">
+    <value>debtorInfoGroupBox</value>
+  </data>
+  <data name="instalmentsPaidTextBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>645, 82</value>
+  </data>
+  <data name="addLoanToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>224, 26</value>
+  </data>
+  <data name="currentDebtLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="amountDataGridColumn.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;initialLoanLabel.Name" xml:space="preserve">
+    <value>initialLoanLabel</value>
+  </data>
+  <data name="debtorInfoGroupBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>800, 169</value>
+  </data>
+  <data name="interestTextBox.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;mainMenuStrip.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;initialLoanTextBox.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="&gt;&gt;collectedInterestLabel.Name" xml:space="preserve">
+    <value>collectedInterestLabel</value>
+  </data>
+  <data name="&gt;&gt;collectedInterestLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;addPaymentButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="dateDataGridColumn.MinimumWidth" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;instalmentsPaidTextBox.Name" xml:space="preserve">
+    <value>instalmentsPaidTextBox</value>
+  </data>
+  <data name="debtorNameLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;feeLabel.Name" xml:space="preserve">
+    <value>feeLabel</value>
+  </data>
+  <data name="&gt;&gt;initialLoanTextBox.Parent" xml:space="preserve">
+    <value>debtorInfoGroupBox</value>
+  </data>
+  <data name="exitToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>224, 26</value>
+  </data>
+  <data name="initialLoanTextBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>349, 20</value>
+  </data>
+  <data name="addPaymentButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>685, 134</value>
+  </data>
+  <data name="interestLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;debtorNameLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="amountDataGridColumn.HeaderText" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="collectedInterestLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;currentDebtTextBox.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;openLoanToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;feeTextBox.Name" xml:space="preserve">
+    <value>feeTextBox</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="debtorInfoGroupBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="initialLoanLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;initialLoanTextBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="disbursementDateLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;debtorInfoGroupBox.Name" xml:space="preserve">
+    <value>debtorInfoGroupBox</value>
+  </data>
+  <data name="&gt;&gt;disbursementDateTextBox.Name" xml:space="preserve">
+    <value>disbursementDateTextBox</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>800, 450</value>
+  </data>
+  <data name="disbursementDateTextBox.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;currentDebtLabel.Name" xml:space="preserve">
+    <value>currentDebtLabel</value>
+  </data>
+  <data name="initialLoanLabel.Text" xml:space="preserve">
+    <value>Initial loan:</value>
+  </data>
+  <data name="feeTextBox.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="&gt;&gt;mainMenuStrip.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <metadata name="interestDataGridColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="capitalDataGridColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="mainMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="amountDataGridColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="newBalanceDataGridColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="$this.Language" type="System.Globalization.CultureInfo, System.Private.CoreLib, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+    <value>es-CO</value>
+  </metadata>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="dateDataGridColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+</root>
