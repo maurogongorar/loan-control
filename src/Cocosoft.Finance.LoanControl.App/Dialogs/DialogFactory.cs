@@ -1,13 +1,14 @@
 ﻿using Cocosoft.Finance.LoanControl.Dal;
 using Cocosoft.Finance.LoanControl.Dal.Model.Entities;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Cocosoft.Finance.LoanControl.App.Dialogs;
 
-internal class DialogFactory : IDialogFactory
+internal class DialogFactory(IServiceProvider serviceProvider) : IDialogFactory
 {
-    public IAddLoanView CreateAddLoanDialogView() => new AddLoanDialogForm();
+    public IAddLoanDialog CreateAddLoanDialogView() => serviceProvider.GetRequiredService<IAddLoanDialog>();
 
-    public IAddPaymentView CreateAddPaymentDialogView(Loan loan) => new AddPaymentDialogForm(loan);
+    public IAddPaymentDialog CreateAddPaymentDialogView(Loan loan) => new AddPaymentDialogForm(loan);
 
-    public IViewSelectable CreateSelectLoanDialogView(IRepository repository) => new SelectLoanDialogForm(repository);
+    public IDialogSelectable CreateSelectLoanDialogView(IRepository repository) => new SelectLoanDialogForm(repository);
 }

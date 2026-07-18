@@ -1,4 +1,4 @@
-using Cocosoft.Finance.LoanControl.App.Dialogs;
+using Cocosoft.Finance.LoanControl.App.Extensions;
 using Cocosoft.Finance.LoanControl.Dal.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -16,9 +16,9 @@ namespace Cocosoft.Finance.LoanControl.App
             ApplicationConfiguration.Initialize();
 
             var builder = Host.CreateApplicationBuilder();
-            builder.Services.AddSingleton<IDialogFactory, DialogFactory>()
+            builder.Services.AddDialogs()
                 .AddRepository()
-                .AddScoped<MainForm>();
+                .AddSingleton<MainForm>();
 
             using var app = builder.Build();
             app.Services.InitializeDbContext();

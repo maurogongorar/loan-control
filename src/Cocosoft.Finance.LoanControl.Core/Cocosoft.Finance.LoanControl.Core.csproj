@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cocosoft.Finance.LoanControl.Dal\Cocosoft.Finance.LoanControl.Dal.csproj" />
+    <ProjectReference Include="..\Cocosoft.Framework.Mvvm\Cocosoft.Framework.Mvvm.csproj" />
+  </ItemGroup>
+
+</Project>

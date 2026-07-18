@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Cocosoft.Finance.LoanControl.Core\Cocosoft.Finance.LoanControl.Core.csproj" />
     <ProjectReference Include="..\Cocosoft.Finance.LoanControl.Dal\Cocosoft.Finance.LoanControl.Dal.csproj" />
   </ItemGroup>
 

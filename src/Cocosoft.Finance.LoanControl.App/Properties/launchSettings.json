@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Cocosoft.Finance.LoanControl.App": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "COCOFOST_LOAN_DB_PATH": ".\\loan.dat"
+      }
+    }
+  }
+}

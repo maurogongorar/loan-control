@@ -2,7 +2,7 @@
 
 namespace Cocosoft.Finance.LoanControl.App.Dialogs;
 
-internal interface IAddPaymentView : IDialog
+internal interface IAddPaymentDialog : IDialog
 {
     Payment? Payment { get; }
 }

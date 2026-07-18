@@ -1,6 +1,6 @@
 ﻿namespace Cocosoft.Finance.LoanControl.App.Dialogs;
 
-internal interface IViewSelectable : IDialog
+internal interface IDialogSelectable : IDialog
 {
     int? SelectedId { get; }
 }

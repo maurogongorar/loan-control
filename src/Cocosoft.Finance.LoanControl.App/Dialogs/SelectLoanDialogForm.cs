@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace Cocosoft.Finance.LoanControl.App.Dialogs;
 
-public partial class SelectLoanDialogForm : Form, IViewSelectable
+public partial class SelectLoanDialogForm : Form, IDialogSelectable
 {
     private readonly IRepository myRepository;
 

@@ -2,7 +2,7 @@
 
 namespace Cocosoft.Finance.LoanControl.App.Dialogs;
 
-internal interface IAddLoanView : IDialog
+internal interface IAddLoanDialog : IDialog
 {
     Loan? Loan { get; }
 }

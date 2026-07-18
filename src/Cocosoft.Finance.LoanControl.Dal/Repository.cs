@@ -6,6 +6,7 @@ namespace Cocosoft.Finance.LoanControl.Dal;
 internal class Repository(LoanDbContext dbContext) : IRepository
 {
     public async Task AddLoanAsync(Loan loan)
+    
     {
         await dbContext.Loans.AddAsync(loan);
         await dbContext.SaveChangesAsync();

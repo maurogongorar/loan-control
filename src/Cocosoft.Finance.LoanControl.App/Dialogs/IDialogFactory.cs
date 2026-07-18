@@ -5,9 +5,9 @@ namespace Cocosoft.Finance.LoanControl.App.Dialogs;
 
 internal interface IDialogFactory
 {
-    IAddLoanView CreateAddLoanDialogView();
+    IAddLoanDialog CreateAddLoanDialogView();
 
-    IAddPaymentView CreateAddPaymentDialogView(Loan loan);
+    IAddPaymentDialog CreateAddPaymentDialogView(Loan loan);
 
-    IViewSelectable CreateSelectLoanDialogView(IRepository repository);
+    IDialogSelectable CreateSelectLoanDialogView(IRepository repository);
 }

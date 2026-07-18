@@ -52,14 +52,12 @@
             resources.ApplyResources(okButton, "okButton");
             okButton.Name = "okButton";
             okButton.UseVisualStyleBackColor = true;
-            okButton.Click += OkButton_Click;
             // 
             // cancelButton
             // 
             resources.ApplyResources(cancelButton, "cancelButton");
             cancelButton.Name = "cancelButton";
             cancelButton.UseVisualStyleBackColor = true;
-            cancelButton.Click += CancelButton_Click;
             // 
             // debtorNameLabel
             // 
@@ -81,8 +79,6 @@
             resources.ApplyResources(annualInterestTextBox, "annualInterestTextBox");
             annualInterestTextBox.Name = "annualInterestTextBox";
             annualInterestTextBox.Tag = "decimal";
-            annualInterestTextBox.TextChanged += AnnualInterestTextBox_TextChanged;
-            annualInterestTextBox.KeyPress += NumericTextBox_KeyPress;
             // 
             // amountLabel
             // 
@@ -94,8 +90,6 @@
             resources.ApplyResources(amountTextBox, "amountTextBox");
             amountTextBox.Name = "amountTextBox";
             amountTextBox.Tag = "decimal";
-            amountTextBox.TextChanged += AmountTextBox_TextChanged;
-            amountTextBox.KeyPress += NumericTextBox_KeyPress;
             // 
             // numberInstalmentsLabel
             // 
@@ -107,8 +101,6 @@
             resources.ApplyResources(numberInstalmentsTextBox, "numberInstalmentsTextBox");
             numberInstalmentsTextBox.Name = "numberInstalmentsTextBox";
             numberInstalmentsTextBox.Tag = "integer";
-            numberInstalmentsTextBox.TextChanged += NumberInstalmentsTextBox_TextChanged;
-            numberInstalmentsTextBox.KeyPress += NumericTextBox_KeyPress;
             // 
             // feeLabel
             // 
@@ -137,8 +129,6 @@
             resources.ApplyResources(monthlyInterestTextBox, "monthlyInterestTextBox");
             monthlyInterestTextBox.Name = "monthlyInterestTextBox";
             monthlyInterestTextBox.Tag = "decimal";
-            monthlyInterestTextBox.TextChanged += MonthlyInterestTextBox_TextChanged;
-            monthlyInterestTextBox.KeyPress += NumericTextBox_KeyPress;
             // 
             // percentage2Label
             // 

@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace Cocosoft.Finance.LoanControl.App.Dialogs;
 
-public partial class AddPaymentDialogForm : Form, IAddPaymentView
+public partial class AddPaymentDialogForm : Form, IAddPaymentDialog
 {
     private readonly decimal myInterestDue;
 
