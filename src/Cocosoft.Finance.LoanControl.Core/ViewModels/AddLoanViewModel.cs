@@ -3,6 +3,7 @@ using Cocosoft.Framework.Mvvm;
 using Cocosoft.Framework.Mvvm.Commands;
 using Cocosoft.Framework.Mvvm.Helpers;
 using System.Windows.Forms;
+using System.Windows.Input;
 
 namespace Cocosoft.Finance.LoanControl.Core.ViewModels;
 
@@ -23,8 +24,6 @@ public class AddLoanViewModel : ViewModelBase
     private double myMonthlyInterest = Math.Round((Math.Pow(1.12, 1.0 / 12) - 1) * 100, 2);
 
     private int myNumberInstalments = 12;
-
-    public event Action? RequestClose;
 
     public decimal Amount
     {
@@ -64,6 +63,12 @@ public class AddLoanViewModel : ViewModelBase
         }
     }
 
+    public DialogResult DialogResult
+    {
+        get => this.myDialogResult;
+        private set => this.SetProperty(ref this.myDialogResult, value);
+    }
+
     public double MonthlyInterest
     {
         get => this.myMonthlyInterest;
@@ -95,11 +100,6 @@ public class AddLoanViewModel : ViewModelBase
             }
         }
     }
-    
-    public DialogResult DialogResult {
-        get => this.myDialogResult;
-        private set => this.SetProperty(ref this.myDialogResult, value);
-    }
 
     public Loan? Loan
     {
@@ -107,7 +107,7 @@ public class AddLoanViewModel : ViewModelBase
         private set => this.SetProperty(ref this.myLoan, value);
     }
 
-    public RelayCommand CancelCommand { get; }
+    public ICommand CancelCommand { get; }
 
     public ICommand<(object sender, KeyPressEventArgs e)> NumericVerificationCommand { get; }
 
@@ -121,14 +121,12 @@ public class AddLoanViewModel : ViewModelBase
             {
                 this.DialogResult = DialogResult.OK;
                 this.Loan = this.CreateLoan();
-                this.RequestClose?.Invoke();
             },
             canExecute: () => this.myMonthlyFee > 0 && this.myDebtorName.Length >= 3);
         this.CancelCommand = new RelayCommand(
             execute: () =>
             {
                 this.DialogResult = DialogResult.Cancel;
-                this.RequestClose?.Invoke();
             });
     }
 

@@ -1,4 +1,6 @@
-﻿namespace Cocosoft.Finance.LoanControl.App.Dialogs
+﻿using Cocosoft.Finance.LoanControl.Core.ViewModels;
+
+namespace Cocosoft.Finance.LoanControl.App.Dialogs
 {
     partial class SelectLoanDialogForm
     {
@@ -47,7 +49,6 @@
             resources.ApplyResources(getAllLoansCheckBox, "getAllLoansCheckBox");
             getAllLoansCheckBox.Name = "getAllLoansCheckBox";
             getAllLoansCheckBox.UseVisualStyleBackColor = true;
-            getAllLoansCheckBox.CheckedChanged += GetAllLoansCheckBox_CheckedChange;
             // 
             // loansLabel
             // 
@@ -67,36 +68,42 @@
             loansDataGridView.Name = "loansDataGridView";
             loansDataGridView.RowHeadersVisible = false;
             loansDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            loansDataGridView.SelectionChanged += LoansDataGridView_SelectionChanged;
             // 
             // loanIdDataGridColumn
             // 
             resources.ApplyResources(loanIdDataGridColumn, "loanIdDataGridColumn");
             loanIdDataGridColumn.Name = "loanIdDataGridColumn";
+            loanIdDataGridColumn.DataPropertyName = nameof(SelectLoanViewModel.LoanRow.Id);
             // 
             // debtorDataGridColumn
             // 
             debtorDataGridColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             resources.ApplyResources(debtorDataGridColumn, "debtorDataGridColumn");
             debtorDataGridColumn.Name = "debtorDataGridColumn";
+            debtorDataGridColumn.DataPropertyName = nameof(SelectLoanViewModel.LoanRow.DebtorName);
             // 
             // initialLoanDataGridColumn
             // 
             initialLoanDataGridColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             resources.ApplyResources(initialLoanDataGridColumn, "initialLoanDataGridColumn");
             initialLoanDataGridColumn.Name = "initialLoanDataGridColumn";
+            initialLoanDataGridColumn.DataPropertyName = nameof(SelectLoanViewModel.LoanRow.InitialAmount);
+            initialLoanDataGridColumn.DefaultCellStyle.Format = "C";
             // 
             // currentDebtDataGridColumn
             // 
             currentDebtDataGridColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             resources.ApplyResources(currentDebtDataGridColumn, "currentDebtDataGridColumn");
             currentDebtDataGridColumn.Name = "currentDebtDataGridColumn";
+            currentDebtDataGridColumn.DataPropertyName = nameof(SelectLoanViewModel.LoanRow.CurrentBalance);
+            currentDebtDataGridColumn.DefaultCellStyle.Format = "C";
             // 
             // isClosedDataGridColumn
             // 
             isClosedDataGridColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             resources.ApplyResources(isClosedDataGridColumn, "isClosedDataGridColumn");
             isClosedDataGridColumn.Name = "isClosedDataGridColumn";
+            isClosedDataGridColumn.DataPropertyName = nameof(SelectLoanViewModel.LoanRow.IsClosed);
             // 
             // okButton
             // 
@@ -110,7 +117,6 @@
             resources.ApplyResources(cancelButton, "cancelButton");
             cancelButton.Name = "cancelButton";
             cancelButton.UseVisualStyleBackColor = true;
-            cancelButton.Click += CancelButton_Click;
             // 
             // SelectLoanDialogForm
             // 
@@ -127,7 +133,6 @@
             MinimizeBox = false;
             Name = "SelectLoanDialogForm";
             ShowInTaskbar = false;
-            Load += SelectLoanDialogForm_Load;
             ((System.ComponentModel.ISupportInitialize)loansDataGridView).EndInit();
             ResumeLayout(false);
             PerformLayout();

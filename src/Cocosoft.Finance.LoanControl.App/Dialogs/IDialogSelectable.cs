@@ -1,6 +1,8 @@
-﻿namespace Cocosoft.Finance.LoanControl.App.Dialogs;
+﻿using Cocosoft.Framework.Mvvm;
 
-internal interface IDialogSelectable : IDialog
+namespace Cocosoft.Finance.LoanControl.App.Dialogs;
+
+internal interface IDialogSelectable<TViewModel> : IDialog, IMvvmViewSelectable<TViewModel>
+    where TViewModel : ViewModelBase, IViewModelSelectable
 {
-    int? SelectedId { get; }
 }

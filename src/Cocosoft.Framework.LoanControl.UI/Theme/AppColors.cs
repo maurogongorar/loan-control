@@ -14,9 +14,9 @@ public static class AppColors
 
     // Colores Semánticos
     public static readonly Color Success = ColorTranslator.FromHtml("#2E8B57");
-    public static readonly Color Warning = ColorTranslator.FromHtml("#D97706");
-    public static readonly Color Error = ColorTranslator.FromHtml("#C2410C");
-    public static readonly Color Information = ColorTranslator.FromHtml("#2563EB");
+    public static readonly Color Warning = ColorTranslator.FromHtml("#F59E0B");
+    public static readonly Color Error = ColorTranslator.FromHtml("#E11D48");
+    public static readonly Color Information = ColorTranslator.FromHtml("#3B82F6");
 
     // Variantes de Primary (hover/pressed)
     public static readonly Color PrimaryLight = ControlPaint.Light(Primary, 0.1f);

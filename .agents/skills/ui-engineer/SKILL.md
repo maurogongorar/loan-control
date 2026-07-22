@@ -1,8 +1,8 @@
-# Skill: Diseño de UI y Arquitectura Base en Windows Forms (MVVM Framework)
+# Skill: Diseño de UI y Arquitectura Base en Windows Forms (MVVM Framework - .NET 10)
 
 ## 1. Propósito y Alcance
 
-Garantizar la consistencia visual, la reutilización de componentes y la separación estricta de responsabilidades en la interfaz de usuario (UI). Este documento define las reglas obligatorias de diseño visual, la identidad gráfica y la jerarquía de herencia técnica que debe seguir todo desarrollador o diseñador al crear pantallas, diálogos y componentes interactivos dentro del ecosistema del framework.
+Garantizar la consistencia visual, la reutilización de componentes y la separación estricta de responsabilidades en la interfaz de usuario (UI). Este documento define las reglas obligatorias de diseño visual, la identidad gráfica, el manejo de texturas y relieves, y la jerarquía de herencia técnica que debe seguir todo desarrollador o IA al crear pantallas, diálogos y componentes interactivos dentro del ecosistema del framework MVVM sobre .NET 10.
 
 ---
 
@@ -25,120 +25,86 @@ Para evitar que la lógica de infraestructura se mezcle con el diseño visual, e
 
 ### 2.1 MvvmForm (Clase Base de Infraestructura)
 
-**Responsabilidad**
+**Responsabilidad**:
 
 Gestionar exclusivamente el ciclo de vida MVVM de la ventana.
 
-**Funciones**
+**Funciones**:
 
-* Inyectar o enlazar el `DataContext` (ViewModel).
-* Registrar suscripciones al sistema de mensajería (`Messenger` / `EventAggregator`).
-* Liberar correctamente bindings y recursos durante `Dispose()`.
+- Inyectar o enlazar el `DataContext` (ViewModel) mediante el sistema de Inyección de Dependencias de .NET 10 (Microsoft.Extensions.DependencyInjection).
+- Configurar el motor de enlazado nativo (BindingSource y DataBindings).
+- Registrar suscripciones al sistema de mensajería (`Messenger` / `EventAggregator`).
+- Liberar correctamente bindings y recursos durante el método Dispose().
 
-**Restricción**
+**Restricción**:
 
-Queda estrictamente prohibido agregar:
-
-* Controles visuales.
-* Paneles.
-* Layouts.
-* Colores.
-* Estilos visuales.
-
+Queda estrictamente prohibido agregar controles visuales, paneles, layouts, colores o estilos visuales en esta clase.
 Toda responsabilidad estética pertenece exclusivamente a las clases derivadas.
 
 ---
 
 ### 2.2 BaseLayoutForm (Clase Base de Diseño Principal)
 
-**Responsabilidad**
+**Responsabilidad**:
 
-Proveer el layout maestro de la aplicación.
+Proveer el layout maestro de la aplicación estilo Dashboard Moderno.
 
-**Herencia**
+**Estructura estándar**:
 
-Hereda directamente de `MvvmForm`.
-
-**Estructura estándar**
-
-* `pnlNavigation`
-
-  * Menú lateral fijo.
-* `pnlHeader`
-
-  * Barra superior.
-* `pnlContent`
-
-  * Contenedor principal.
-  * `Dock = DockStyle.Fill`
+- `pnlNavigation` (Izquierda): Menú lateral fijo con íconos vectoriales minimalistas y selector activo destacado.
+- `pnlHeader` (Arriba): Barra superior para el Título de la sección activa (Ej. "Saldos y deudas") y acciones globales de la vista (Ej. Botón "Exportar").
+- `pnlContent`  (Centro): Contenedor principal con Dock = DockStyle.Fill y Padding uniforme. Aquí se inyectarán y destruirán los UserControls de negocio dinámicamente.
 
 ---
 
 ### 2.3 BaseModalForm (Clase Base de Diálogos)
 
-**Responsabilidad**
+**Responsabilidad**:
 
-Proveer una apariencia limpia para ventanas emergentes.
+Proveer una apariencia limpia, enmarcada y enfocada para ventanas emergentes.
 
-**Herencia**
-
-Hereda directamente de `MvvmForm`.
-
-**Configuración obligatoria**
+**Configuración obligatoria**:
 
 ```csharp
 MinimizeBox = false;
 MaximizeBox = false;
-FormBorderStyle = FormBorderStyle.FixedDialog;
+FormBorderStyle = FormBorderStyle.None;
 StartPosition = FormStartPosition.CenterParent;
 ```
 
 ---
 
-# 3. Identidad Visual (Design System)
+## 3. Identidad Visual (Design System) y Profundidad
 
-La identidad visual está inspirada en la costa Caribe colombiana.
+La identidad visual está inspirada en la costa Caribe colombiana, transmitiendo confianza, profesionalismo y estabilidad financiera mediante una estética moderna y limpia.
 
-El objetivo es transmitir simultáneamente:
-
-* Confianza.
-* Profesionalismo.
-* Cercanía.
-* Calidez.
-* Estabilidad financiera.
-* Alegría y energía de la región Caribe sin caer en una apariencia turística.
-
-La interfaz debe diferenciarse de las aplicaciones bancarias tradicionales evitando el uso predominante del clásico azul corporativo, pero conservando una percepción sólida y profesional.
-
-La inspiración proviene del mar Caribe, la arena, la arquitectura colonial y los atardeceres de la región, manteniendo una estética moderna, minimalista y elegante.
+**Regla de Textura y Profundidad**: Para alejarse del aspecto plano (flat) tradicional o desactualizado de WinForms, la interfaz debe adoptar un estilo Soft-UI / Glassmorphism sutil. Los controles deben poseer relieve mediante sutiles gradientes de fondo, sombras perimetrales difuminadas (DropShadow) y bordes redondeados (Radius), emulando capas físicas superpuestas.
 
 ---
 
-## 3.1 Paleta Institucional
+### 3.1 Paleta Institucional
 
-| Token          | Color                | Hex       | Uso                                                                                                            |
-| -------------- | -------------------- | --------- | -------------------------------------------------------------------------------------------------------------- |
-| Primary        | Azul Petróleo Caribe | `#0F4C5C` | Color institucional principal. Navegación, encabezados, botones principales, elementos destacados.             |
-| Secondary      | Turquesa Caribe      | `#147D8A` | Componentes interactivos, enlaces, iconografía y acciones secundarias.                                         |
-| Accent         | Coral Suave          | `#E07A5F` | Call To Action (CTA), indicadores importantes y pequeños elementos de énfasis. Debe utilizarse con moderación. |
-| Background     | Arena Clara          | `#F7F3EE` | Fondo general de la aplicación.                                                                                |
-| Surface        | Blanco               | `#FFFFFF` | Tarjetas, paneles, formularios y contenedores.                                                                 |
-| Text Primary   | Cacao                | `#5A3E36` | Texto principal. Sustituye el negro puro para aportar mayor calidez.                                           |
-| Text Secondary | Gris Neutro          | `#6B7280` | Texto descriptivo, ayudas y etiquetas secundarias.                                                             |
-| Border         | Arena Oscura         | `#D6C9B8` | Bordes, separadores y líneas divisorias.                                                                       |
+| Token | Color | Hex | Uso |
+| ------ | ------ | ------ | ------ |
+| Primary | Azul Petróleo Caribe | #0F4C5C | Color institucional principal. Navegación, indicadores de gráficos, encabezados destacados. |
+| Secondary | Turquesa Caribe | #147D8A | Componentes interactivos, enlaces, iconografía de tarjetas secundarias y barras de progreso. |
+| Accent | Coral Suave | #E07A5F | Call To Action (CTA) especiales, indicadores importantes y pequeños elementos de énfasis (Uso moderado). |
+| Background | Arena Clara | #F7F3EE | Fondo general de la aplicación (pnlContent y formularios base). |
+| Surface | Blanco | #FFFFFF | Tarjetas (Cards), paneles flotantes y contenedores de formularios. Deben poseer sombra difuminada. |
+| Text Primary | Cacao | #5A3E36 | Texto principal, cifras numéricas grandes y títulos. Sustituye al negro puro para aportar calidez. |
+| Text Secondary | Gris Neutro | #6B7280 | Texto descriptivo, ayudas visuales y etiquetas secundarias (Ej. "Duración", "Interés"). |
+| Border | Arena Oscura | #D6C9B8 | Bordes sutiles para inputs, separadores y líneas divisorias. |## 3.2 Colores Semánticos| Estado | Color | Hex | Uso en Sistema |
 
----
-
-## 3.2 Colores Semánticos
+### 3.2 Colores semánticos
 
 Los estados del sistema deben utilizar colores universalmente reconocidos y no deben mezclarse con los colores institucionales.
 
-| Estado      | Color | Hex       |
-| ----------- | ----- | --------- |
-| Success     | Verde | `#2E8B57` |
-| Warning     | Ámbar | `#D97706` |
-| Error       | Rojo  | `#C2410C` |
-| Information | Azul  | `#2563EB` |
+| Token | Color | Hex |
+| ------ | ------ | ------ |
+| Success | Verde | #2E8B57 |
+| Warning | Ámbar | #F59E0B |
+| Error | Rojo | #E11D48 |
+| Information | Azul | #3B82F6 |
 
 Estos colores únicamente representan estados del sistema.
 
@@ -146,266 +112,83 @@ Nunca deben reemplazar los colores institucionales.
 
 ---
 
-## 3.3 Principios de Uso
+## 4. Diseño de Componentes con Textura (GDI+)
 
-### Dominancia del color
+Para asegurar que la aplicación .NET 10 WinForms se comporte y visualice como una interfaz moderna, las vistas y los controles personalizados deben interceptar el evento OnPaint utilizando System.Drawing.Drawing2D.
 
-* El Azul Petróleo representa la identidad de la aplicación.
-* Debe ser el color dominante de toda la interfaz.
+### 4.1 Tarjetas (Cards / Panels)
 
-### Color secundario
+Todo contenedor de información (Ej. Tarjeta de Saldos, Tarjeta de Deudas) debe renderizarse siguiendo este estándar:
 
-El Turquesa funciona como apoyo visual.
+- Fondo: Blanco (#FFFFFF).
+- Bordes: Redondeados con un radio de 12px a 16px utilizando `GraphicsPath`.
+- Sombra (Drop Shadow): Renderizar una sombra sutil perimetral (Offset Y: 4px, Blur: 12px, Color: #5A3E36 o Negro con una opacidad del 5% al 8%).
+- Estructura Interna:
+  - Ícono en la esquina superior izquierda dentro de un contenedor circular/cuadrado redondeado con fondo semitransparente (Alfa ~30) del color del estado (Azul para saldos, Rojo para deudas).
+  - Texto descriptivo en color Text Secondary.
+  - Valor numérico principal destacado en tamaño grande (24pt a 28pt) en color Text Primary.
 
-Nunca debe reemplazar completamente al color Primary.
+### 4.2 Indicadores Gráficos (Gauges y Barras de Score)
 
-### Color de acento
+Las visualizaciones de datos (como el medidor semicircular de Score de Crédito) deben ser dinámicas:
 
-El Coral únicamente debe utilizarse para:
+- Dibujadas mediante `Graphics.DrawArc` con `LineCap.Round` para asegurar terminaciones suaves.
+- **Canal base**: Color Arena Oscura muy tenue (#EADFCF).
+- **Progreso**: Renderizado con un LinearGradientBrush que transicione suavemente de Turquesa Caribe (#147D8A) a Azul Petróleo Caribe (#0F4C5C).
 
-* Botones CTA.
-* Notificaciones importantes.
-* Badges.
-* Indicadores destacados.
+### 4.3 Botones (`Button`)
 
-No debe utilizarse como fondo principal de pantallas.
+Los botones deben poseer texturas visuales diferenciadas según su estado de interacción:
 
-### Fondos
+- **Acción Primaria**:
+  - Fondo: Gradiente sutil (`LinearGradientBrush`) desde Turquesa Caribe (#147D8A) hasta Azul Petróleo Caribe (#0F4C5C).
+  - Bordes: Redondeados de 8px.
+  - Texto: Blanco, centrado, fuente semibold.
+  - Relieve: Sombra inferior sutil de 2px a 4px.
+  - Hover/Pressed: Variación de luminosidad del gradiente en +/- 10% respectivamente.
+- **Acción Secundaria (Ej. Botón "Exportar")**:
+  - Fondo: Blanco brillante con relieve sutil.
+  - Borde: 1px sólido en color Arena Oscura (#D6C9B8).
+  - Ícono y Texto: Color Cacao (#5A3E36) o Azul Petróleo Caribe.
+- **CTA Especial (Acciones Críticas)**:
+  - Fondo: Gradiente basado en Coral Suave (#E07A5F).
 
-El fondo general debe utilizar Arena Clara.
+#### 4.3.1 Estado Deshabilitado (`Enabled = false`)
+- **Regla Estricta**: Debe ser evidente a primera vista que el botón **no está disponible**.
+- **Fondo**: Cancelar cualquier gradiente o color institucional. Se debe pintar un fondo plano y mate en color Gris Claro Neutro (#E5E7EB o #D1D5DB).
+- **Texto e Íconos**: Color Gris Neutro Apagado (#9CA3AF), perdiendo todo contraste llamativo.
+- **Relieve**: Eliminar por completo la sombra perimetral (**DropShadow**) y efectos de relieve, forzando un aspecto totalmente plano y "hundido" en la superficie.
+- **Interacción**: Ignorar por completo los eventos Hover y Pressed. El cursor debe mantenerse por defecto (`Cursors.Default`), impidiendo el cambio a mano interactiva (`Cursors.Hand`).
 
-Las tarjetas y paneles siempre deben permanecer blancos.
+### 4.4 Inputs y Controles de Texto (`TextBox`)
 
-### Texto
-
-Evitar el uso de negro puro (`#000000`).
-
-Todo texto principal utilizará el color Cacao.
-
-### Saturación
-
-Evitar colores excesivamente brillantes que hagan parecer la aplicación una plataforma turística o de entretenimiento.
-
----
-
-## 3.4 Sensación Visual Esperada
-
-Cada pantalla debe transmitir:
-
-* Profesionalismo.
-* Confianza.
-* Cercanía.
-* Modernidad.
-* Elegancia.
-* Simplicidad.
-* Calidez.
-
-La inspiración caribeña debe percibirse únicamente mediante la paleta de colores y la atmósfera visual.
-
-Nunca mediante elementos gráficos relacionados con playas, palmeras, olas, cocos u otros recursos decorativos.
+- **Estilo Visual**: Altura de 36px con Padding interior para evitar textos pegados al borde.
+- **Borde**: 1px sólido en color Arena Oscura (#D6C9B8). Al ganar el foco (Enter), el borde cambia a Turquesa Caribe (#147D8A) con un sutil efecto de resplandor exterior ( Glow ).
+- Fuente: Segoe UI, 10pt.
 
 ---
 
-## 3.5 Iconografía
+## 5. Patrones de Layout, Espaciado y Grid
 
-Toda la iconografía debe cumplir:
+Toda pantalla generada por Copilot debe acatar estrictamente este modelo de distribución responsive:
 
-* Estilo Outline.
-* Grosor uniforme.
-* Esquinas ligeramente redondeadas.
-* Diseño minimalista.
-* Uso preferente de Primary o Secondary.
-* Evitar iconos caricaturescos.
+- **Márgenes y Padding**: El fondo del **BaseLayoutForm** siempre será Arena Clara (#F7F3EE). Las tarjetas deben mantener un espaciado de separación ( Gutter ) constante de 20px a 24px.
+- **Dimensionamiento Dinámico**: Utilizar `TableLayoutPanel` o cálculos manuales en el evento OnResize del formulario para recalcular el tamaño de las tarjetas de forma proporcional, evitando el solapamiento de componentes.
 
 ---
 
-## 3.6 Bordes
+## 6. Textos en las vistas
 
-Valores estándar:
-
-* Inputs: `6px`
-* Botones: `8px`
-* Cards: `12px`
-* Modales: `12px`
-
-No utilizar bordes completamente cuadrados salvo en tablas.
+Los textos en la aplicacion se deben manejar mediante recursos pues la aplicacion se debe construir para soportar diversos idiomas.
 
 ---
 
-## 3.7 Sombras
+## 7. Reglas para el Agente en la Creación de Vistas
 
-Las sombras deben ser extremadamente sutiles.
+Al solicitar a la IA la creación o modificación de una vista (`UserControl` o `Form`):
 
-Referencia:
+1. **NO usar controles planos estándar de WinForms**: La IA tiene la obligación de extender los componentes o utilizar los eventos Paint e incorporar `GraphicsPath` para aplicar bordes redondeados, texturas de gradiente y sombras realistas.
 
-```text
-Offset Y : 4px
-Blur     : 12px
-Opacity  : 8% - 12%
-```
+2. **Implementar el Estado Deshabilitado Explícito**: Al sobreescribir o diseñar componentes interactivos customizados, validar siempre la propiedad `Enabled` en el método de dibujo para aplicar la estética opaca, plana e inactiva descrita en la sección 4.3.1.
 
-Evitar:
-
-* Sombras fuertes.
-* Neumorphism.
-* Glow.
-* Sombras múltiples.
-
----
-
-# 4. Patrones de Navegación y Estilos de Ventana
-
-## 4.1 Ventanas Contenidas (UserControls Dinámicos)
-
-Toda pantalla de negocio debe implementarse como un `UserControl` orientado a MVVM.
-
-Se cargará dinámicamente dentro de `pnlContent`.
-
-Antes de cargar una nueva vista:
-
-```csharp
-pnlContent.Controls.Clear();
-activeUserControl?.Dispose();
-```
-
----
-
-## 4.2 Ventanas Emergentes (Modals)
-
-Los formularios derivados de `BaseModalForm` deben abrirse exclusivamente mediante:
-
-```csharp
-.ShowDialog();
-```
-
-Esto garantiza un flujo de interacción enfocado.
-
----
-
-## 4.3 Side Drawers
-
-Los paneles laterales deben:
-
-* utilizar `Dock.Left` o `Dock.Right`;
-* animarse mediante un `Timer`;
-* modificar progresivamente la propiedad `Width`;
-* evitar cambios bruscos de tamaño.
-
----
-
-# 5. Estilos Estrictos de Componentes
-
-## 5.1 Botones (`Button`)
-
-### Acción Primaria
-
-* Fondo: Primary (`#0F4C5C`)
-* Texto blanco
-* Sin borde
-* `FlatStyle = Flat`
-* `BorderSize = 0`
-
-### Hover
-
-Utilizar una variante aproximadamente un 10% más clara del color Primary.
-
-### Pressed
-
-Utilizar una variante aproximadamente un 10% más oscura del color Primary.
-
-### Acción Secundaria
-
-* Fondo blanco
-* Borde Secondary
-* Texto Primary
-
-### CTA Especial
-
-Acciones como:
-
-* Solicitar préstamo
-* Realizar pago
-* Confirmar desembolso
-
-pueden utilizar Accent (`#E07A5F`) de forma puntual.
-
----
-
-## 5.2 TextBox
-
-* Fondo blanco.
-* Borde de 1px.
-* Placeholder mediante eventos `Enter` y `Leave`.
-* Altura entre 28 y 32 px.
-* Fuente recomendada:
-
-```text
-Segoe UI
-10 pt
-```
-
----
-
-## 5.3 DataGridView
-
-### Estilo
-
-* `BorderStyle = None`
-* Filas alternadas.
-* Cabecera oscura.
-* Texto blanco.
-* Fuente Bold.
-* `EnableHeadersVisualStyles = false`
-
----
-
-# 6. Layout, Espaciado y Grid
-
-## Padding
-
-Todo contenedor debe mantener un padding uniforme de:
-
-* `16px`
-* `20px`
-
-Nunca deben existir controles pegados a los bordes.
-
----
-
-## Botones
-
-En formularios:
-
-* esquina inferior derecha;
-* botón principal siempre a la derecha;
-* botón secundario inmediatamente antes.
-
----
-
-## Responsive
-
-Todo control debe definir correctamente:
-
-* `Anchor`
-* `Dock`
-
-para mantener una interfaz armónica durante el redimensionamiento.
-
----
-
-# 7. Principios para Generación de Interfaces
-
-Toda pantalla generada para este framework debe cumplir las siguientes reglas:
-
-* Priorizar simplicidad sobre cantidad de elementos.
-* Mantener abundante espacio en blanco.
-* No utilizar más de un color de acento por pantalla.
-* Evitar más de tres niveles visuales de jerarquía.
-* Las acciones principales deben identificarse inmediatamente.
-* La información financiera debe ser fácilmente escaneable.
-* Priorizar tarjetas limpias sobre tablas cuando sea posible.
-* Utilizar tipografía consistente y con buena legibilidad.
-* Mantener una experiencia uniforme entre todas las pantallas.
-* Evitar gradientes llamativos, texturas o fondos decorativos.
-* La inspiración en la costa Caribe debe percibirse por la combinación de colores, la calidez de la interfaz y el equilibrio visual, nunca mediante ilustraciones turísticas.
-* Toda nueva pantalla debe sentirse parte de un único sistema de diseño, independientemente del desarrollador que la implemente.
+3. **Mapeo de Datos y Formato**: Seguir la arquitectura base conectando los bindings a través de `OnBindViewModel`. Los formatos de moneda, porcentajes y plazos se aplican en la capa de Vista para mantener el ViewModel limpio con tipos primitivos de datos.

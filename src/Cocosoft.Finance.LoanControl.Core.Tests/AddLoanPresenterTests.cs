@@ -15,12 +15,11 @@ public class AddLoanViewModelTests
             Amount = 1000000m
         };
 
-        Assert.True(vm.IsValid);
-        Assert.False(string.IsNullOrEmpty(vm.MonthlyFeeText));
+        Assert.True(vm.MonthlyFee > 0);
     }
 
     [Fact]
-    public void SettingAmount_WithZeroInterest_IsNotValid()
+    public void SettingAmount_WithZeroInterest_FeeIsZero()
     {
         var vm = new AddLoanViewModel
         {
@@ -30,7 +29,7 @@ public class AddLoanViewModelTests
             Amount = 1000000m
         };
 
-        Assert.False(vm.IsValid);
+        Assert.Equal(0m, vm.MonthlyFee);
     }
 
     [Fact]
@@ -75,7 +74,7 @@ public class AddLoanViewModelTests
     }
 
     [Fact]
-    public void IsValid_FalseWhenDebtorNameTooShort()
+    public void OkCommand_CannotExecute_WhenDebtorNameTooShort()
     {
         var vm = new AddLoanViewModel
         {
@@ -85,7 +84,35 @@ public class AddLoanViewModelTests
             DebtorName = "Ab"
         };
 
-        Assert.False(vm.IsValid);
+        Assert.False(vm.OkCommand.CanExecute(null));
+    }
+
+    [Fact]
+    public void OkCommand_CanExecute_WhenAllFieldsValid()
+    {
+        var vm = new AddLoanViewModel
+        {
+            DebtorName = "Test Debtor",
+            AnnualInterest = 12,
+            NumberInstalments = 12,
+            Amount = 1000000m
+        };
+
+        Assert.True(vm.OkCommand.CanExecute(null));
+    }
+
+    [Fact]
+    public void OkCommand_CannotExecute_WhenFeeIsZero()
+    {
+        var vm = new AddLoanViewModel
+        {
+            DebtorName = "Test Debtor",
+            AnnualInterest = 0,
+            NumberInstalments = 12,
+            Amount = 1000000m
+        };
+
+        Assert.False(vm.OkCommand.CanExecute(null));
     }
 
     [Fact]
@@ -93,7 +120,7 @@ public class AddLoanViewModelTests
     {
         var vm = new AddLoanViewModel { AnnualInterest = 12, NumberInstalments = 12 };
         var raised = false;
-        vm.PropertyChanged += (s, e) => { if (e.PropertyName == nameof(AddLoanViewModel.MonthlyFeeText)) raised = true; };
+        vm.PropertyChanged += (s, e) => { if (e.PropertyName == nameof(AddLoanViewModel.MonthlyFee)) raised = true; };
 
         vm.Amount = 1000000m;
 

@@ -9,5 +9,5 @@ internal interface IDialogFactory
 
     IAddPaymentDialog CreateAddPaymentDialogView(Loan loan);
 
-    IDialogSelectable CreateSelectLoanDialogView(IRepository repository);
+    ISelectLoanDialog CreateSelectLoanDialogView();
 }

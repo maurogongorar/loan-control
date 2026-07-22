@@ -6,24 +6,22 @@ namespace Cocosoft.Finance.LoanControl.Core.Tests;
 public class AddPaymentViewModelTests
 {
     [Fact]
-    public void CountDays_SameMonth_ReturnsCorrectDays()
+    public void SetLoan_SetsInterestDueAndFee()
     {
-        var days = AddPaymentViewModel.CountDays(new DateTime(2024, 1, 1), new DateTime(2024, 1, 15));
-        Assert.Equal(14, days);
-    }
+        var loan = new Loan
+        {
+            Id = 1,
+            CurrentBalance = 1000000m,
+            AnnualInterest = 0.12,
+            DisbursementDate = DateTime.Now.AddDays(-30),
+            Fee = 100000m
+        };
 
-    [Fact]
-    public void CountDays_DifferentMonths_ReturnsCorrectDays()
-    {
-        var days = AddPaymentViewModel.CountDays(new DateTime(2024, 1, 15), new DateTime(2024, 3, 15));
-        Assert.Equal(60, days);
-    }
+        var vm = new AddPaymentViewModel();
+        vm.SetLoan(loan);
 
-    [Fact]
-    public void CountDays_FullYear_Returns360()
-    {
-        var days = AddPaymentViewModel.CountDays(new DateTime(2024, 1, 1), new DateTime(2025, 1, 1));
-        Assert.Equal(360, days);
+        Assert.True(vm.InterestDue > 0);
+        Assert.Equal(100000m, vm.Fee);
     }
 
     [Fact]
@@ -38,15 +36,16 @@ public class AddPaymentViewModelTests
             Fee = 100000m
         };
 
-        var vm = new AddPaymentViewModel(loan);
+        var vm = new AddPaymentViewModel();
+        vm.SetLoan(loan);
         vm.Fee = 120000m;
 
-        Assert.False(string.IsNullOrEmpty(vm.CapitalText));
-        Assert.False(string.IsNullOrEmpty(vm.NewBalanceText));
+        Assert.True(vm.CapitalPayment > 0);
+        Assert.True(vm.NewBalance < 1000000m);
     }
 
     [Fact]
-    public void CreatePayment_ReturnsPaymentWithCorrectLoanId()
+    public void OkCommand_CanExecute_WhenLoanSetAndCapitalPositive()
     {
         var loan = new Loan
         {
@@ -57,29 +56,37 @@ public class AddPaymentViewModelTests
             Fee = 50000m
         };
 
-        var vm = new AddPaymentViewModel(loan);
+        var vm = new AddPaymentViewModel();
+        vm.SetLoan(loan);
         vm.Fee = 50000m;
 
-        var payment = vm.CreatePayment();
-
-        Assert.Equal(42, payment.LoanId);
-        Assert.Equal(50000m, payment.Amount);
+        Assert.True(vm.OkCommand.CanExecute(null));
     }
 
     [Fact]
-    public void CalculateInterestDue_WithNoPayments_UsesDisubrsementDate()
+    public void OkCommand_CannotExecute_WhenNoLoan()
+    {
+        var vm = new AddPaymentViewModel();
+
+        Assert.False(vm.OkCommand.CanExecute(null));
+    }
+
+    [Fact]
+    public void InterestDue_WithNoPayments_UsesDisubrsementDate()
     {
         var loan = new Loan
         {
             CurrentBalance = 1000000m,
             AnnualInterest = 0.12,
             DisbursementDate = DateTime.Now.AddDays(-30),
-            LastPaymentDate = null
+            LastPaymentDate = null,
+            Fee = 100000m
         };
 
-        var interest = AddPaymentViewModel.CalculateInterestDue(loan);
+        var vm = new AddPaymentViewModel();
+        vm.SetLoan(loan);
 
-        Assert.True(interest > 0);
+        Assert.True(vm.InterestDue > 0);
     }
 
     [Fact]
@@ -93,9 +100,10 @@ public class AddPaymentViewModelTests
             Fee = 100000m
         };
 
-        var vm = new AddPaymentViewModel(loan);
+        var vm = new AddPaymentViewModel();
+        vm.SetLoan(loan);
         var raised = false;
-        vm.PropertyChanged += (s, e) => { if (e.PropertyName == nameof(AddPaymentViewModel.IsValid)) raised = true; };
+        vm.PropertyChanged += (s, e) => { if (e.PropertyName == nameof(AddPaymentViewModel.CapitalPayment)) raised = true; };
 
         vm.Fee = 120000m;
 

@@ -1,7 +1,7 @@
 using Cocosoft.Finance.LoanControl.App.Dialogs;
+using Cocosoft.Finance.LoanControl.Core.Resources;
 using Cocosoft.Finance.LoanControl.Dal;
 using Cocosoft.Finance.LoanControl.Dal.Model.Entities;
-using System.ComponentModel;
 
 namespace Cocosoft.Finance.LoanControl.App
 {
@@ -11,14 +11,15 @@ namespace Cocosoft.Finance.LoanControl.App
 
         private readonly IDialogFactory myDialogFactory;
 
+        private readonly ILocalizationService myLocalizer;
+
         private readonly IRepository myRepository;
 
-        private readonly ComponentResourceManager myResources = new(typeof(Program));
-
-        public MainForm(IRepository repository, IDialogFactory dialogFactory)
+        public MainForm(IRepository repository, IDialogFactory dialogFactory, ILocalizationService localizer)
         {
             this.myRepository = repository;
             this.myDialogFactory = dialogFactory;
+            this.myLocalizer = localizer;
             InitializeComponent();
         }
 
@@ -26,13 +27,13 @@ namespace Cocosoft.Finance.LoanControl.App
         {
             using var prompt = this.myDialogFactory.CreateAddLoanDialogView();
             var result = prompt.ShowDialog(this);
-            if (result != DialogResult.OK || prompt.Loan == null)
+            if (result != DialogResult.OK || prompt.ViewModel.Loan == null)
             {
                 return;
             }
 
-            this.myRepository.AddLoanAsync(prompt.Loan);
-            this.myCurrentLoan = prompt.Loan;
+            this.myRepository.AddLoanAsync(prompt.ViewModel.Loan);
+            this.myCurrentLoan = prompt.ViewModel.Loan;
             this.LoadLoan(this.myCurrentLoan.Id);
         }
 
@@ -42,8 +43,8 @@ namespace Cocosoft.Finance.LoanControl.App
             {
                 MessageBox.Show(
                     this,
-                    this.myResources.GetString("LoanNotLoadedMessage"),
-                    this.myResources.GetString("Warning"),
+                    this.myLocalizer["LoanNotLoadedMessage"],
+                    this.myLocalizer["Warning"],
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);
                 return;
@@ -52,20 +53,20 @@ namespace Cocosoft.Finance.LoanControl.App
             using var prompt = this.myDialogFactory.CreateAddPaymentDialogView(this.myCurrentLoan);
             var result = prompt.ShowDialog(this);
 
-            if (result != DialogResult.OK || prompt.Payment == null)
+            if (result != DialogResult.OK || prompt.ViewModel.Payment == null)
             {
                 return;
             }
 
-            this.myCurrentLoan.CurrentBalance = prompt.Payment.NewBalance > 0 ? prompt.Payment.NewBalance : 0;
+            this.myCurrentLoan.CurrentBalance = prompt.ViewModel.Payment.NewBalance > 0 ? prompt.ViewModel.Payment.NewBalance : 0;
             this.myCurrentLoan.IsClosed = this.myCurrentLoan.CurrentBalance == 0;
-            this.myCurrentLoan.InterestCollected += prompt.Payment.Interest;
-            this.myCurrentLoan.LastPaymentDate = prompt.Payment.Date;
+            this.myCurrentLoan.InterestCollected += prompt.ViewModel.Payment.Interest;
+            this.myCurrentLoan.LastPaymentDate = prompt.ViewModel.Payment.Date;
 
             using var tran = this.myRepository.BeginTransaction();
             try
             {
-                this.myRepository.AddPaymentAsync(prompt.Payment);
+                this.myRepository.AddPaymentAsync(prompt.ViewModel.Payment);
                 this.myRepository.UpdateLoanAsync(this.myCurrentLoan);
                 tran.Commit();
                 this.LoadLoan(this.myCurrentLoan.Id);
@@ -73,8 +74,8 @@ namespace Cocosoft.Finance.LoanControl.App
             catch (Exception)
             {
                 MessageBox.Show(
-                    this.myResources.GetString("UnhandledErrorMessage"),
-                    this.myResources.GetString("Error"),
+                    this.myLocalizer["UnhandledErrorMessage"],
+                    this.myLocalizer["Error"],
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
                 tran.Rollback();
@@ -82,8 +83,8 @@ namespace Cocosoft.Finance.LoanControl.App
         }
 
         private string GetDisplayInterest(double annualInterest)
-            => $"{annualInterest:P} {this.myResources.GetString("AnnualEffective")} " +
-            $"({Math.Pow(1 + annualInterest, 1.0 / 12) - 1:P} {this.myResources.GetString("MonthlyEffective")})";
+            => $"{annualInterest:P} {this.myLocalizer["AnnualEffective"]} " +
+            $"({Math.Pow(1 + annualInterest, 1.0 / 12) - 1:P} {this.myLocalizer["MonthlyEffective"]})";
 
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e) => this.Close();
 
@@ -115,11 +116,11 @@ namespace Cocosoft.Finance.LoanControl.App
 
         private void OpenLoanToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using var prompt = this.myDialogFactory.CreateSelectLoanDialogView(this.myRepository);
+            using var prompt = this.myDialogFactory.CreateSelectLoanDialogView();
             var result = prompt.ShowDialog(this);
-            if (result == DialogResult.OK && prompt.SelectedId.HasValue)
+            if (result == DialogResult.OK && prompt.ViewModel.SelectedId.HasValue)
             {
-                this.LoadLoan(prompt.SelectedId.Value);
+                this.LoadLoan(prompt.ViewModel.SelectedId.Value);
                 this.addPaymentButton.Enabled = true;
             }
         }

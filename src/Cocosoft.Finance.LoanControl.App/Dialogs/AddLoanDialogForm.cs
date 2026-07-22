@@ -1,14 +1,10 @@
 ﻿using Cocosoft.Finance.LoanControl.Core.ViewModels;
-using Cocosoft.Finance.LoanControl.Dal.Model.Entities;
 using Cocosoft.Framework.Mvvm;
-using Cocosoft.Framework.Mvvm.Helpers;
 
 namespace Cocosoft.Finance.LoanControl.App.Dialogs;
 
 public partial class AddLoanDialogForm : MvvmForm<AddLoanViewModel>, IAddLoanDialog
 {
-    public Loan? Loan { get; private set; }
-
     public AddLoanDialogForm(AddLoanViewModel viewModel)
         : base(viewModel)
     {
@@ -24,12 +20,11 @@ public partial class AddLoanDialogForm : MvvmForm<AddLoanViewModel>, IAddLoanDia
         BindProperty(numberInstalmentsTextBox, vm => vm.NumberInstalments);
         BindProperty(monthlyFeeTextBox, vm => vm.MonthlyFee, "C");
         BindProperty(vm => vm.DialogResult, result => DialogResult = result);
-        BindProperty(vm => vm.Loan, loan => Loan = loan);
 
-        amountTextBox.BindKeyPressCommand(ViewModel.NumericVerificationCommand);
-        annualInterestTextBox.BindKeyPressCommand(ViewModel.NumericVerificationCommand);
-        monthlyInterestTextBox.BindKeyPressCommand(ViewModel.NumericVerificationCommand);
-        numberInstalmentsTextBox.BindKeyPressCommand(ViewModel.NumericVerificationCommand);
+        BindCommand(amountTextBox, vm => vm.NumericVerificationCommand);
+        BindCommand(annualInterestTextBox, vm => vm.NumericVerificationCommand);
+        BindCommand(monthlyInterestTextBox, vm => vm.NumericVerificationCommand);
+        BindCommand(numberInstalmentsTextBox, vm => vm.NumericVerificationCommand);
         BindCommand(cancelButton, ViewModel.CancelCommand);
         BindCommand(okButton, ViewModel.OkCommand);
     }

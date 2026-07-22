@@ -50,8 +50,6 @@
             // 
             resources.ApplyResources(feeTextBox, "feeTextBox");
             feeTextBox.Name = "feeTextBox";
-            feeTextBox.TextChanged += FeeTextBox_TextChanged;
-            feeTextBox.KeyPress += FeeTextBox_KeyPress;
             // 
             // interestLabel
             // 
@@ -82,14 +80,12 @@
             resources.ApplyResources(okButton, "okButton");
             okButton.Name = "okButton";
             okButton.UseVisualStyleBackColor = true;
-            okButton.Click += OkButton_Click;
             // 
             // cancelButton
             // 
             resources.ApplyResources(cancelButton, "cancelButton");
             cancelButton.Name = "cancelButton";
             cancelButton.UseVisualStyleBackColor = true;
-            cancelButton.Click += CancelButton_Click;
             // 
             // newBalanceLabel
             // 

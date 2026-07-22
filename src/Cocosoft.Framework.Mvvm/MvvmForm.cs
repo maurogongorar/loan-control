@@ -1,4 +1,6 @@
 ﻿using Cocosoft.Framework.Mvvm.Commands;
+using Cocosoft.Framework.Mvvm.Helpers;
+using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Windows.Input;
 
@@ -6,7 +8,7 @@ namespace Cocosoft.Framework.Mvvm;
 
 public abstract class MvvmForm<TViewModel> : Form where TViewModel : ViewModelBase
 {
-    protected TViewModel ViewModel { get; }
+    public TViewModel ViewModel { get; }
 
     public MvvmForm(TViewModel viewModel)
     {
@@ -58,6 +60,14 @@ public abstract class MvvmForm<TViewModel> : Form where TViewModel : ViewModelBa
     }
 
     protected void BindProperty<TProperty>(
+        CheckBox checkBox,
+        Expression<Func<TViewModel, TProperty>> viewModelProperty)
+    {
+        var propertyName = ((MemberExpression)viewModelProperty.Body).Member.Name;
+        BindProperty(checkBox, nameof(checkBox.Checked), propertyName);
+    }
+
+    protected void BindProperty<TProperty>(
         Expression<Func<TViewModel, TProperty>> viewModelProperty,
         Action<TProperty> updateAction)
     {
@@ -70,6 +80,32 @@ public abstract class MvvmForm<TViewModel> : Form where TViewModel : ViewModelBa
                 updateAction(value);
             }
         };
+    }
+
+    protected void BindProperty<TRow>(
+        DataGridView gridView,
+        Expression<Func<TViewModel, BindingList<TRow>>> viewModelDataSource,
+        Expression<Func<TViewModel, TRow?>> viewModelSelectedRow,
+        Action<DataGridViewColumnCollection>? rowMapper = default)
+    {
+        var selectedRowPropertyName = ((MemberExpression)viewModelDataSource.Body).Member.Name;
+
+        gridView.SelectionChanged += (s, e) =>
+        {
+            var propInfo = (viewModelSelectedRow.Body as MemberExpression)?.Member as System.Reflection.PropertyInfo;
+
+            if (gridView.CurrentRow?.DataBoundItem is TRow selectedRow)
+            {
+                propInfo?.SetValue(this.ViewModel, selectedRow);
+            }
+            else
+            {
+                propInfo?.SetValue(this.ViewModel, default(TRow));
+            }
+        };
+
+        gridView.DataSource = viewModelDataSource.Compile()(this.ViewModel);
+        rowMapper?.Invoke(gridView.Columns);
     }
 
     protected void BindCommand(Control control, ICommand command, string eventName = "Click")
@@ -134,5 +170,11 @@ public abstract class MvvmForm<TViewModel> : Form where TViewModel : ViewModelBa
                 SetControlEnable();
             }
         };
+    }
+
+    protected void BindCommand(TextBox txtBox, Expression<Func<TViewModel, ICommand<(object sender, KeyPressEventArgs e)>>> keyPressCommand)
+    {
+        var command = keyPressCommand.Compile()(this.ViewModel);
+        txtBox.BindKeyPressCommand(command);
     }
 }

@@ -52,7 +52,7 @@ public abstract class BaseModalForm<TViewModel>(TViewModel viewModel) : MvvmForm
 
     private void ApplyButtonStyle(Button button)
     {
-        button.FlatStyle = FlatStyle.Flat;
+        button.FlatStyle = FlatStyle.Popup;
         button.FlatAppearance.BorderSize = 0;
         button.Font = AppFonts.Default;
         button.Cursor = Cursors.Hand;
@@ -70,7 +70,7 @@ public abstract class BaseModalForm<TViewModel>(TViewModel viewModel) : MvvmForm
             button.BackColor = AppColors.Surface;
             button.ForeColor = AppColors.Primary;
             button.FlatAppearance.BorderSize = 1;
-            button.FlatAppearance.BorderColor = AppColors.Secondary;
+            button.FlatAppearance.BorderColor = AppColors.Border;
             button.FlatAppearance.MouseOverBackColor = AppColors.Background;
             button.FlatAppearance.MouseDownBackColor = AppColors.Border;
         }

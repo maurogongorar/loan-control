@@ -1,8 +1,8 @@
-﻿using Cocosoft.Finance.LoanControl.Dal.Model.Entities;
+﻿using Cocosoft.Finance.LoanControl.Core.ViewModels;
+using Cocosoft.Framework.Mvvm;
 
 namespace Cocosoft.Finance.LoanControl.App.Dialogs;
 
-internal interface IAddPaymentDialog : IDialog
+internal interface IAddPaymentDialog : IDialog, IMvvmView<AddPaymentViewModel>
 {
-    Payment? Payment { get; }
 }

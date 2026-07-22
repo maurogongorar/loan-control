@@ -19,13 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Cocosoft.Finance.LoanControl.Core\Cocosoft.Finance.LoanControl.Core.csproj" />
     <ProjectReference Include="..\Cocosoft.Finance.LoanControl.Dal\Cocosoft.Finance.LoanControl.Dal.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Program.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Program.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <ProjectReference Include="..\Cocosoft.Framework.LoanControl.UI\Cocosoft.Framework.LoanControl.UI.csproj" />
   </ItemGroup>
 
 </Project>

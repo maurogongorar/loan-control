@@ -11,8 +11,10 @@ internal static class ServiceCollectionExtensions
         services.AddSingleton<IDialogFactory, DialogFactory>();
         services.AddTransient<IAddLoanDialog, AddLoanDialogForm>()
             .AddTransient<AddLoanViewModel>();
-        services.AddTransient<IAddPaymentDialog, AddPaymentDialogForm>();
-        services.AddTransient<IDialogSelectable, SelectLoanDialogForm>();
+        services.AddTransient<IAddPaymentDialog, AddPaymentDialogForm>()
+            .AddTransient<AddPaymentViewModel>();
+        services.AddTransient<ISelectLoanDialog, SelectLoanDialogForm>()
+            .AddTransient<SelectLoanViewModel>();
         return services;
     }
 }
