@@ -1,0 +1,223 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Cocosoft.Finance.LoanControl.App.Avalonia.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="720"
+        x:Class="Cocosoft.Finance.LoanControl.App.Avalonia.Views.MainWindow"
+        x:DataType="vm:MainViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Loan Control"
+        Width="1280" Height="720"
+        MinWidth="900" MinHeight="500"
+        SystemDecorations="None"
+        Background="{StaticResource ContentBackgroundBrush}">
+
+    <Design.DataContext>
+        <vm:MainViewModel />
+    </Design.DataContext>
+
+    <Panel>
+        <!-- Resize grips (invisible hit areas on edges) -->
+        <Border x:Name="ResizeTop" Height="4" VerticalAlignment="Top" HorizontalAlignment="Stretch"
+                Background="Transparent" Cursor="SizeNorthSouth" ZIndex="10"
+                PointerPressed="Resize_PointerPressed" />
+        <Border x:Name="ResizeBottom" Height="4" VerticalAlignment="Bottom" HorizontalAlignment="Stretch"
+                Background="Transparent" Cursor="SizeNorthSouth" ZIndex="10"
+                PointerPressed="Resize_PointerPressed" />
+        <Border x:Name="ResizeLeft" Width="4" HorizontalAlignment="Left" VerticalAlignment="Stretch"
+                Background="Transparent" Cursor="SizeWestEast" ZIndex="10"
+                PointerPressed="Resize_PointerPressed" />
+        <Border x:Name="ResizeRight" Width="4" HorizontalAlignment="Right" VerticalAlignment="Stretch"
+                Background="Transparent" Cursor="SizeWestEast" ZIndex="10"
+                PointerPressed="Resize_PointerPressed" />
+        <Border x:Name="ResizeTopLeft" Width="6" Height="6" VerticalAlignment="Top" HorizontalAlignment="Left"
+                Background="Transparent" Cursor="TopLeftCorner" ZIndex="11"
+                PointerPressed="Resize_PointerPressed" />
+        <Border x:Name="ResizeTopRight" Width="6" Height="6" VerticalAlignment="Top" HorizontalAlignment="Right"
+                Background="Transparent" Cursor="TopRightCorner" ZIndex="11"
+                PointerPressed="Resize_PointerPressed" />
+        <Border x:Name="ResizeBottomLeft" Width="6" Height="6" VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                Background="Transparent" Cursor="BottomLeftCorner" ZIndex="11"
+                PointerPressed="Resize_PointerPressed" />
+        <Border x:Name="ResizeBottomRight" Width="6" Height="6" VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                Background="Transparent" Cursor="BottomRightCorner" ZIndex="11"
+                PointerPressed="Resize_PointerPressed" />
+
+        <DockPanel LastChildFill="True">
+
+        <!-- Left Sidebar -->
+        <Border DockPanel.Dock="Left" Width="{Binding SidebarWidth}"
+                Background="{StaticResource SidebarBackgroundBrush}">
+            <DockPanel LastChildFill="True">
+
+                <!-- App branding (draggable title bar area) -->
+                <Border DockPanel.Dock="Top"
+                        Padding="10"
+                        BorderBrush="{StaticResource BorderDarkBrush}"
+                        BorderThickness="0,0,0,1"
+                        IsHitTestVisible="False"
+                        Height="72">
+                    <Panel VerticalAlignment="Center">
+                        <!-- Full branding when expanded -->
+                        <StackPanel Spacing="4"
+                                    HorizontalAlignment="Center"
+                                    IsVisible="{Binding IsSidebarExpanded}">
+                            <TextBlock Text="💰 Loan Control"
+                                       FontFamily="{StaticResource HeadingFontFamily}"
+                                       FontSize="{StaticResource FontSizeLarge}"
+                                       Foreground="#FFFFFF" />
+                            <TextBlock Text="Cocosoft Finance"
+                                       FontSize="{StaticResource FontSizeSmall}"
+                                       Foreground="{StaticResource TextOnDarkMutedBrush}" />
+                        </StackPanel>
+                        <!-- Icon only when collapsed -->
+                        <TextBlock Text="💰" FontSize="24"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   IsVisible="{Binding !IsSidebarExpanded}" />
+                    </Panel>
+                </Border>
+
+                <!-- Toggle button (only when can toggle manually) -->
+                <Button DockPanel.Dock="Top"
+                        Command="{Binding ToggleSidebarCommand}"
+                        IsVisible="{Binding CanToggleSidebar}"
+                        Background="Transparent" BorderThickness="0"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"
+                        Padding="0,10" Cursor="Hand">
+                    <TextBlock Text="☰" FontSize="18"
+                               Foreground="{StaticResource TextOnDarkMutedBrush}"
+                               HorizontalAlignment="Center" />
+                </Button>
+
+                <!-- Navigation buttons -->
+                <StackPanel DockPanel.Dock="Top" Margin="0,4,0,0">
+                    <Button Classes="nav-button active">
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <TextBlock Text="🏠" FontSize="16" VerticalAlignment="Center" />
+                            <TextBlock Text="Dashboard" VerticalAlignment="Center"
+                                       IsVisible="{Binding IsSidebarExpanded}" />
+                        </StackPanel>
+                    </Button>
+                    <Button Classes="nav-button">
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <TextBlock Text="📋" FontSize="16" VerticalAlignment="Center" />
+                            <TextBlock Text="Préstamos" VerticalAlignment="Center"
+                                       IsVisible="{Binding IsSidebarExpanded}" />
+                        </StackPanel>
+                    </Button>
+                    <Button Classes="nav-button">
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <TextBlock Text="💳" FontSize="16" VerticalAlignment="Center" />
+                            <TextBlock Text="Pagos" VerticalAlignment="Center"
+                                       IsVisible="{Binding IsSidebarExpanded}" />
+                        </StackPanel>
+                    </Button>
+                    <Button Classes="nav-button">
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <TextBlock Text="👥" FontSize="16" VerticalAlignment="Center" />
+                            <TextBlock Text="Clientes" VerticalAlignment="Center"
+                                       IsVisible="{Binding IsSidebarExpanded}" />
+                        </StackPanel>
+                    </Button>
+                    <Button Classes="nav-button">
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <TextBlock Text="📊" FontSize="16" VerticalAlignment="Center" />
+                            <TextBlock Text="Reportes" VerticalAlignment="Center"
+                                       IsVisible="{Binding IsSidebarExpanded}" />
+                        </StackPanel>
+                    </Button>
+                    <Button Classes="nav-button">
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <TextBlock Text="⚙️" FontSize="16" VerticalAlignment="Center" />
+                            <TextBlock Text="Configuración" VerticalAlignment="Center"
+                                       IsVisible="{Binding IsSidebarExpanded}" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+
+                <!-- Bottom spacer -->
+                <Border />
+            </DockPanel>
+        </Border>
+
+        <!-- Right area (Header + Content) -->
+        <DockPanel LastChildFill="True">
+
+            <!-- Header (custom title bar) -->
+            <Border DockPanel.Dock="Top" Height="60"
+                    Background="{StaticResource HeaderBackgroundBrush}"
+                    Padding="24,0"
+                    x:Name="TitleBar"
+                    PointerPressed="TitleBar_PointerPressed">
+                <DockPanel LastChildFill="True">
+                    <!-- Page title -->
+                    <StackPanel DockPanel.Dock="Left" VerticalAlignment="Center" Spacing="2">
+                        <TextBlock Classes="header-title" Text="Dashboard" />
+                        <TextBlock Classes="header-subtitle" Text="Resumen general del sistema" />
+                    </StackPanel>
+
+                    <!-- Window control buttons -->
+                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal"
+                                VerticalAlignment="Center" Spacing="0">
+                        <!-- Notification and user avatar -->
+                        <TextBlock Text="🔔"
+                                   FontSize="18"
+                                   VerticalAlignment="Center"
+                                   Foreground="{StaticResource TextOnDarkMutedBrush}"
+                                   Margin="0,0,12,0" />
+                        <Border Width="32" Height="32" CornerRadius="16"
+                                Background="{StaticResource AccentBrush}"
+                                Margin="0,0,16,0">
+                            <TextBlock Text="U"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Foreground="#FFFFFF"
+                                       FontSize="{StaticResource FontSizeBody}" />
+                        </Border>
+
+                        <!-- Separator -->
+                        <Border Width="1" Height="24" Background="{StaticResource BorderDarkBrush}" Margin="0,0,8,0" />
+
+                        <!-- Minimize -->
+                        <Button x:Name="MinimizeButton" Click="MinimizeButton_Click"
+                                Width="40" Height="32" Padding="0"
+                                Background="Transparent" BorderThickness="0"
+                                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                Cursor="Hand">
+                            <TextBlock Text="─" Foreground="{StaticResource TextOnDarkMutedBrush}" FontSize="14" />
+                        </Button>
+                        <!-- Maximize/Restore -->
+                        <Button x:Name="MaximizeButton" Click="MaximizeButton_Click"
+                                Width="40" Height="32" Padding="0"
+                                Background="Transparent" BorderThickness="0"
+                                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                Cursor="Hand">
+                            <TextBlock Text="☐" Foreground="{StaticResource TextOnDarkMutedBrush}" FontSize="14" />
+                        </Button>
+                        <!-- Close -->
+                        <Button x:Name="CloseButton" Click="CloseButton_Click"
+                                Width="40" Height="32" Padding="0"
+                                Background="Transparent" BorderThickness="0"
+                                VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                Cursor="Hand">
+                            <TextBlock Text="✕" Foreground="{StaticResource TextOnDarkMutedBrush}" FontSize="14" />
+                        </Button>
+                    </StackPanel>
+
+                    <Border />
+                </DockPanel>
+            </Border>
+
+            <!-- Main Content Area -->
+            <Border Padding="24" Background="{StaticResource ContentBackgroundBrush}">
+                <ContentControl Content="{Binding}" />
+            </Border>
+
+        </DockPanel>
+
+    </DockPanel>
+    </Panel>
+
+</Window>

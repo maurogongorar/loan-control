@@ -1,0 +1,30 @@
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+
+namespace Cocosoft.Finance.LoanControl.App.Avalonia.ViewModels;
+
+public partial class MainViewModel : ViewModelBase
+{
+    private const double SidebarExpandedWidth = 240;
+
+    private const double SidebarCollapsedWidth = 60;
+
+    [ObservableProperty]
+    public partial bool IsSidebarExpanded { get; set; } = true;
+
+    [ObservableProperty]
+    public partial bool CanToggleSidebar { get; set; } = true;
+
+    public double SidebarWidth => IsSidebarExpanded ? SidebarExpandedWidth : SidebarCollapsedWidth;
+
+    partial void OnIsSidebarExpandedChanged(bool value)
+    {
+        OnPropertyChanged(nameof(SidebarWidth));
+    }
+
+    [RelayCommand]
+    private void ToggleSidebar()
+    {
+        IsSidebarExpanded = !IsSidebarExpanded;
+    }
+}
