@@ -7,78 +7,66 @@ namespace Cocosoft.Finance.LoanControl.App.Avalonia.Views;
 public partial class MainWindow : Window
 {
     private const double CollapseThreshold = 1000;
+
     private bool _isAutoCollapsed;
 
     public MainWindow()
     {
-        InitializeComponent();
-        SizeChanged += OnSizeChanged;
+        this.InitializeComponent();
+        this.SizeChanged += this.OnSizeChanged;
+    }
+
+    private void CloseButton_Click(object? sender, RoutedEventArgs e)
+    {
+        this.Close();
+    }
+
+    private void MaximizeButton_Click(object? sender, RoutedEventArgs e)
+    {
+        this.WindowState = this.WindowState == WindowState.Maximized
+            ? WindowState.Normal
+            : WindowState.Maximized;
+    }
+
+    private void MinimizeButton_Click(object? sender, RoutedEventArgs e)
+    {
+        this.WindowState = WindowState.Minimized;
     }
 
     private void OnSizeChanged(object? sender, SizeChangedEventArgs e)
     {
-        if (DataContext is not ViewModels.MainViewModel vm)
+        if (this.DataContext is not ViewModels.MainViewModel vm)
+        {
             return;
+        }
 
         if (e.NewSize.Width < CollapseThreshold)
         {
-            if (!_isAutoCollapsed)
+            if (!this._isAutoCollapsed)
             {
-                _isAutoCollapsed = true;
+                this._isAutoCollapsed = true;
                 vm.IsSidebarExpanded = false;
                 vm.CanToggleSidebar = false;
             }
         }
         else
         {
-            if (_isAutoCollapsed)
+            if (this._isAutoCollapsed)
             {
-                _isAutoCollapsed = false;
+                this._isAutoCollapsed = false;
                 vm.IsSidebarExpanded = true;
                 vm.CanToggleSidebar = true;
             }
         }
     }
 
-    private void TitleBar_PointerPressed(object? sender, PointerPressedEventArgs e)
-    {
-        var point = e.GetCurrentPoint(this);
-        if (!point.Properties.IsLeftButtonPressed)
-            return;
-
-        if (e.ClickCount == 2)
-        {
-            WindowState = WindowState == WindowState.Maximized
-                ? WindowState.Normal
-                : WindowState.Maximized;
-        }
-        else
-        {
-            BeginMoveDrag(e);
-        }
-    }
-
-    private void MinimizeButton_Click(object? sender, RoutedEventArgs e)
-    {
-        WindowState = WindowState.Minimized;
-    }
-
-    private void MaximizeButton_Click(object? sender, RoutedEventArgs e)
-    {
-        WindowState = WindowState == WindowState.Maximized
-            ? WindowState.Normal
-            : WindowState.Maximized;
-    }
-
-    private void CloseButton_Click(object? sender, RoutedEventArgs e)
-    {
-        Close();
-    }
-
     private void Resize_PointerPressed(object? sender, PointerPressedEventArgs e)
     {
-        if (sender is not Control control || !e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
+        if (sender is not Control control
+            || !e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
+        {
             return;
+        }
 
         var edge = control.Name switch
         {
@@ -95,7 +83,27 @@ public partial class MainWindow : Window
 
         if (edge.HasValue)
         {
-            BeginResizeDrag(edge.Value, e);
+            this.BeginResizeDrag(edge.Value, e);
+        }
+    }
+
+    private void TitleBar_PointerPressed(object? sender, PointerPressedEventArgs e)
+    {
+        var point = e.GetCurrentPoint(this);
+        if (!point.Properties.IsLeftButtonPressed)
+        {
+            return;
+        }
+
+        if (e.ClickCount == 2)
+        {
+            this.WindowState = this.WindowState == WindowState.Maximized
+                ? WindowState.Normal
+                : WindowState.Maximized;
+        }
+        else
+        {
+            this.BeginMoveDrag(e);
         }
     }
 }

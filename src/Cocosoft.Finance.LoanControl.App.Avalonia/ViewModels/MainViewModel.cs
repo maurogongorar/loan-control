@@ -5,26 +5,28 @@ namespace Cocosoft.Finance.LoanControl.App.Avalonia.ViewModels;
 
 public partial class MainViewModel : ViewModelBase
 {
-    private const double SidebarExpandedWidth = 240;
-
     private const double SidebarCollapsedWidth = 60;
 
-    [ObservableProperty]
-    public partial bool IsSidebarExpanded { get; set; } = true;
+    private const double SidebarExpandedWidth = 240;
 
     [ObservableProperty]
     public partial bool CanToggleSidebar { get; set; } = true;
 
-    public double SidebarWidth => IsSidebarExpanded ? SidebarExpandedWidth : SidebarCollapsedWidth;
+    [ObservableProperty]
+    public partial bool IsSidebarExpanded { get; set; } = true;
+
+    public double SidebarWidth => this.IsSidebarExpanded
+        ? SidebarExpandedWidth
+        : SidebarCollapsedWidth;
 
     partial void OnIsSidebarExpandedChanged(bool value)
     {
-        OnPropertyChanged(nameof(SidebarWidth));
+        this.OnPropertyChanged(nameof(this.SidebarWidth));
     }
 
     [RelayCommand]
     private void ToggleSidebar()
     {
-        IsSidebarExpanded = !IsSidebarExpanded;
+        this.IsSidebarExpanded = !this.IsSidebarExpanded;
     }
 }

@@ -10,7 +10,7 @@
         Title="Loan Control"
         Width="1280" Height="720"
         MinWidth="900" MinHeight="500"
-        SystemDecorations="None"
+        WindowDecorations="None"
         Background="{StaticResource ContentBackgroundBrush}">
 
     <Design.DataContext>
