@@ -1,0 +1,48 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="Cocosoft.Finance.LoanControl.App.Avalonia.Views.Dialogs.ConfirmationDialog"
+        Width="450" Height="220"
+        CanResize="False"
+        WindowDecorations="None"
+        WindowStartupLocation="CenterOwner"
+        Background="{StaticResource ContentBackgroundBrush}">
+
+  <Border BorderBrush="{StaticResource BorderDarkBrush}" BorderThickness="1">
+    <DockPanel>
+
+      <!-- Header -->
+      <Border DockPanel.Dock="Top" Background="{StaticResource PrimaryDarkBrush}" Padding="20,14">
+        <TextBlock x:Name="TitleText" FontSize="16" FontWeight="Bold"
+                   Foreground="{StaticResource TextOnDarkBrush}" />
+      </Border>
+
+      <!-- Content -->
+      <Border Padding="20">
+        <DockPanel>
+
+          <!-- Action buttons -->
+          <Border DockPanel.Dock="Bottom"
+                  BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,1,0,0"
+                  Padding="0,12,0,0" Margin="0,12,0,0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+              <Button x:Name="ConfirmButton" Content="Confirmar"
+                      Classes="accent" Cursor="Hand"
+                      AutomationProperties.Name="Confirmar" />
+              <Button x:Name="CancelButton" Content="Cancelar"
+                      Classes="secondary" Cursor="Hand"
+                      AutomationProperties.Name="Cancelar" />
+            </StackPanel>
+          </Border>
+
+          <!-- Message -->
+          <TextBlock x:Name="MessageText" FontSize="14" TextWrapping="Wrap"
+                     Foreground="{StaticResource TextPrimaryBrush}"
+                     VerticalAlignment="Center" />
+
+        </DockPanel>
+      </Border>
+
+    </DockPanel>
+  </Border>
+
+</Window>

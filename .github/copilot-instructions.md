@@ -21,5 +21,20 @@ Al inicio de cada sesión o cuando recibas una solicitud, **debes**:
 ### Reglas
 
 - **Nunca** generes o modifiques código sin haber revisado primero los skills aplicables.
+- Siempre antes de generar o modificar código C#, leer los skills en `.agents/skills/` (especialmente `coding-standards/SKILL.md` y `ui-avalonia-engineer/SKILL.md` según aplique) y seguir sus reglas obligatoriamente.
 - Si no existe un skill para el contexto solicitado, aplica las mejores prácticas estándar de .NET 10 y C#.
 - A medida que se agreguen nuevos skills, este mapeo debe extenderse automáticamente.
+
+## Paleta de Colores Preferida
+
+- Utiliza la paleta de colores moderna en tonos azul marino oscuro:
+  - Color primario: `#1B2A4A`
+  - Color de acento: `#3B82F6`
+  - Fondo de contenido: `#F1F5F9`
+- Evita la paleta cálida/terrosa, ya que se considera que los tonos cálidos se sienten "muertos".
+
+## Comentarios y Documentación
+
+- Todos los comentarios en el código **deben** estar en inglés.
+- Las cadenas de interfaz de usuario (etiquetas, mensajes mostrados al usuario) **deben** permanecer en español.
+- La documentación XML en los miembros públicos **es obligatoria** según los estándares de codificación.

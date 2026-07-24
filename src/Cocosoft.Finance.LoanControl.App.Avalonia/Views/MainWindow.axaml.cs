@@ -4,6 +4,11 @@ using Avalonia.Interactivity;
 
 namespace Cocosoft.Finance.LoanControl.App.Avalonia.Views;
 
+/// <summary>
+/// The main application window that provides custom title bar, sidebar auto-collapse,
+/// and custom resize handling.
+/// </summary>
+/// <seealso cref="Avalonia.Controls.Window" />
 public partial class MainWindow : Window
 {
     private const double CollapseThreshold = 1000;

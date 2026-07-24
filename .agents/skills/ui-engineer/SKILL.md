@@ -1,12 +1,17 @@
-# Skill: Diseño de UI y Arquitectura Base en Windows Forms (MVVM Framework - .NET 10)
+---
+name: ui-engineer
+description: Usa este skill para crear o modificar las vistas del proyecto `scr/Cocosoft.Finance.LoanControl.App`
+---
 
-## 1. Propósito y Alcance
+# Diseño de UI y Arquitectura Base en Windows Forms (MVVM Framework - .NET 10)
+
+## Propósito y Alcance
 
 Garantizar la consistencia visual, la reutilización de componentes y la separación estricta de responsabilidades en la interfaz de usuario (UI). Este documento define las reglas obligatorias de diseño visual, la identidad gráfica, el manejo de texturas y relieves, y la jerarquía de herencia técnica que debe seguir todo desarrollador o IA al crear pantallas, diálogos y componentes interactivos dentro del ecosistema del framework MVVM sobre .NET 10.
 
 ---
 
-## 2. Arquitectura de Herencia (Jerarquía de Formularios)
+## Arquitectura de Herencia (Jerarquía de Formularios)
 
 Para evitar que la lógica de infraestructura se mezcle con el diseño visual, el framework implementa una jerarquía de herencia en dos niveles independientes:
 
@@ -23,7 +28,7 @@ Para evitar que la lógica de infraestructura se mezcle con el diseño visual, e
 (Layout Principal)             (Ventanas Modales)
 ```
 
-### 2.1 MvvmForm (Clase Base de Infraestructura)
+### MvvmForm (Clase Base de Infraestructura)
 
 **Responsabilidad**:
 
@@ -43,7 +48,7 @@ Toda responsabilidad estética pertenece exclusivamente a las clases derivadas.
 
 ---
 
-### 2.2 BaseLayoutForm (Clase Base de Diseño Principal)
+### BaseLayoutForm (Clase Base de Diseño Principal)
 
 **Responsabilidad**:
 
@@ -57,7 +62,7 @@ Proveer el layout maestro de la aplicación estilo Dashboard Moderno.
 
 ---
 
-### 2.3 BaseModalForm (Clase Base de Diálogos)
+### BaseModalForm (Clase Base de Diálogos)
 
 **Responsabilidad**:
 
@@ -74,37 +79,43 @@ StartPosition = FormStartPosition.CenterParent;
 
 ---
 
-## 3. Identidad Visual (Design System) y Profundidad
+## Identidad Visual (Design System) y Profundidad
 
-La identidad visual está inspirada en la costa Caribe colombiana, transmitiendo confianza, profesionalismo y estabilidad financiera mediante una estética moderna y limpia.
+La identidad visual transmite confianza, profesionalismo y estabilidad financiera mediante una estética moderna, oscura y limpia inspirada en interfaces financieras contemporáneas.
 
 **Regla de Textura y Profundidad**: Para alejarse del aspecto plano (flat) tradicional o desactualizado de WinForms, la interfaz debe adoptar un estilo Soft-UI / Glassmorphism sutil. Los controles deben poseer relieve mediante sutiles gradientes de fondo, sombras perimetrales difuminadas (DropShadow) y bordes redondeados (Radius), emulando capas físicas superpuestas.
 
 ---
 
-### 3.1 Paleta Institucional
+### Paleta Institucional
 
 | Token | Color | Hex | Uso |
 | ------ | ------ | ------ | ------ |
-| Primary | Azul Petróleo Caribe | #0F4C5C | Color institucional principal. Navegación, indicadores de gráficos, encabezados destacados. |
-| Secondary | Turquesa Caribe | #147D8A | Componentes interactivos, enlaces, iconografía de tarjetas secundarias y barras de progreso. |
-| Accent | Coral Suave | #E07A5F | Call To Action (CTA) especiales, indicadores importantes y pequeños elementos de énfasis (Uso moderado). |
-| Background | Arena Clara | #F7F3EE | Fondo general de la aplicación (pnlContent y formularios base). |
-| Surface | Blanco | #FFFFFF | Tarjetas (Cards), paneles flotantes y contenedores de formularios. Deben poseer sombra difuminada. |
-| Text Primary | Cacao | #5A3E36 | Texto principal, cifras numéricas grandes y títulos. Sustituye al negro puro para aportar calidez. |
-| Text Secondary | Gris Neutro | #6B7280 | Texto descriptivo, ayudas visuales y etiquetas secundarias (Ej. "Duración", "Interés"). |
-| Border | Arena Oscura | #D6C9B8 | Bordes sutiles para inputs, separadores y líneas divisorias. |## 3.2 Colores Semánticos| Estado | Color | Hex | Uso en Sistema |
+| Primary | Azul Naval Profundo | #1B2A4A | Color institucional principal. Navegación, header, encabezados destacados. |
+| PrimaryDark | Azul Naval Oscuro | #111D35 | Variante oscura para fondos profundos y estados pressed. |
+| PrimaryLight | Azul Naval Claro | #2A3F6A | Hover states en navegación y elementos interactivos sobre fondo oscuro. |
+| Accent | Azul Brillante | #3B82F6 | Botones activos, indicadores de selección, CTAs principales. |
+| AccentHover | Azul Brillante Claro | #60A5FA | Estado hover de elementos accent. |
+| SidebarBackground | Azul Noche | #0F1729 | Fondo del panel de navegación lateral (pnlNavigation). |
+| HeaderBackground | Azul Naval Profundo | #1B2A4A | Fondo de la barra superior (pnlHeader). |
+| ContentBackground | Gris Hielo | #F1F5F9 | Fondo general del área de contenido (pnlContent y formularios base). |
+| CardBackground | Blanco | #FFFFFF | Tarjetas (Cards), paneles flotantes y contenedores. Deben poseer sombra sutil. |
+| TextPrimary | Azul Tinta | #1E293B | Texto principal, cifras numéricas grandes y títulos. |
+| TextSecondary | Gris Pizarra | #64748B | Texto descriptivo, etiquetas secundarias y ayudas visuales. |
+| TextOnDark | Gris Claro | #E2E8F0 | Texto principal sobre fondos oscuros (sidebar, header). |
+| TextOnDarkMuted | Gris Azulado | #94A3B8 | Texto secundario sobre fondos oscuros. |
+| Border | Gris Hielo | #E2E8F0 | Bordes sutiles para inputs, separadores y líneas divisorias. |
+| BorderDark | Azul Profundo | #1E3A5F | Bordes sobre fondos oscuros (separadores en sidebar). |
 
-### 3.2 Colores semánticos
+### Colores semánticos
 
 Los estados del sistema deben utilizar colores universalmente reconocidos y no deben mezclarse con los colores institucionales.
 
 | Token | Color | Hex |
 | ------ | ------ | ------ |
-| Success | Verde | #2E8B57 |
+| Success | Verde | #22C55E |
 | Warning | Ámbar | #F59E0B |
-| Error | Rojo | #E11D48 |
-| Information | Azul | #3B82F6 |
+| Danger | Rojo | #EF4444 |
 
 Estos colores únicamente representan estados del sistema.
 
@@ -112,78 +123,78 @@ Nunca deben reemplazar los colores institucionales.
 
 ---
 
-## 4. Diseño de Componentes con Textura (GDI+)
+## Diseño de Componentes con Textura (GDI+)
 
 Para asegurar que la aplicación .NET 10 WinForms se comporte y visualice como una interfaz moderna, las vistas y los controles personalizados deben interceptar el evento OnPaint utilizando System.Drawing.Drawing2D.
 
-### 4.1 Tarjetas (Cards / Panels)
+### Tarjetas (Cards / Panels)
 
 Todo contenedor de información (Ej. Tarjeta de Saldos, Tarjeta de Deudas) debe renderizarse siguiendo este estándar:
 
 - Fondo: Blanco (#FFFFFF).
 - Bordes: Redondeados con un radio de 12px a 16px utilizando `GraphicsPath`.
-- Sombra (Drop Shadow): Renderizar una sombra sutil perimetral (Offset Y: 4px, Blur: 12px, Color: #5A3E36 o Negro con una opacidad del 5% al 8%).
+- Sombra (Drop Shadow): Renderizar una sombra sutil perimetral (Offset Y: 4px, Blur: 12px, Color: #1E293B o Negro con una opacidad del 5% al 8%).
 - Estructura Interna:
   - Ícono en la esquina superior izquierda dentro de un contenedor circular/cuadrado redondeado con fondo semitransparente (Alfa ~30) del color del estado (Azul para saldos, Rojo para deudas).
   - Texto descriptivo en color Text Secondary.
   - Valor numérico principal destacado en tamaño grande (24pt a 28pt) en color Text Primary.
 
-### 4.2 Indicadores Gráficos (Gauges y Barras de Score)
+### Indicadores Gráficos (Gauges y Barras de Score)
 
 Las visualizaciones de datos (como el medidor semicircular de Score de Crédito) deben ser dinámicas:
 
 - Dibujadas mediante `Graphics.DrawArc` con `LineCap.Round` para asegurar terminaciones suaves.
-- **Canal base**: Color Arena Oscura muy tenue (#EADFCF).
-- **Progreso**: Renderizado con un LinearGradientBrush que transicione suavemente de Turquesa Caribe (#147D8A) a Azul Petróleo Caribe (#0F4C5C).
+- **Canal base**: Color Gris Hielo muy tenue (#E2E8F0).
+- **Progreso**: Renderizado con un LinearGradientBrush que transicione suavemente de Azul Brillante (#3B82F6) a Azul Naval Profundo (#1B2A4A).
 
-### 4.3 Botones (`Button`)
+### Botones (`Button`)
 
 Los botones deben poseer texturas visuales diferenciadas según su estado de interacción:
 
 - **Acción Primaria**:
-  - Fondo: Gradiente sutil (`LinearGradientBrush`) desde Turquesa Caribe (#147D8A) hasta Azul Petróleo Caribe (#0F4C5C).
+  - Fondo: Gradiente sutil (`LinearGradientBrush`) desde Azul Naval Claro (#2A3F6A) hasta Azul Naval Profundo (#1B2A4A).
   - Bordes: Redondeados de 8px.
   - Texto: Blanco, centrado, fuente semibold.
   - Relieve: Sombra inferior sutil de 2px a 4px.
   - Hover/Pressed: Variación de luminosidad del gradiente en +/- 10% respectivamente.
 - **Acción Secundaria (Ej. Botón "Exportar")**:
   - Fondo: Blanco brillante con relieve sutil.
-  - Borde: 1px sólido en color Arena Oscura (#D6C9B8).
-  - Ícono y Texto: Color Cacao (#5A3E36) o Azul Petróleo Caribe.
+  - Borde: 1px sólido en color Gris Hielo (#E2E8F0).
+  - Ícono y Texto: Color Azul Tinta (#1E293B) o Azul Naval Profundo.
 - **CTA Especial (Acciones Críticas)**:
-  - Fondo: Gradiente basado en Coral Suave (#E07A5F).
+  - Fondo: Gradiente basado en Azul Brillante (#3B82F6).
 
-#### 4.3.1 Estado Deshabilitado (`Enabled = false`)
+#### Estado Deshabilitado (`Enabled = false`)
 - **Regla Estricta**: Debe ser evidente a primera vista que el botón **no está disponible**.
 - **Fondo**: Cancelar cualquier gradiente o color institucional. Se debe pintar un fondo plano y mate en color Gris Claro Neutro (#E5E7EB o #D1D5DB).
 - **Texto e Íconos**: Color Gris Neutro Apagado (#9CA3AF), perdiendo todo contraste llamativo.
 - **Relieve**: Eliminar por completo la sombra perimetral (**DropShadow**) y efectos de relieve, forzando un aspecto totalmente plano y "hundido" en la superficie.
 - **Interacción**: Ignorar por completo los eventos Hover y Pressed. El cursor debe mantenerse por defecto (`Cursors.Default`), impidiendo el cambio a mano interactiva (`Cursors.Hand`).
 
-### 4.4 Inputs y Controles de Texto (`TextBox`)
+### Inputs y Controles de Texto (`TextBox`)
 
 - **Estilo Visual**: Altura de 36px con Padding interior para evitar textos pegados al borde.
-- **Borde**: 1px sólido en color Arena Oscura (#D6C9B8). Al ganar el foco (Enter), el borde cambia a Turquesa Caribe (#147D8A) con un sutil efecto de resplandor exterior ( Glow ).
+- **Borde**: 1px sólido en color Gris Hielo (#E2E8F0). Al ganar el foco (Enter), el borde cambia a Azul Brillante (#3B82F6) con un sutil efecto de resplandor exterior ( Glow ).
 - Fuente: Segoe UI, 10pt.
 
 ---
 
-## 5. Patrones de Layout, Espaciado y Grid
+## Patrones de Layout, Espaciado y Grid
 
 Toda pantalla generada por Copilot debe acatar estrictamente este modelo de distribución responsive:
 
-- **Márgenes y Padding**: El fondo del **BaseLayoutForm** siempre será Arena Clara (#F7F3EE). Las tarjetas deben mantener un espaciado de separación ( Gutter ) constante de 20px a 24px.
+- **Márgenes y Padding**: El fondo del **BaseLayoutForm** siempre será Gris Hielo (#F1F5F9). Las tarjetas deben mantener un espaciado de separación ( Gutter ) constante de 20px a 24px.
 - **Dimensionamiento Dinámico**: Utilizar `TableLayoutPanel` o cálculos manuales en el evento OnResize del formulario para recalcular el tamaño de las tarjetas de forma proporcional, evitando el solapamiento de componentes.
 
 ---
 
-## 6. Textos en las vistas
+## Textos en las vistas
 
 Los textos en la aplicacion se deben manejar mediante recursos pues la aplicacion se debe construir para soportar diversos idiomas.
 
 ---
 
-## 7. Reglas para el Agente en la Creación de Vistas
+## Reglas para el Agente en la Creación de Vistas
 
 Al solicitar a la IA la creación o modificación de una vista (`UserControl` o `Form`):
 

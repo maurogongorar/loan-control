@@ -1,0 +1,349 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Cocosoft.Finance.LoanControl.App.Avalonia.ViewModels"
+             xmlns:models="using:Cocosoft.Finance.LoanControl.App.Avalonia.Models"
+             xmlns:ctrl="using:Cocosoft.Finance.LoanControl.App.Avalonia.Controls"
+             x:Class="Cocosoft.Finance.LoanControl.App.Avalonia.Views.LoansView"
+             x:DataType="vm:LoansViewModel">
+  <Design.DataContext>
+    <vm:LoansViewModel />
+  </Design.DataContext>
+
+  <Panel>
+    <!-- Main View: Header + KPIs / Search Results -->
+    <DockPanel IsVisible="{Binding !IsCreatingLoan}" x:Name="MainPanel">
+      <Panel IsVisible="{Binding !IsShowingDetail}" x:Name="ListPanel">
+        <DockPanel>
+          <!-- Add button row -->
+          <Button DockPanel.Dock="Top"
+                  Command="{Binding CreateLoanCommand}"
+                  AutomationProperties.Name="Crear nuevo préstamo"
+                  Width="40" Height="40"
+                  Background="{StaticResource AccentBrush}"
+                  Foreground="White"
+                  CornerRadius="20"
+                  Padding="0"
+                  HorizontalAlignment="Right"
+                  HorizontalContentAlignment="Center"
+                  VerticalContentAlignment="Center"
+                  FontSize="22"
+                  FontWeight="Bold"
+                  Cursor="Hand"
+                  ToolTip.Tip="Crear nuevo préstamo"
+                  Margin="0,0,0,12"
+                  Content="+" />
+
+          <!-- Search bar -->
+          <Border DockPanel.Dock="Top" Classes="card" Margin="0,0,0,16">
+            <DockPanel>
+              <Button DockPanel.Dock="Right"
+                      Command="{Binding SearchCommand}"
+                      AutomationProperties.Name="Buscar préstamo"
+                      Width="40" Height="40"
+                      Background="Transparent"
+                      Foreground="{StaticResource TextSecondaryBrush}"
+                      CornerRadius="20"
+                      Padding="0"
+                      HorizontalContentAlignment="Center"
+                      VerticalContentAlignment="Center"
+                      FontSize="18"
+                      Cursor="Hand"
+                      ToolTip.Tip="Buscar"
+                      Content="🔍" />
+              <TextBox x:Name="SearchBox"
+                       AutomationProperties.Name="Buscar préstamo"
+                       PlaceholderText="Buscar por número de préstamo, nombre o identificación..."
+                       Text="{Binding SearchText}"
+                       Margin="0,0,12,0">
+                <TextBox.KeyBindings>
+                  <KeyBinding Gesture="Enter" Command="{Binding SearchCommand}" />
+                </TextBox.KeyBindings>
+              </TextBox>
+            </DockPanel>
+          </Border>
+
+          <!-- Content area (fills remaining space) -->
+          <Panel>
+            <!-- KPIs (visible when not showing results) -->
+            <WrapPanel IsVisible="{Binding !IsShowingResults}" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" ItemWidth="280">
+              <Border Classes="card" Margin="8" Height="120">
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="8">
+                  <TextBlock Text="Créditos Activos" FontSize="14" Foreground="{StaticResource TextSecondaryBrush}" HorizontalAlignment="Center" />
+                  <TextBlock Text="{Binding ActiveLoansCount}" FontSize="36" FontWeight="Bold" Foreground="{StaticResource AccentBrush}" HorizontalAlignment="Center" />
+                </StackPanel>
+              </Border>
+              <Border Classes="card" Margin="8" Height="120">
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="8">
+                  <TextBlock Text="Deuda Total" FontSize="14" Foreground="{StaticResource TextSecondaryBrush}" HorizontalAlignment="Center" />
+                  <TextBlock Text="{Binding TotalDebt, StringFormat=C0}" FontSize="36" FontWeight="Bold" Foreground="{StaticResource DangerBrush}" HorizontalAlignment="Center" />
+                </StackPanel>
+              </Border>
+              <Border Classes="card" Margin="8" Height="120">
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="8">
+                  <TextBlock Text="Interés Recolectado" FontSize="14" Foreground="{StaticResource TextSecondaryBrush}" HorizontalAlignment="Center" />
+                  <TextBlock Text="{Binding TotalInterestCollected, StringFormat=C0}" FontSize="36" FontWeight="Bold" Foreground="{StaticResource SuccessBrush}" HorizontalAlignment="Center" />
+                </StackPanel>
+              </Border>
+            </WrapPanel>
+
+            <!-- Search Results Table -->
+            <Border Classes="card" IsVisible="{Binding IsShowingResults}">
+              <DockPanel>
+                <TextBlock DockPanel.Dock="Top" Text="Resultados de Búsqueda" FontSize="16" FontWeight="SemiBold"
+                           Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,12" />
+                <DataGrid ItemsSource="{Binding SearchResults}"
+                          AutoGenerateColumns="False"
+                          IsReadOnly="True"
+                          CanUserResizeColumns="True"
+                          GridLinesVisibility="Horizontal"
+                          BorderThickness="0"
+                          SelectionMode="Single"
+                          SelectedItem="{Binding SelectedSearchResult}">
+                  <DataGrid.Columns>
+                    <DataGridTextColumn Header="N° Crédito" Binding="{Binding LoanNumber}" Width="Auto" />
+                    <DataGridTextColumn Header="Deudor" Binding="{Binding DebtorName}" Width="*" />
+                    <DataGridTextColumn Header="Valor Prestado" Binding="{Binding LoanAmount, StringFormat=C0}" Width="Auto" />
+                    <DataGridTextColumn Header="Cuota" Binding="{Binding InstallmentAmount, StringFormat=C0}" Width="Auto" />
+                    <DataGridTextColumn Header="Deuda Actual" Binding="{Binding CurrentDebt, StringFormat=C0}" Width="Auto" />
+                    <DataGridTextColumn Header="Último Pago" Binding="{Binding LastPaymentDate, StringFormat=d}" Width="Auto" />
+                  </DataGrid.Columns>
+                  <DataGrid.Styles>
+                    <Style Selector="DataGridRow">
+                      <Setter Property="Cursor" Value="Hand" />
+                    </Style>
+                  </DataGrid.Styles>
+                </DataGrid>
+              </DockPanel>
+            </Border>
+          </Panel>
+        </DockPanel>
+      </Panel>
+    </DockPanel>
+
+    <!-- Create Loan View -->
+    <Border Classes="card" IsVisible="{Binding IsCreatingLoan}" Padding="24">      
+      <Border DataContext="{Binding CreateLoanForm}" x:DataType="vm:CreateLoanViewModel">
+      <DockPanel>
+        <Button DockPanel.Dock="Top" Content="← Volver" Command="{Binding $parent[UserControl].((vm:LoansViewModel)DataContext).GoBackCommand}"
+                HorizontalAlignment="Left" Margin="0,0,0,16"
+                Background="Transparent" Foreground="{StaticResource AccentBrush}" BorderThickness="0" Cursor="Hand" />
+
+        <ScrollViewer DockPanel.Dock="Top" VerticalScrollBarVisibility="Auto">
+          <StackPanel Spacing="24" MaxWidth="800" HorizontalAlignment="Center">
+            <TextBlock Text="Crear Nuevo Préstamo" FontSize="24" FontWeight="Bold"
+                       HorizontalAlignment="Center" Foreground="{StaticResource TextPrimaryBrush}" />
+
+            <Grid ColumnDefinitions="*,Auto,*" RowDefinitions="Auto">
+              <!-- Borrower section (left column) -->
+              <StackPanel Grid.Column="0" Spacing="12">
+                <TextBlock Text="Información del Tomador" FontSize="16" FontWeight="SemiBold"
+                           Foreground="{StaticResource TextPrimaryBrush}" />
+
+                <StackPanel Spacing="4">
+                  <TextBlock Text="Número de Identificación" FontSize="12" Foreground="{StaticResource TextSecondaryBrush}" />
+                  <TextBox Classes="form-input" Text="{Binding IdentificationNumber}"
+                           AutomationProperties.Name="Número de identificación" />
+                </StackPanel>
+
+                <StackPanel Spacing="4">
+                  <TextBlock Text="Nombres" FontSize="12" Foreground="{StaticResource TextSecondaryBrush}" />
+                  <TextBox Classes="form-input" Text="{Binding FirstName}" IsReadOnly="True"
+                           AutomationProperties.Name="Nombres" />
+                </StackPanel>
+
+                <StackPanel Spacing="4">
+                  <TextBlock Text="Apellidos" FontSize="12" Foreground="{StaticResource TextSecondaryBrush}" />
+                  <TextBox Classes="form-input" Text="{Binding LastName}" IsReadOnly="True"
+                           AutomationProperties.Name="Apellidos" />
+                </StackPanel>
+              </StackPanel>
+
+              <!-- Vertical separator -->
+              <Border Grid.Column="1" Width="1" Background="{StaticResource BorderBrush}"
+                      Margin="24,0" VerticalAlignment="Stretch" />
+
+              <!-- Loan section (right column) -->
+              <StackPanel Grid.Column="2" Spacing="12">
+                <TextBlock Text="Información del Préstamo" FontSize="16" FontWeight="SemiBold"
+                           Foreground="{StaticResource TextPrimaryBrush}" />
+
+                <StackPanel Spacing="4">
+                  <TextBlock Text="Monto del Préstamo" FontSize="12" Foreground="{StaticResource TextSecondaryBrush}" />
+                  <TextBox Classes="form-input" Text="{Binding LoanAmount}"
+                           ctrl:NumericInput.IsCurrency="True"
+                           AutomationProperties.Name="Monto del préstamo">
+                    <TextBox.KeyBindings>
+                      <KeyBinding Gesture="Enter" Command="{Binding SubmitCommand}" />
+                    </TextBox.KeyBindings>
+                  </TextBox>
+                </StackPanel>
+
+                <StackPanel Spacing="4">
+                  <TextBlock Text="Número de Cuotas Pactadas" FontSize="12" Foreground="{StaticResource TextSecondaryBrush}" />
+                  <TextBox Classes="form-input" Text="{Binding NumberOfInstallments}"
+                           ctrl:NumericInput.IsInteger="True"
+                           AutomationProperties.Name="Número de cuotas pactadas">
+                    <TextBox.KeyBindings>
+                      <KeyBinding Gesture="Enter" Command="{Binding SubmitCommand}" />
+                    </TextBox.KeyBindings>
+                  </TextBox>
+                </StackPanel>
+
+                <StackPanel Spacing="4">
+                  <TextBlock Text="Interés Anual (%)" FontSize="12" Foreground="{StaticResource TextSecondaryBrush}" />
+                  <TextBox Classes="form-input" Text="{Binding AnnualInterestRate}"
+                           ctrl:NumericInput.IsDecimal="True"
+                           AutomationProperties.Name="Interés anual">
+                    <TextBox.KeyBindings>
+                      <KeyBinding Gesture="Enter" Command="{Binding SubmitCommand}" />
+                    </TextBox.KeyBindings>
+                  </TextBox>
+                </StackPanel>
+
+                <StackPanel Spacing="4">
+                  <TextBlock Text="Interés Mensual (%)" FontSize="12" Foreground="{StaticResource TextSecondaryBrush}" />
+                  <TextBox Classes="form-input" Text="{Binding MonthlyInterestRate}"
+                           ctrl:NumericInput.IsDecimal="True"
+                           AutomationProperties.Name="Interés mensual">
+                    <TextBox.KeyBindings>
+                      <KeyBinding Gesture="Enter" Command="{Binding SubmitCommand}" />
+                    </TextBox.KeyBindings>
+                  </TextBox>
+                </StackPanel>
+
+                <StackPanel Spacing="4">
+                  <TextBlock Text="Monto de la Cuota Mensual" FontSize="12" Foreground="{StaticResource TextSecondaryBrush}" />
+                  <TextBox Classes="form-input" Text="{Binding MonthlyInstallmentAmount}"
+                           ctrl:NumericInput.IsCurrency="True"
+                           AutomationProperties.Name="Monto de la cuota mensual">
+                    <TextBox.KeyBindings>
+                      <KeyBinding Gesture="Enter" Command="{Binding SubmitCommand}" />
+                    </TextBox.KeyBindings>
+                  </TextBox>
+                </StackPanel>
+              </StackPanel>
+            </Grid>
+
+            <!-- Submit Button -->
+            <Button Classes="accent" Content="Registrar Préstamo" Command="{Binding SubmitCommand}"
+                    HorizontalAlignment="Center" Margin="0,12,0,0"
+                    AutomationProperties.Name="Registrar préstamo" />
+          </StackPanel>
+        </ScrollViewer>
+      </DockPanel>
+      </Border>
+    </Border>
+
+    <!-- Loan Detail View -->
+    <DockPanel IsVisible="{Binding IsShowingDetail}">
+      <Button DockPanel.Dock="Top" Content="← Volver" Command="{Binding GoBackCommand}"
+              HorizontalAlignment="Left" Margin="0,0,0,12"
+              Background="Transparent" Foreground="{StaticResource AccentBrush}" BorderThickness="0" Cursor="Hand" />
+
+      <!-- Loan Info Header -->
+      <Border DockPanel.Dock="Top" Classes="card" Margin="0,0,0,16"
+              DataContext="{Binding SelectedLoanDetail}" x:DataType="models:LoanDetail">
+        <StackPanel Spacing="12">
+          <!-- Row 1: Loan info -->
+          <UniformGrid Columns="6">
+            <StackPanel Margin="8,4" Spacing="2">
+              <TextBlock Text="N° Crédito" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}" />
+              <TextBlock Text="{Binding LoanNumber}" FontSize="14" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}" />
+            </StackPanel>
+            <StackPanel Margin="8,4" Spacing="2">
+              <TextBlock Text="Deudor" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}" />
+              <TextBlock Text="{Binding DebtorName}" FontSize="14" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}" />
+            </StackPanel>
+            <StackPanel Margin="8,4" Spacing="2">
+              <TextBlock Text="Identificación" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}" />
+              <TextBlock Text="{Binding DebtorIdentification}" FontSize="14" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}" />
+            </StackPanel>
+            <StackPanel Margin="8,4" Spacing="2">
+              <TextBlock Text="Monto Inicial" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}" />
+              <TextBlock Text="{Binding InitialAmount, StringFormat=C0}" FontSize="14" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}" />
+            </StackPanel>
+            <StackPanel Margin="8,4" Spacing="2">
+              <TextBlock Text="Fecha Desembolso" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}" />
+              <TextBlock Text="{Binding DisbursementDate, StringFormat=d}" FontSize="14" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}" />
+            </StackPanel>
+            <StackPanel Margin="8,4" Spacing="2">
+              <TextBlock Text="Plazo" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}" />
+              <TextBlock Text="{Binding TermMonths, StringFormat={}{0} meses}" FontSize="14" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}" />
+            </StackPanel>
+          </UniformGrid>
+          <!-- Row 2: Financial details -->
+          <UniformGrid Columns="6">
+            <StackPanel Margin="8,4" Spacing="2">
+              <TextBlock Text="Interés Anual" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}" />
+              <TextBlock Text="{Binding AnnualInterestRate, StringFormat={}{0}%}" FontSize="14" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}" />
+            </StackPanel>
+            <StackPanel Margin="8,4" Spacing="2">
+              <TextBlock Text="Interés Mensual" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}" />
+              <TextBlock Text="{Binding MonthlyInterestRate, StringFormat={}{0}%}" FontSize="14" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}" />
+            </StackPanel>
+            <StackPanel Margin="8,4" Spacing="2">
+              <TextBlock Text="Valor Cuota" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}" />
+              <TextBlock Text="{Binding InstallmentAmount, StringFormat=C0}" FontSize="14" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}" />
+            </StackPanel>
+            <StackPanel Margin="8,4" Spacing="2">
+              <TextBlock Text="Cuotas Pagas" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}" />
+              <TextBlock FontSize="14" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}">
+                <TextBlock.Text>
+                  <MultiBinding StringFormat="{}{0} / {1}">
+                    <Binding Path="PaidInstallments" />
+                    <Binding Path="TotalInstallments" />
+                  </MultiBinding>
+                </TextBlock.Text>
+              </TextBlock>
+            </StackPanel>
+            <StackPanel Margin="8,4" Spacing="2">
+              <TextBlock Text="Interés Pagado" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}" />
+              <TextBlock Text="{Binding TotalInterestPaid, StringFormat=C0}" FontSize="14" FontWeight="Bold" Foreground="{StaticResource SuccessBrush}" />
+            </StackPanel>
+            <StackPanel Margin="8,4" Spacing="2">
+              <TextBlock Text="Deuda Actual" FontSize="11" Foreground="{StaticResource TextSecondaryBrush}" />
+              <TextBlock Text="{Binding CurrentDebt, StringFormat=C0}" FontSize="14" FontWeight="Bold" Foreground="{StaticResource DangerBrush}" />
+            </StackPanel>
+          </UniformGrid>
+        </StackPanel>
+      </Border>
+
+      <!-- Payments Table -->
+      <Border Classes="card" DataContext="{Binding SelectedLoanDetail}" x:DataType="models:LoanDetail">
+        <DockPanel>
+          <TextBlock DockPanel.Dock="Top" Text="Historial de Pagos" FontSize="16" FontWeight="SemiBold"
+                     Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,12" />
+          <Button DockPanel.Dock="Bottom"
+                  Command="{Binding $parent[UserControl].((vm:LoansViewModel)DataContext).AddPaymentCommand}"
+                  Width="40" Height="40"
+                  Background="{StaticResource SuccessBrush}"
+                  Foreground="White"
+                  CornerRadius="20"
+                  Padding="0"
+                  HorizontalAlignment="Right"
+                  HorizontalContentAlignment="Center"
+                  VerticalContentAlignment="Center"
+                  FontSize="22"
+                  FontWeight="Bold"
+                  Cursor="Hand"
+                  Margin="0,12,0,0"
+                  ToolTip.Tip="Agregar pago"
+                  Content="+" />
+          <DataGrid ItemsSource="{Binding Payments}"
+                    AutoGenerateColumns="False"
+                    IsReadOnly="True"
+                    CanUserResizeColumns="True"
+                    GridLinesVisibility="Horizontal"
+                    BorderThickness="0">
+            <DataGrid.Columns>
+              <DataGridTextColumn Header="Fecha de Pago" Binding="{Binding PaymentDate, StringFormat=d}" Width="*" />
+              <DataGridTextColumn Header="Valor del Pago" Binding="{Binding PaymentAmount, StringFormat=C0}" Width="*" />
+              <DataGridTextColumn Header="Intereses Pagados" Binding="{Binding InterestPaid, StringFormat=C0}" Width="*" />
+              <DataGridTextColumn Header="Capital Abonado" Binding="{Binding PrincipalPaid, StringFormat=C0}" Width="*" />
+            </DataGrid.Columns>
+          </DataGrid>
+        </DockPanel>
+      </Border>
+    </DockPanel>
+  </Panel>
+</UserControl>

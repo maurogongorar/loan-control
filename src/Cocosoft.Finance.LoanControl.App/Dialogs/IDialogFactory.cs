@@ -1,5 +1,4 @@
-﻿using Cocosoft.Finance.LoanControl.Dal;
-using Cocosoft.Finance.LoanControl.Dal.Model.Entities;
+﻿using Cocosoft.Finance.LoanControl.Dal.Model.Entities;
 
 namespace Cocosoft.Finance.LoanControl.App.Dialogs;
 

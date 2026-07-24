@@ -1,16 +1,21 @@
-# Skill: Diseño de UI y Arquitectura Base en Avalonia (MVVM Nativo - .NET 10)
+---
+name: ui-avalonia-engineer
+description: Usa este skill para crear o modificar las vistas y sus comportamientos en el proyecto `src/Cocosoft.Finance.LoanControl.App.Avalonia/`. Es la base para mantener un diseño uniforme a lo largo de toda la aplicación, definiendo una paleta de colores y texturas que se debe tener en cuenta al momento de modificar el UI
+---
 
-## 1. Propósito y Alcance
+# Diseño de UI y Arquitectura Base en Avalonia (MVVM Nativo - .NET 10)
+
+## Propósito y Alcance
 
 Garantizar la consistencia visual, la reutilización de componentes y la separación estricta de responsabilidades en la interfaz de usuario (UI). Este documento define las reglas obligatorias de diseño visual, la identidad gráfica, el manejo de estilos y profundidad, y la jerarquía de vistas que debe seguir todo desarrollador o IA al crear ventanas, diálogos y componentes interactivos dentro del ecosistema Avalonia con MVVM nativo sobre .NET 10.
 
 ---
 
-## 2. Arquitectura de Vistas (Jerarquía de Ventanas)
+## Arquitectura de Vistas (Jerarquía de Ventanas)
 
 Avalonia soporta MVVM de forma nativa mediante `DataContext`, `Binding`, `ICommand` y `CommunityToolkit.Mvvm`. No se requiere un framework MVVM externo ni propietario.
 
-### 2.1 Enlace MVVM Nativo
+### Enlace MVVM Nativo
 
 **Responsabilidad**:
 
@@ -29,7 +34,7 @@ No se debe usar ningún framework MVVM propietario. Avalonia + CommunityToolkit.
 
 ---
 
-### 2.2 MainLayoutWindow (Ventana Principal con Layout Dashboard)
+### MainLayoutWindow (Ventana Principal con Layout Dashboard)
 
 **Responsabilidad**:
 
@@ -57,7 +62,7 @@ Proveer el layout maestro de la aplicación estilo Dashboard Moderno.
 
 ---
 
-### 2.3 BaseModalWindow (Ventana Modal Base)
+### BaseModalWindow (Ventana Modal Base)
 
 **Responsabilidad**:
 
@@ -74,81 +79,103 @@ Proveer una apariencia limpia, enmarcada y enfocada para ventanas emergentes.
 
 ---
 
-## 3. Identidad Visual (Design System) y Profundidad
+## Identidad Visual (Design System) y Profundidad
 
-La identidad visual está inspirada en la costa Caribe colombiana, transmitiendo confianza, profesionalismo y estabilidad financiera mediante una estética moderna y limpia.
+La identidad visual transmite confianza, profesionalismo y estabilidad financiera mediante una estética moderna, oscura y limpia inspirada en interfaces financieras contemporáneas.
 
 **Regla de Textura y Profundidad**: La interfaz debe adoptar un estilo Soft-UI / Glassmorphism sutil. Los controles deben poseer relieve mediante sutiles gradientes de fondo, sombras (`BoxShadow`) y bordes redondeados (`CornerRadius`), emulando capas físicas superpuestas.
 
 ---
 
-### 3.1 Paleta Institucional
+### Paleta Institucional
 
 | Token | Color | Hex | Uso |
 | ------ | ------ | ------ | ------ |
-| Primary | Azul Petróleo Caribe | #0F4C5C | Color institucional principal. Navegación, indicadores de gráficos, encabezados destacados. |
-| Secondary | Turquesa Caribe | #147D8A | Componentes interactivos, enlaces, iconografía de tarjetas secundarias y barras de progreso. |
-| Accent | Coral Suave | #E07A5F | Call To Action (CTA) especiales, indicadores importantes y pequeños elementos de énfasis (Uso moderado). |
-| Background | Arena Clara | #F7F3EE | Fondo general de la aplicación (ContentArea y ventanas base). |
-| Surface | Blanco | #FFFFFF | Tarjetas (Cards), paneles flotantes y contenedores de formularios. Deben poseer sombra difuminada. |
-| Text Primary | Cacao | #5A3E36 | Texto principal, cifras numéricas grandes y títulos. Sustituye al negro puro para aportar calidez. |
-| Text Secondary | Gris Neutro | #6B7280 | Texto descriptivo, ayudas visuales y etiquetas secundarias (Ej. "Duración", "Interés"). |
-| Border | Arena Oscura | #D6C9B8 | Bordes sutiles para inputs, separadores y líneas divisorias. |
+| Primary | Azul Naval Profundo | #1B2A4A | Color institucional principal. Navegación, header, encabezados destacados. |
+| PrimaryDark | Azul Naval Oscuro | #111D35 | Variante oscura para fondos profundos y estados pressed. |
+| PrimaryLight | Azul Naval Claro | #2A3F6A | Hover states en navegación y elementos interactivos sobre fondo oscuro. |
+| Accent | Azul Brillante | #3B82F6 | Botones activos, indicadores de selección, CTAs principales. |
+| AccentHover | Azul Brillante Claro | #60A5FA | Estado hover de elementos accent. |
+| SidebarBackground | Azul Noche | #0F1729 | Fondo del panel de navegación lateral. |
+| HeaderBackground | Azul Naval Profundo | #1B2A4A | Fondo de la barra superior (header/title bar). |
+| ContentBackground | Gris Hielo | #F1F5F9 | Fondo general del área de contenido. |
+| CardBackground | Blanco | #FFFFFF | Tarjetas (Cards), paneles flotantes y contenedores. Deben poseer sombra sutil. |
+| TextPrimary | Azul Tinta | #1E293B | Texto principal, cifras numéricas grandes y títulos. |
+| TextSecondary | Gris Pizarra | #64748B | Texto descriptivo, etiquetas secundarias y ayudas visuales. |
+| TextOnDark | Gris Claro | #E2E8F0 | Texto principal sobre fondos oscuros (sidebar, header). |
+| TextOnDarkMuted | Gris Azulado | #94A3B8 | Texto secundario sobre fondos oscuros. |
+| Border | Gris Hielo | #E2E8F0 | Bordes sutiles para cards, inputs y separadores. |
+| BorderDark | Azul Profundo | #1E3A5F | Bordes sobre fondos oscuros (separadores en sidebar). |
 
-### 3.2 Colores Semánticos
+### Colores Semánticos
 
 Los estados del sistema deben utilizar colores universalmente reconocidos y no deben mezclarse con los colores institucionales.
 
 | Token | Color | Hex |
 | ------ | ------ | ------ |
-| Success | Verde | #2E8B57 |
+| Success | Verde | #22C55E |
 | Warning | Ámbar | #F59E0B |
-| Error | Rojo | #E11D48 |
-| Information | Azul | #3B82F6 |
+| Danger | Rojo | #EF4444 |
 
 Estos colores únicamente representan estados del sistema. Nunca deben reemplazar los colores institucionales.
 
 ---
 
-## 4. Sistema de Estilos y Recursos (AXAML)
+## Sistema de Estilos y Recursos (AXAML)
 
 Los estilos deben definirse como recursos globales en `App.axaml` o en archivos de recursos separados (`Styles/`) e importados mediante `StyleInclude`.
 
-### 4.1 Definición de Recursos de Color
+### Definición de Recursos de Color
 
 ```xml
 <Application.Resources>
   <ResourceDictionary>
 	<!-- Paleta Institucional -->
-	<Color x:Key="PrimaryColor">#0F4C5C</Color>
-	<Color x:Key="SecondaryColor">#147D8A</Color>
-	<Color x:Key="AccentColor">#E07A5F</Color>
-	<Color x:Key="BackgroundColor">#F7F3EE</Color>
-	<Color x:Key="SurfaceColor">#FFFFFF</Color>
-	<Color x:Key="TextPrimaryColor">#5A3E36</Color>
-	<Color x:Key="TextSecondaryColor">#6B7280</Color>
-	<Color x:Key="BorderColor">#D6C9B8</Color>
+	<Color x:Key="PrimaryColor">#1B2A4A</Color>
+	<Color x:Key="PrimaryDarkColor">#111D35</Color>
+	<Color x:Key="PrimaryLightColor">#2A3F6A</Color>
+	<Color x:Key="AccentColor">#3B82F6</Color>
+	<Color x:Key="AccentHoverColor">#60A5FA</Color>
+	<Color x:Key="SidebarBackgroundColor">#0F1729</Color>
+	<Color x:Key="HeaderBackgroundColor">#1B2A4A</Color>
+	<Color x:Key="ContentBackgroundColor">#F1F5F9</Color>
+	<Color x:Key="CardBackgroundColor">#FFFFFF</Color>
+	<Color x:Key="TextPrimaryColor">#1E293B</Color>
+	<Color x:Key="TextSecondaryColor">#64748B</Color>
+	<Color x:Key="TextOnDarkColor">#E2E8F0</Color>
+	<Color x:Key="TextOnDarkMutedColor">#94A3B8</Color>
+	<Color x:Key="BorderColor">#E2E8F0</Color>
+	<Color x:Key="BorderDarkColor">#1E3A5F</Color>
 
 	<!-- Colores Semánticos -->
-	<Color x:Key="SuccessColor">#2E8B57</Color>
+	<Color x:Key="SuccessColor">#22C55E</Color>
 	<Color x:Key="WarningColor">#F59E0B</Color>
-	<Color x:Key="ErrorColor">#E11D48</Color>
-	<Color x:Key="InformationColor">#3B82F6</Color>
+	<Color x:Key="DangerColor">#EF4444</Color>
 
 	<!-- Brushes -->
 	<SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource PrimaryColor}" />
-	<SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource SecondaryColor}" />
+	<SolidColorBrush x:Key="PrimaryDarkBrush" Color="{StaticResource PrimaryDarkColor}" />
+	<SolidColorBrush x:Key="PrimaryLightBrush" Color="{StaticResource PrimaryLightColor}" />
 	<SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}" />
-	<SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource BackgroundColor}" />
-	<SolidColorBrush x:Key="SurfaceBrush" Color="{StaticResource SurfaceColor}" />
+	<SolidColorBrush x:Key="AccentHoverBrush" Color="{StaticResource AccentHoverColor}" />
+	<SolidColorBrush x:Key="SidebarBackgroundBrush" Color="{StaticResource SidebarBackgroundColor}" />
+	<SolidColorBrush x:Key="HeaderBackgroundBrush" Color="{StaticResource HeaderBackgroundColor}" />
+	<SolidColorBrush x:Key="ContentBackgroundBrush" Color="{StaticResource ContentBackgroundColor}" />
+	<SolidColorBrush x:Key="CardBackgroundBrush" Color="{StaticResource CardBackgroundColor}" />
 	<SolidColorBrush x:Key="TextPrimaryBrush" Color="{StaticResource TextPrimaryColor}" />
 	<SolidColorBrush x:Key="TextSecondaryBrush" Color="{StaticResource TextSecondaryColor}" />
+	<SolidColorBrush x:Key="TextOnDarkBrush" Color="{StaticResource TextOnDarkColor}" />
+	<SolidColorBrush x:Key="TextOnDarkMutedBrush" Color="{StaticResource TextOnDarkMutedColor}" />
 	<SolidColorBrush x:Key="BorderBrush" Color="{StaticResource BorderColor}" />
+	<SolidColorBrush x:Key="BorderDarkBrush" Color="{StaticResource BorderDarkColor}" />
+	<SolidColorBrush x:Key="SuccessBrush" Color="{StaticResource SuccessColor}" />
+	<SolidColorBrush x:Key="WarningBrush" Color="{StaticResource WarningColor}" />
+	<SolidColorBrush x:Key="DangerBrush" Color="{StaticResource DangerColor}" />
   </ResourceDictionary>
 </Application.Resources>
 ```
 
-### 4.2 Tarjetas (Cards)
+### Tarjetas (Cards)
 
 Todo contenedor de información debe renderizarse siguiendo este estándar mediante estilos de Avalonia:
 
@@ -168,7 +195,7 @@ Todo contenedor de información debe renderizarse siguiendo este estándar media
   - Texto descriptivo en color Text Secondary.
   - Valor numérico principal destacado en tamaño grande (24pt a 28pt) en color Text Primary.
 
-### 4.3 Indicadores Gráficos (Gauges y Barras de Score)
+### Indicadores Gráficos (Gauges y Barras de Score)
 
 Las visualizaciones de datos deben renderizarse utilizando el sistema de dibujo de Avalonia:
 
@@ -177,7 +204,7 @@ Las visualizaciones de datos deben renderizarse utilizando el sistema de dibujo 
 - **Canal base**: Color Arena Oscura muy tenue (#EADFCF).
 - **Progreso**: Renderizado con `LinearGradientBrush` que transicione de Turquesa Caribe (#147D8A) a Azul Petróleo Caribe (#0F4C5C).
 
-### 4.4 Botones
+### Botones
 
 ```xml
 <Style Selector="Button.primary">
@@ -221,7 +248,7 @@ Las visualizaciones de datos deben renderizarse utilizando el sistema de dibujo 
 </Style>
 ```
 
-### 4.5 Inputs (TextBox)
+### Inputs (TextBox)
 
 ```xml
 <Style Selector="TextBox.form-input">
@@ -240,7 +267,7 @@ Las visualizaciones de datos deben renderizarse utilizando el sistema de dibujo 
 </Style>
 ```
 
-### 4.6 Panel de Navegación
+### Panel de Navegación
 
 ```xml
 <Style Selector="Border.navigation-panel">
@@ -269,7 +296,7 @@ Las visualizaciones de datos deben renderizarse utilizando el sistema de dibujo 
 
 ---
 
-## 5. Tipografía
+## Tipografía
 
 | Rol | Familia | Tamaño | Peso | Color |
 | ------ | ------ | ------ | ------ | ------ |
@@ -281,7 +308,7 @@ Las visualizaciones de datos deben renderizarse utilizando el sistema de dibujo 
 
 ---
 
-## 6. Navegación y Transiciones
+## Navegación y Transiciones
 
 Avalonia soporta animaciones nativas. Las transiciones entre vistas dentro del `ContentControl` deben implementarse con `PageSlide` o `CrossFade`:
 
@@ -295,7 +322,7 @@ Avalonia soporta animaciones nativas. Las transiciones entre vistas dentro del `
 
 ---
 
-## 7. Estructura de Proyecto Recomendada
+## Estructura de Proyecto Recomendada
 
 ```text
 Project.App.Avalonia/
@@ -305,9 +332,9 @@ Project.App.Avalonia/
 ├── Views/
 │   ├── MainWindow.axaml         # Layout principal (Dashboard)
 │   ├── MainWindow.axaml.cs
-│   ├── Controls/                # UserControls reutilizables
-│   │   ├── CardControl.axaml
-│   │   └── ScoreGauge.axaml
+│   ├── Charts/                # UserControls reutilizables
+│   │   ├── GaugeChart.axaml
+│   │   └── PieChart.axaml
 │   └── Pages/                   # Páginas/Vistas de contenido
 │       ├── DashboardView.axaml
 │       └── LoansView.axaml
@@ -328,7 +355,7 @@ Project.App.Avalonia/
 
 ---
 
-## 8. Reglas de Implementación
+## Reglas de Implementación
 
 1. **No usar code-behind para lógica de negocio**: El `.axaml.cs` solo debe contener inicialización del componente y navegación mínima que no pueda resolverse con bindings.
 2. **Preferir CompiledBindings**: Usar `x:DataType` para habilitar compiled bindings y detectar errores en compilación.

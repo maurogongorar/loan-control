@@ -6,10 +6,22 @@ using System.Windows.Input;
 
 namespace Cocosoft.Framework.Mvvm;
 
+/// <summary>
+/// The <see cref="MvvmForm{TViewModel}"/> class is a base class for Windows Forms that follows the MVVM pattern.
+/// </summary>
+/// <typeparam name="TViewModel">The type of the view model.</typeparam>
+/// <seealso cref="System.Windows.Forms.Form" />
 public abstract class MvvmForm<TViewModel> : Form where TViewModel : ViewModelBase
 {
+    /// <summary>
+    /// Gets the view model associated with this form.
+    /// </summary>
     public TViewModel ViewModel { get; }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="MvvmForm{TViewModel}"/> class.
+    /// </summary>
+    /// <param name="viewModel">The view model to associate with this form.</param>
     public MvvmForm(TViewModel viewModel)
     {
         this.ViewModel = viewModel;

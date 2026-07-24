@@ -14,6 +14,14 @@ namespace Cocosoft.Finance.LoanControl.App.Avalonia;
     Url = "https://docs.avaloniaui.net/docs/concepts/view-locator")]
 public class ViewLocator : IDataTemplate
 {
+    /// <summary>
+    /// Creates the view control that corresponds to the given view model instance.
+    /// </summary>
+    /// <param name="param">The view model instance to resolve a view for.</param>
+    /// <returns>
+    /// The matching <see cref="Control"/>, or a <see cref="TextBlock"/> with an error message
+    /// if no matching view type is found.
+    /// </returns>
     public Control? Build(object? param)
     {
         if (param is null)
@@ -32,6 +40,13 @@ public class ViewLocator : IDataTemplate
         return new TextBlock { Text = "Not Found: " + name };
     }
 
+    /// <summary>
+    /// Determines whether this data template can handle the specified data object.
+    /// </summary>
+    /// <param name="data">The data object to evaluate.</param>
+    /// <returns>
+    /// <see langword="true"/> if the data object is a <see cref="ViewModelBase"/>; otherwise, <see langword="false"/>.
+    /// </returns>
     public bool Match(object? data)
     {
         return data is ViewModelBase;
