@@ -1,12 +1,12 @@
-using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Cocosoft.Finance.LoanControl.App.Avalonia.Views.Dialogs;
+using System.Threading.Tasks;
 
 namespace Cocosoft.Finance.LoanControl.App.Avalonia.Services;
 
 /// <summary>
-/// Provides dialog functionality by displaying Avalonia modal windows.
+/// Provides dialog functionality by displaying Avalonia modal windows. 
 /// </summary>
 /// <seealso cref="IDialogService" />
 public sealed class DialogService : IDialogService

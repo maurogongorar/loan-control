@@ -9,13 +9,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocosoft.Finance.LoanContro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocosoft.Finance.LoanControl.Core", "Cocosoft.Finance.LoanControl.Core\Cocosoft.Finance.LoanControl.Core.csproj", "{54FF7A5C-68FE-47B5-A676-8D5AB0FF4EC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocosoft.Finance.LoanControl.Core.Tests", "Cocosoft.Finance.LoanControl.Core.Tests\Cocosoft.Finance.LoanControl.Core.Tests.csproj", "{C8EF0821-6702-4FFC-AC28-859C0CECC14C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocosoft.Finance.LoanControl.Tests", "Cocosoft.Finance.LoanControl.Core.Tests\Cocosoft.Finance.LoanControl.Tests.csproj", "{C8EF0821-6702-4FFC-AC28-859C0CECC14C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocosoft.Framework.Mvvm", "Cocosoft.Framework.Mvvm\Cocosoft.Framework.Mvvm.csproj", "{EBDBFF27-693E-493E-B821-5F3BCD8435C5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocosoft.Framework.LoanControl.UI", "Cocosoft.Framework.LoanControl.UI\Cocosoft.Framework.LoanControl.UI.csproj", "{370CBC60-EB53-4990-8522-5BFDFB17182E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocosoft.Finance.LoanControl.App.Avalonia", "Cocosoft.Finance.LoanControl.App.Avalonia\Cocosoft.Finance.LoanControl.App.Avalonia.csproj", "{F9482322-7BAE-44AF-AADC-8F5D8AD59E89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cocosoft.Finance.LoanControl.Domain", "Cocosoft.Finance.LoanControl.Domain\Cocosoft.Finance.LoanControl.Domain.csproj", "{F100BD41-AA77-4986-9CD6-68C34F92C73C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -111,6 +113,18 @@ Global
 		{F9482322-7BAE-44AF-AADC-8F5D8AD59E89}.Release|x64.Build.0 = Release|Any CPU
 		{F9482322-7BAE-44AF-AADC-8F5D8AD59E89}.Release|x86.ActiveCfg = Release|Any CPU
 		{F9482322-7BAE-44AF-AADC-8F5D8AD59E89}.Release|x86.Build.0 = Release|Any CPU
+		{F100BD41-AA77-4986-9CD6-68C34F92C73C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F100BD41-AA77-4986-9CD6-68C34F92C73C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F100BD41-AA77-4986-9CD6-68C34F92C73C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F100BD41-AA77-4986-9CD6-68C34F92C73C}.Debug|x64.Build.0 = Debug|Any CPU
+		{F100BD41-AA77-4986-9CD6-68C34F92C73C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F100BD41-AA77-4986-9CD6-68C34F92C73C}.Debug|x86.Build.0 = Debug|Any CPU
+		{F100BD41-AA77-4986-9CD6-68C34F92C73C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F100BD41-AA77-4986-9CD6-68C34F92C73C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F100BD41-AA77-4986-9CD6-68C34F92C73C}.Release|x64.ActiveCfg = Release|Any CPU
+		{F100BD41-AA77-4986-9CD6-68C34F92C73C}.Release|x64.Build.0 = Release|Any CPU
+		{F100BD41-AA77-4986-9CD6-68C34F92C73C}.Release|x86.ActiveCfg = Release|Any CPU
+		{F100BD41-AA77-4986-9CD6-68C34F92C73C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

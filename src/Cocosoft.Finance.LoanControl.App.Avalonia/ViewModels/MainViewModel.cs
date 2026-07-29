@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Cocosoft.Finance.LoanControl.App.Avalonia.ViewModels;
 
@@ -85,6 +86,7 @@ public partial class MainViewModel : ViewModelBase
     /// </summary>
     /// <param name="dashboard">The dashboard view model.</param>
     /// <param name="loans">The loans view model.</param>
+    [ActivatorUtilitiesConstructor]
     public MainViewModel(
         DashboardViewModel dashboard,
         LoansViewModel loans)

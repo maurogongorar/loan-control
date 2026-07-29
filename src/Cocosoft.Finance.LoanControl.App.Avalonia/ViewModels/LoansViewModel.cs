@@ -1,7 +1,8 @@
-using Cocosoft.Finance.LoanControl.App.Avalonia.Models;
 using Cocosoft.Finance.LoanControl.App.Avalonia.Services;
+using Cocosoft.Finance.LoanControl.Domain.Loans;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
@@ -62,7 +63,7 @@ public partial class LoansViewModel : ViewModelBase
     /// Gets or sets the currently selected loan detail.
     /// </summary>
     [ObservableProperty]
-    public partial LoanDetail? SelectedLoanDetail { get; set; }
+    public partial LoanDto? SelectedLoanDetail { get; set; }
 
     /// <summary>
     /// Gets or sets the currently selected search result. Setting a non-null value
@@ -102,7 +103,7 @@ public partial class LoansViewModel : ViewModelBase
     /// Initializes a new instance of the <see cref="LoansViewModel"/> class
     /// using a default <see cref="DialogService"/> (design-time support).
     /// </summary>
-    public LoansViewModel() : this(new DialogService())
+    public LoansViewModel() : this(new DialogService(), new CreateLoanViewModel())
     {
     }
 
@@ -110,10 +111,12 @@ public partial class LoansViewModel : ViewModelBase
     /// Initializes a new instance of the <see cref="LoansViewModel"/> class.
     /// </summary>
     /// <param name="dialogService">The dialog service used for confirmation prompts.</param>
-    public LoansViewModel(IDialogService dialogService)
+    /// <param name="createLoanForm">The view model for the create-loan form.</param>
+    [ActivatorUtilitiesConstructor]
+    public LoansViewModel(IDialogService dialogService, CreateLoanViewModel createLoanForm)
     {
         this._dialogService = dialogService;
-        this.CreateLoanForm = new CreateLoanViewModel(dialogService);
+        this.CreateLoanForm = createLoanForm;
         this.CreateLoanForm.LoanCreated += this.OnLoanCreated;
     }
 
@@ -212,7 +215,7 @@ public partial class LoansViewModel : ViewModelBase
             return;
         }
 
-        this.SelectedLoanDetail = new LoanDetail
+        this.SelectedLoanDetail = new LoanDto
         {
             LoanNumber = loan.LoanNumber,
             DebtorName = loan.DebtorName,
@@ -227,7 +230,7 @@ public partial class LoansViewModel : ViewModelBase
             TotalInstallments = 12,
             TotalInterestPaid = 2_065m,
             CurrentDebt = loan.CurrentDebt,
-            Payments = new ObservableCollection<LoanPayment>
+            Payments = new ObservableCollection<PaymentDto>
             {
                 new()
                 {

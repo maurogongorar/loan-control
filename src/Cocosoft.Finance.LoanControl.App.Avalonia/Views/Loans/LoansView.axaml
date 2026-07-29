@@ -1,7 +1,7 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="using:Cocosoft.Finance.LoanControl.App.Avalonia.ViewModels"
-             xmlns:models="using:Cocosoft.Finance.LoanControl.App.Avalonia.Models"
+             xmlns:models="using:Cocosoft.Finance.LoanControl.Domain.Loans"
              xmlns:ctrl="using:Cocosoft.Finance.LoanControl.App.Avalonia.Controls"
              x:Class="Cocosoft.Finance.LoanControl.App.Avalonia.Views.LoansView"
              x:DataType="vm:LoansViewModel">
@@ -242,7 +242,7 @@
 
       <!-- Loan Info Header -->
       <Border DockPanel.Dock="Top" Classes="card" Margin="0,0,0,16"
-              DataContext="{Binding SelectedLoanDetail}" x:DataType="models:LoanDetail">
+              DataContext="{Binding SelectedLoanDetail}" x:DataType="models:LoanDto">
         <StackPanel Spacing="12">
           <!-- Row 1: Loan info -->
           <UniformGrid Columns="6">
@@ -309,7 +309,7 @@
       </Border>
 
       <!-- Payments Table -->
-      <Border Classes="card" DataContext="{Binding SelectedLoanDetail}" x:DataType="models:LoanDetail">
+      <Border Classes="card" DataContext="{Binding SelectedLoanDetail}" x:DataType="models:LoanDto">
         <DockPanel>
           <TextBlock DockPanel.Dock="Top" Text="Historial de Pagos" FontSize="16" FontWeight="SemiBold"
                      Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,12" />

@@ -1,4 +1,4 @@
-using Cocosoft.Finance.LoanControl.App.Dialogs;
+using Cocosoft.Finance.LoanControl.App.Views.Dialogs;
 using Cocosoft.Finance.LoanControl.Core.Resources;
 using Cocosoft.Finance.LoanControl.Dal;
 using Cocosoft.Finance.LoanControl.Dal.Model.Entities;

@@ -1,5 +1,6 @@
 ﻿using Cocosoft.Finance.LoanControl.App.Dialogs;
-using Cocosoft.Finance.LoanControl.Core.ViewModels;
+using Cocosoft.Finance.LoanControl.App.ViewModels;
+using Cocosoft.Finance.LoanControl.App.Views.Dialogs;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Cocosoft.Finance.LoanControl.App.Extensions;

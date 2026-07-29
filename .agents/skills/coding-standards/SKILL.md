@@ -1,8 +1,8 @@
 ---
 name: coding-standards
-description: Usa este skill para garantizar la uniformidad, legibilidad y mantenibilidad del código fuente C# en todo el proyecto. Este documento define las reglas obligatorias de estilo, estructura y convenciones de nombres que debe seguir todo desarrollador o IA al escribir, modificar o revisar código dentro del ecosistema .NET 10.
+description: Usa este skill para garantizar las buenas prácticas, la uniformidad, legibilidad y mantenibilidad del código fuente C# en todo el proyecto. Este documento define las reglas obligatorias de estilo, estructura y convenciones de nombres que debe seguir todo desarrollador o IA al escribir, modificar o revisar código dentro del ecosistema .NET 10.
 metadata:
-  short-description: estándar de codificación para manetener uniformidad en todo el código y evitar code smells
+  short-description: estándar de codificación para manetener buenas prácticas y uniformidad en todo el código y evitar code smells y código de mala calidad.
 ---
 
 # Estándares de Código C# (.NET 10)
@@ -10,6 +10,163 @@ metadata:
 ## Propósito y Alcance
 
 Garantizar la uniformidad, legibilidad y mantenibilidad del código fuente C# en todo el proyecto. Este documento define las reglas obligatorias de estilo, estructura y convenciones de nombres que debe seguir todo desarrollador o IA al escribir, modificar o revisar código dentro del ecosistema .NET 10.
+
+---
+
+## Principios y patrones
+
+Todo el proyecto debe cumplir con una serie de principios de desarrollo y patrones de software definidos.
+
+### Prinsipios SOLID
+
+**Siempre** se debe desarrollar siguiendo los 5 principios SOLID:
+
+1. **Single responsability**: Principio de Responsabilidad Única. Cada clase u objeto debe tener una sola tarea y una única razón para cambiar.
+2. **Open/Closed**: Principio de Abierto/Cerrado. Las entidades (clases, funciones) deben estar abiertas para su extensión, pero cerradas para su modificación.
+3. **Liskov substitution**: Principio de Sustitución de Liskov. Las subclases deben poder reemplazar a sus clases padre sin alterar el funcionamiento del programa.
+4. **Interface segregation**: Principio de Segregación de Interfaces. Es mejor tener muchas interfaces específicas que una sola de propósito general. Ningún componente debe depender de métodos que no usa.
+5. **Dependency inversion**: Principio de Inversión de Dependencia. Los módulos de alto nivel no deben depender de los de bajo nivel. Ambos deben depender de abstracciones (interfaces)
+
+### Patron de inyección de dependencias DI
+
+**Siempre** se debe seguir el patron de inyeccion de dependencias, para esto se debe usar el framework `Microsoft.Extensions.DependencyInjection` aprovechando las interfaces `IServiceCollection` e `IServiceProvider`.
+Bajo ninguna circunstancia un objeto puede instanciar una dependencia por si solo, si es encesario, se debe implementar un patrón de _Fatory_
+
+**Correcto**:
+```csharp
+public partial class App : Application
+{
+    public override void OnFrameworkInitializationCompleted()
+	{
+	    var services = new ServiceCollection();
+		
+		// other services were added...
+		
+		// adds the services IRepository and ILoanService
+        services.AddSingleton<IRepository, Repository>()
+		    .AddSingleton<ILoanService, LoanService>();
+		
+		var provider = services.BuildServiceProvider();
+
+        desktop.MainWindow = new MainWindow
+        {
+            DataContext = provider.GetRequiredService<MainViewModel>(),
+        };
+	}
+}
+
+// injects the dependency IRepository
+public partial class LoanService(IRepository repository) : ILoanService
+{
+    public async Task<IEnumerable<LoanDetail?>> GetLoanById(int loanId)
+        => await repository.Set<Loan>().FirstOrDefaultAsync(l => l.Id == loanId);
+}
+```
+
+**Incorrecto**:
+```csharp
+public partial class App : Application
+{
+    public override void OnFrameworkInitializationCompleted()
+	{
+	    var services = new ServiceCollection();
+		
+		// other services were added...
+		
+		// the services IRepository neither ILoanService were added to the service collection
+		
+		var provider = services.BuildServiceProvider();
+
+        desktop.MainWindow = new MainWindow
+        {
+            DataContext = provider.GetRequiredService<MainViewModel>(),
+        };
+	}
+}
+
+public partial class LoanService : ILoanService
+{
+    // wrong: Instantiates the IRepository service
+    private readonly IRepository _repository = new Repository();
+	
+    public async Task<IEnumerable<LoanDetail?>> GetLoanById(int loanId)
+        => await this._repository.Set<Loan>().FirstOrDefaultAsync(l => l.Id == loanId);
+}
+```
+
+**Excepciones**:
+- Los view models tienen excepcion, puesto que para que el previsualizador de avalonia funcione se requiere tener constructores sin parámetros en los view models,
+  por lo tanto se debe implementar un constructor sin parámetros que cree los parámetros necesarios y llame al constructor real.
+  Se debe agregar el decorador `ActivatorUtilitiesConstructor` al constructor real, es decir, el que recibe las dependencias inyectadas.
+  Es una buena practica agregar un break point al constructor sin parametros para validar que no se este usando en tiempo de ejecucion durante la depuración.
+
+```csharp
+[ActivatorUtilitiesConstructor]
+public partial class CreateLoanViewModel(IDialogService dialogService) : ViewModelBase
+{
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CreateLoanViewModel"/> class
+    /// using a default <see cref="DialogService"/> (design-time support).
+    /// </summary>
+    public CreateLoanViewModel() : this(new DialogService())
+    {
+    }
+}
+```
+
+- Los objetos tipo factory tambien tienen esta excepción. En lo posible se debe usar IServiceProvider para obtener cualquier servicio, pero en caso que no sea posible, se puede instanciar manualmente un objeto.
+
+```csharp
+public partial class App : Application
+{
+    public override void OnFrameworkInitializationCompleted()
+	{
+	    var services = new ServiceCollection();
+		// other services were added...
+		
+		// adds the service IDialogFactory and the view AboutDialog
+		services.AddSingleton<AboutDialog>();
+		services.AddSingleton<IDialogFactory, DialogFactory>();
+		
+		var provider = services.BuildServiceProvider();
+
+        desktop.MainWindow = new MainWindow
+        {
+            DataContext = provider.GetRequiredService<MainViewModel>(),
+        };
+	}
+}
+
+// This is not properly a factory, but it needs to creade a new view, acting as a factory.
+public sealed class DialogService() : IDialogService
+{
+    public async Task<bool> ShowConfirmationAsync(string title, string message)
+    {
+	    // ConfirmationDialog needs a title and a message in its constructor so it cannot be configured in the DI engine
+        var dialog = new ConfirmationDialog(title, message);
+
+        if (Application.Current?.ApplicationLifetime
+            is IClassicDesktopStyleApplicationLifetime desktop
+            && desktop.MainWindow is not null)
+        {
+            await dialog.ShowDialog(desktop.MainWindow);
+        }
+
+        return dialog.Result;
+    }
+}
+
+public partial class AboutDialog : Window
+{
+    // Some code implementation...
+}
+
+public class DialogFactory(IServiceProvider provider) : IDialogFactory
+{
+    // AboutDialog can be get from the service provider, so, it should be implemented in this way
+    public IDialogView CreateAboutDialog() => provider.GetRequiredService<AboutDialog>();
+}
+```
 
 ---
 
@@ -33,6 +190,97 @@ if (condition)
 ```csharp
 if (condition)
 	DoSomething();
+```
+
+### Constructores
+
+En lo posible usar constructores primarios. Además, si no es necesario asignar los parámetros del constructor primario a un campo, no hacerlo y usar el mismo parámetro.
+
+**Correcto**:
+```csharp
+public partial class CreateLoanViewModel(IDialogService dialogService) : ViewModelBase
+{
+    [RelayCommand]
+    private async Task SubmitAsync()
+    {
+        var summary = $"Identificaci\u00f3n: {this.IdentificationNumber}\n"
+            + $"Nombres: {this.FirstName}\n"
+            + $"Apellidos: {this.LastName}\n"
+            + $"Monto: {this.LoanAmount}\n"
+            + $"Cuotas: {this.NumberOfInstallments}\n"
+            + $"Inter\u00e9s Anual: {this.AnnualInterestRate}%\n"
+            + $"Inter\u00e9s Mensual: {this.MonthlyInterestRate}%\n"
+            + $"Cuota Mensual: {this.MonthlyInstallmentAmount}";
+    
+        var confirmed = await dialogService.ShowConfirmationAsync(
+            "Confirmar Pr\u00e9stamo", summary);
+    
+        if (confirmed)
+        {
+            this.OnLoanCreated();
+        }
+    }
+}
+```
+
+**Incorrecto**:
+```csharp
+public partial class CreateLoanViewModel(IDialogService dialogService) : ViewModelBase
+{
+    private readonly IDialogService _dialogService = dialogService;
+	
+    [RelayCommand]
+    private async Task SubmitAsync()
+    {
+        var summary = $"Identificaci\u00f3n: {this.IdentificationNumber}\n"
+            + $"Nombres: {this.FirstName}\n"
+            + $"Apellidos: {this.LastName}\n"
+            + $"Monto: {this.LoanAmount}\n"
+            + $"Cuotas: {this.NumberOfInstallments}\n"
+            + $"Inter\u00e9s Anual: {this.AnnualInterestRate}%\n"
+            + $"Inter\u00e9s Mensual: {this.MonthlyInterestRate}%\n"
+            + $"Cuota Mensual: {this.MonthlyInstallmentAmount}";
+    
+        var confirmed = await this._dialogService.ShowConfirmationAsync(
+            "Confirmar Pr\u00e9stamo", summary);
+    
+        if (confirmed)
+        {
+            this.OnLoanCreated();
+        }
+    }
+}
+
+public partial class CreateLoanViewModel : ViewModelBase
+{
+    private readonly IDialogService _dialogService;
+	
+	public CreateLoanViewModel(IDialogService dialogService)
+	{
+	    this._dialogService = dialogService;
+    }
+	
+    [RelayCommand]
+    private async Task SubmitAsync()
+    {
+        var summary = $"Identificaci\u00f3n: {this.IdentificationNumber}\n"
+            + $"Nombres: {this.FirstName}\n"
+            + $"Apellidos: {this.LastName}\n"
+            + $"Monto: {this.LoanAmount}\n"
+            + $"Cuotas: {this.NumberOfInstallments}\n"
+            + $"Inter\u00e9s Anual: {this.AnnualInterestRate}%\n"
+            + $"Inter\u00e9s Mensual: {this.MonthlyInterestRate}%\n"
+            + $"Cuota Mensual: {this.MonthlyInstallmentAmount}";
+    
+        var confirmed = await this._dialogService.ShowConfirmationAsync(
+            "Confirmar Pr\u00e9stamo", summary);
+    
+        if (confirmed)
+        {
+            this.OnLoanCreated();
+        }
+    }
+}
 ```
 
 ---
@@ -72,6 +320,8 @@ public class LoanService
 	public decimal InterestRate { get; set; }
 
 	public string Name { get; set; }
+	
+	public event EventHandler? OnPropertyChanged;
 
 	public LoanService(ILoanRepository loanRepository, INotificationService notificationService)
 	{

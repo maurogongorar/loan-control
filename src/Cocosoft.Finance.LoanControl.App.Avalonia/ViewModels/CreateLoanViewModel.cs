@@ -1,8 +1,9 @@
-using System;
-using System.Threading.Tasks;
 using Cocosoft.Finance.LoanControl.App.Avalonia.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Threading.Tasks;
 
 namespace Cocosoft.Finance.LoanControl.App.Avalonia.ViewModels;
 
@@ -15,10 +16,9 @@ namespace Cocosoft.Finance.LoanControl.App.Avalonia.ViewModels;
 /// Initializes a new instance of the <see cref="CreateLoanViewModel"/> class.
 /// </remarks>
 /// <param name="dialogService">The dialog service used for confirmation prompts.</param>
+[ActivatorUtilitiesConstructor]
 public partial class CreateLoanViewModel(IDialogService dialogService) : ViewModelBase
 {
-    private readonly IDialogService _dialogService = dialogService;
-
     /// <summary>
     /// Gets or sets the annual interest rate entered by the user.
     /// </summary>
@@ -120,7 +120,7 @@ public partial class CreateLoanViewModel(IDialogService dialogService) : ViewMod
             + $"Inter\u00e9s Mensual: {this.MonthlyInterestRate}%\n"
             + $"Cuota Mensual: {this.MonthlyInstallmentAmount}";
 
-        var confirmed = await this._dialogService.ShowConfirmationAsync(
+        var confirmed = await dialogService.ShowConfirmationAsync(
             "Confirmar Pr\u00e9stamo", summary);
 
         if (confirmed)
