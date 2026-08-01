@@ -1,7 +1,6 @@
 using Cocosoft.Finance.LoanControl.App.Avalonia.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
 
@@ -16,7 +15,6 @@ namespace Cocosoft.Finance.LoanControl.App.Avalonia.ViewModels;
 /// Initializes a new instance of the <see cref="CreateLoanViewModel"/> class.
 /// </remarks>
 /// <param name="dialogService">The dialog service used for confirmation prompts.</param>
-[ActivatorUtilitiesConstructor]
 public partial class CreateLoanViewModel(IDialogService dialogService) : ViewModelBase
 {
     /// <summary>
@@ -84,14 +82,6 @@ public partial class CreateLoanViewModel(IDialogService dialogService) : ViewMod
     /// Occurs when a loan has been successfully created after user confirmation.
     /// </summary>
     public event Action? LoanCreated;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="CreateLoanViewModel"/> class
-    /// using a default <see cref="DialogService"/> (design-time support).
-    /// </summary>
-    public CreateLoanViewModel() : this(new DialogService())
-    {
-    }
 
     /// <summary>
     /// Resets all form fields to their default empty values.

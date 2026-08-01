@@ -7,13 +7,6 @@ namespace Cocosoft.Finance.LoanControl.Core.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddCoreServices(this IServiceCollection services)
-    {
-        return services.AddLocalization()
-            .AddSingleton<ILocalizationService, LocalizationService>()
-            .AddSingleton<ILoanService, LoanService>();
-    }
-
     public static IServiceCollection AddConfiguration<TEntryPoint>(this IServiceCollection services)
         where TEntryPoint : class
     {
@@ -25,5 +18,20 @@ public static class ServiceCollectionExtensions
             .AddUserSecrets<TEntryPoint>()
             .AddEnvironmentVariables();
         return services.AddSingleton<IConfiguration>(confBuilder.Build());
+    }
+
+    public static IServiceCollection AddCoreServices(this IServiceCollection services)
+    {
+        return services.AddLocalization()
+            .AddSingleton<ILocalizationService, LocalizationService>()
+            .AddSingleton<ILoanService, LoanService>();
+    }
+
+    public static IServiceCollection AddCoreServicesV2(this IServiceCollection services)
+    {
+        return services.AddLocalization()
+            .AddSingleton<ILocalizationService, LocalizationService>()
+            .AddSingleton<Services.V2.ILoanService, Services.V2.LoanService>()
+            .AddSingleton<Services.V2.ICustomerService, Services.V2.CustomerService>();
     }
 }

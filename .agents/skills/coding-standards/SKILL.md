@@ -30,7 +30,7 @@ Todo el proyecto debe cumplir con una serie de principios de desarrollo y patron
 ### Patron de inyección de dependencias DI
 
 **Siempre** se debe seguir el patron de inyeccion de dependencias, para esto se debe usar el framework `Microsoft.Extensions.DependencyInjection` aprovechando las interfaces `IServiceCollection` e `IServiceProvider`.
-Bajo ninguna circunstancia un objeto puede instanciar una dependencia por si solo, si es encesario, se debe implementar un patrón de _Fatory_
+Salvo algunas excepciones, un objeto no puede instanciar una dependencia por si solo, si es encesario, se debe implementar un patrón de _Fatory_
 
 **Correcto**:
 ```csharp
@@ -94,26 +94,71 @@ public partial class LoanService : ILoanService
 }
 ```
 
-**Excepciones**:
-- Los view models tienen excepcion, puesto que para que el previsualizador de avalonia funcione se requiere tener constructores sin parámetros en los view models,
-  por lo tanto se debe implementar un constructor sin parámetros que cree los parámetros necesarios y llame al constructor real.
-  Se debe agregar el decorador `ActivatorUtilitiesConstructor` al constructor real, es decir, el que recibe las dependencias inyectadas.
-  Es una buena practica agregar un break point al constructor sin parametros para validar que no se este usando en tiempo de ejecucion durante la depuración.
+**Consideración**:
+- Para separar los ViewModels de producción de los de diseño de la herramienta de previsualización de Avalonia, se debe crear un DesignViewModel en el namespace `Cocosoft.Finance.LoanControl.App.Avalonia.DesignTimeSupport`
+  por cada ViewModel que se agrega, este DesignViewModel debe ser usado en el tag Design.DataContext de la vista correspondiente al ViewModel; además, se debe crear un Mock de los servicios de los que depende el ViewModel
+  en el namespace `Cocosoft.Finance.LoanControl.App.Avalonia.DesignTimeSupport.Mocks`, tal como se muestra en el ejemplo:
 
 ```csharp
-[ActivatorUtilitiesConstructor]
-public partial class CreateLoanViewModel(IDialogService dialogService) : ViewModelBase
+namespace Cocosoft.Finance.LoanControl.App.Avalonia.ViewModels
 {
-    /// <summary>
-    /// Initializes a new instance of the <see cref="CreateLoanViewModel"/> class
-    /// using a default <see cref="DialogService"/> (design-time support).
-    /// </summary>
-    public CreateLoanViewModel() : this(new DialogService())
+    // The ViewModel class is unmodified
+    public partial class MainViewModel : ViewModelBase
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainViewModel"/> class.
+        /// </summary>
+        /// <param name="dashboard">The dashboard view model.</param>
+        /// <param name="loans">The loans view model.</param>
+        public CreateLoanViewModel(DashboardViewModel dashboard, LoansViewModel loans)
+        {
+            // Constructor implementation...
+        }
+    }
+}
+
+namespace Cocosoft.Finance.LoanControl.App.Avalonia.DesignTimeSupport.Mocks
+{
+    internal class DesignLoanService : ILoanService
+    {
+        /// <inheritdoc />
+        public decimal GetTotalCollected() => 87_500_000m;
+    
+        /// <inheritdoc />
+        public decimal GetTotalCurrentDueFeeAmount() => 12_000_000m;
+    
+        /// <inheritdoc />
+        public decimal GetTotalCurrentPendingFeeDueAmount() => 4_800_000m;
+    
+        /// <inheritdoc />
+        public decimal GetTotalLoansGranted() => 150_000_000m;
+    }
+}
+
+namespace Cocosoft.Finance.LoanControl.App.Avalonia.DesignTimeSupport
+{
+    internal class DesignMainViewModel() : MainViewModel(new DesignDashboardViewModel(), new DesignLoansViewModel())
+    {
+    }
+	
+	internal class DesignDashboardViewModel() : DashboardViewModel(new DesignLoanService())
     {
     }
 }
 ```
 
+```axaml
+<Window xmlns:dvm="using:Cocosoft.Finance.LoanControl.App.Avalonia.DesignTimeSupport">
+    
+	<Design.DataContext>
+        <dvm:DesignMainViewModel />
+    </Design.DataContext>
+    <!-- Main window conten... -->
+
+</ window>
+```
+
+**Excepciones**
 - Los objetos tipo factory tambien tienen esta excepción. En lo posible se debe usar IServiceProvider para obtener cualquier servicio, pero en caso que no sea posible, se puede instanciar manualmente un objeto.
 
 ```csharp

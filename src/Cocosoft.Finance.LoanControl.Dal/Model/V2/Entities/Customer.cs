@@ -76,10 +76,28 @@ internal class Customer
     public bool IsCurrent { get; set; } = true;
 
     /// <summary>
+    /// Gets or sets a value indicating whether this instance is marked as deleted.
+    /// </summary>
+    /// <value>
+    ///   <c>true</c> if this instance is marked as deleted; otherwise, <c>false</c>.
+    /// </value>
+    [Column("IS_DELETED", Order = 10)]
+    public bool IsDeleted { get; set; }
+
+    /// <summary>
+    /// Gets or sets the collection of loans associated with this customer. This property establishes a one-to-many
+    /// relationship between the customer and the loan entities.
+    /// </summary>
+    /// <value>
+    /// The collection of loans associated with this customer.
+    /// </value>
+    public ICollection<Loan> Loans { get; set; } = [];
+
+    /// <summary>
     /// Gets or sets the name of the customer. This property represents the first name or given name of the customer.
     /// </summary>
     /// <value>
-    /// Teh name of the customer.
+    /// The name of the customer.
     /// </value>
     [Column("NAME", Order = 4)]
     public required string Name { get; set; }

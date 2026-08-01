@@ -8,6 +8,7 @@ using Cocosoft.Finance.LoanControl.App.Avalonia.Views.Dialogs;
 using Cocosoft.Finance.LoanControl.Core.Extensions;
 using Cocosoft.Finance.LoanControl.Dal.Extensions;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Cocosoft.Finance.LoanControl.App.Avalonia;
 
@@ -30,6 +31,7 @@ public partial class App : Application
 
             // Register configuration and settings for dependency injection
             services.AddConfiguration<Program>();
+            services.AddLogging(builder => builder.AddConsole());
 
             // Register presentation services and view models for dependency injection
             services.AddSingleton<IDialogService, DialogService>();
@@ -40,7 +42,9 @@ public partial class App : Application
             services.AddTransient<ConfirmationDialog>();
 
             // Register infrastructure services for dependency injection
+            services.AddMemoryCache();
             services.AddRepositoryV2();
+            services.AddCoreServicesV2();
 
             var provider = services.BuildServiceProvider();
 

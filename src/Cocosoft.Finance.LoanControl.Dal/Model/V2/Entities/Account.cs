@@ -93,15 +93,6 @@ internal class Account
     public bool IsLocked { get; set; }
 
     /// <summary>
-    /// Gets or sets the collection of loans associated with this account. This property establishes a one-to-many
-    /// relationship between the account and the loan entities.
-    /// </summary>
-    /// <value>
-    /// The collection of loans associated with this account.
-    /// </value>
-    public ICollection<Loan> Loans { get; set; } = [];
-
-    /// <summary>
     /// Gets or sets the version number of the customer record. This property is used to track changes to the customer data over time.
     /// </summary>
     /// <value>

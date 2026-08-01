@@ -32,6 +32,11 @@ public sealed class LoanSearchResult
     public required decimal LoanAmount { get; init; }
 
     /// <summary>
+    /// Gets the unique identifier of the loan in the system.
+    /// </summary>
+    public int LoanId { get; init; }
+
+    /// <summary>
     /// Gets the unique loan number identifier.
     /// </summary>
     public required string LoanNumber { get; init; }

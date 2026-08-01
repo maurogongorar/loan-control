@@ -14,42 +14,13 @@ namespace Cocosoft.Finance.LoanControl.Dal.Model.V2.Entities;
 internal class Loan
 {
     /// <summary>
-    /// Gets or sets the account associated with the loan. This property establishes a relationship
-    /// between the loan and the account entity, allowing for navigation and data retrieval related to the account.
-    /// </summary>
-    /// <value>
-    /// The account associated with the loan.
-    /// </value>
-    public Account? Account { get; set; }
-
-    /// <summary>
-    /// Gets or sets the identifier of the account associated with the loan. This property is used to establish
-    /// a relationship between the loan and the account entity.
-    /// </summary>
-    /// <value>
-    /// The identifier of the account associated with the loan.
-    /// </value>
-    [Column("ACCOUNT_ID", Order = 4)]
-    public int AccountId { get; set; }
-
-    /// <summary>
-    /// Gets or sets the version number of the account record associated with the loan. This property is used to track
-    /// changes to the account over time.
-    /// </summary>
-    /// <value>
-    /// The version number of the account record associated with the loan.
-    /// </value>
-    [Column("ACCOUNT_VERSION", Order = 5)]
-    public int AccountVersion { get; set; }
-
-    /// <summary>
     /// Gets or sets the annual interest rate applied to the loan. This value is used to calculate interest accruals
     /// and payments.
     /// </summary>
     /// <value>
     /// The annual interest rate.
     /// </value>
-    [Column("ANNUAL_INTEREST", Order = 10)]
+    [Column("ANNUAL_INTEREST", Order = 11)]
     public double AnnualInterest { get; set; }
 
     /// <summary>
@@ -63,6 +34,35 @@ internal class Loan
     public decimal CurrentBalance { get; set; }
 
     /// <summary>
+    /// Gets or sets the debtor associated with the loan. This property is used for identification and
+    /// navigation purposes.
+    /// </summary>
+    /// <value>
+    /// The the debtor associated with the loan.
+    /// </value>
+    public Customer? Customer { get; set; }
+
+    /// <summary>
+    /// Gets or sets the identifier of the customer associated with the loan. This property is used to establish
+    /// a relationship between the loan and the customer entity.
+    /// </summary>
+    /// <value>
+    /// The identifier of the customer associated with the loan.
+    /// </value>
+    [Column("CUSTOMER_ID", Order = 4)]
+    public int CustomerId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the version number of the customer record associated with the loan. This property is used to track
+    /// changes to the customer over time.
+    /// </summary>
+    /// <value>
+    /// The version number of the customer record associated with the loan.
+    /// </value>
+    [Column("CUSTOMER_VERSION", Order = 5)]
+    public int CustomerVersion { get; set; }
+
+    /// <summary>
     /// Gets or sets the date when the loan was disbursed to the debtor. This date is important for calculating
     /// interest accruals and determining the loan's repayment schedule.
     /// </summary>
@@ -71,6 +71,16 @@ internal class Loan
     /// </value>
     [Column("DISBURSEMENT_DATE", Order = 7)]
     public DateTime DisbursementDate { get; set; }
+
+    /// <summary>
+    /// Gets or sets the day of the month when the loan payment is due.
+    /// This value is used to determine the payment schedule.
+    /// </summary>
+    /// <value>
+    /// The day of the month when the loan payment is due.
+    /// </value>
+    [Column("DUE_DAY", Order = 10)]
+    public int DueDay { get; set; } = 30;
 
     /// <summary>
     /// Gets or sets the fixed installment amount that the debtor is required to pay for each installment period.
@@ -108,7 +118,7 @@ internal class Loan
     /// <value>
     /// The acumulated interest collected on the loan.
     /// </value>
-    [Column("INTEREST_COLLECTED", Order = 13)]
+    [Column("INTEREST_COLLECTED", Order = 14)]
     public decimal InterestCollected { get; set; }
 
     /// <summary>
@@ -118,7 +128,7 @@ internal class Loan
     /// <value>
     ///   <c>true</c> if this loan is closed; otherwise, <c>false</c>.
     /// </value>
-    [Column("IS_CLOSED", Order = 14)]
+    [Column("IS_CLOSED", Order = 15)]
     public bool IsClosed { get; set; }
 
     /// <summary>
@@ -137,7 +147,7 @@ internal class Loan
     /// <value>
     /// The date of the last payment made on the loan.
     /// </value>
-    [Column("LAST_PAYMENT_DATE", Order = 11)]
+    [Column("LAST_PAYMENT_DATE", Order = 12)]
     public DateTime? LastPaymentDate { get; set; }
 
     /// <summary>
@@ -156,7 +166,7 @@ internal class Loan
     /// <value>
     /// The number of installments that have been pacted for the loan.
     /// </value>
-    [Column("NUMBER_INSTALMENTS", Order = 12)]
+    [Column("NUMBER_INSTALMENTS", Order = 13)]
     public int NumberInstalments { get; set; }
 
     /// <summary>

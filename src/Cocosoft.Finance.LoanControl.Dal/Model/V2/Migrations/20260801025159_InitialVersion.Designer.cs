@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cocosoft.Finance.LoanControl.Dal.Model.V2.Migrations
 {
     [DbContext(typeof(LoanDbContext))]
-    [Migration("20260728004627_Initial Version")]
+    [Migration("20260801025159_InitialVersion")]
     partial class InitialVersion
     {
         /// <inheritdoc />
@@ -38,6 +38,15 @@ namespace Cocosoft.Finance.LoanControl.Dal.Model.V2.Migrations
                         .HasColumnName("ACCOUNT_NUMBER")
                         .HasColumnOrder(3);
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("CreatedAt");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("CreatedBy");
+
                     b.Property<int>("CustomerId")
                         .HasColumnType("INTEGER")
                         .HasColumnName("CUSTOMER_ID")
@@ -62,6 +71,15 @@ namespace Cocosoft.Finance.LoanControl.Dal.Model.V2.Migrations
                         .HasColumnType("INTEGER")
                         .HasColumnName("IS_LOCKED")
                         .HasColumnOrder(6);
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("UpdatedAt");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("UpdatedBy");
 
                     b.HasKey("Id", "Version");
 
@@ -97,6 +115,15 @@ namespace Cocosoft.Finance.LoanControl.Dal.Model.V2.Migrations
                         .HasColumnName("CITY")
                         .HasColumnOrder(8);
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("CreatedAt");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("CreatedBy");
+
                     b.Property<string>("Email")
                         .HasColumnType("TEXT")
                         .HasColumnName("EMAIL")
@@ -112,6 +139,11 @@ namespace Cocosoft.Finance.LoanControl.Dal.Model.V2.Migrations
                         .HasColumnType("INTEGER")
                         .HasColumnName("IS_CURRENT")
                         .HasColumnOrder(2);
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("IS_DELETED")
+                        .HasColumnOrder(10);
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -130,6 +162,15 @@ namespace Cocosoft.Finance.LoanControl.Dal.Model.V2.Migrations
                         .HasColumnType("TEXT")
                         .HasColumnName("SURNAME")
                         .HasColumnOrder(5);
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("UpdatedAt");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("UpdatedBy");
 
                     b.HasKey("Id", "Version");
 
@@ -151,30 +192,44 @@ namespace Cocosoft.Finance.LoanControl.Dal.Model.V2.Migrations
                         .HasColumnName("VERSION")
                         .HasColumnOrder(1);
 
-                    b.Property<int>("AccountId")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("ACCOUNT_ID")
-                        .HasColumnOrder(4);
-
-                    b.Property<int>("AccountVersion")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("ACCOUNT_VERSION")
-                        .HasColumnOrder(5);
-
                     b.Property<double>("AnnualInterest")
                         .HasColumnType("REAL")
                         .HasColumnName("ANNUAL_INTEREST")
-                        .HasColumnOrder(10);
+                        .HasColumnOrder(11);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("CreatedAt");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("CreatedBy");
 
                     b.Property<decimal>("CurrentBalance")
                         .HasColumnType("TEXT")
                         .HasColumnName("CURRENT_BALANCE")
                         .HasColumnOrder(8);
 
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("CUSTOMER_ID")
+                        .HasColumnOrder(4);
+
+                    b.Property<int>("CustomerVersion")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("CUSTOMER_VERSION")
+                        .HasColumnOrder(5);
+
                     b.Property<DateTime>("DisbursementDate")
                         .HasColumnType("TEXT")
                         .HasColumnName("DISBURSEMENT_DATE")
                         .HasColumnOrder(7);
+
+                    b.Property<int>("DueDay")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("DUE_DAY")
+                        .HasColumnOrder(10);
 
                     b.Property<decimal>("Fee")
                         .HasColumnType("TEXT")
@@ -189,12 +244,12 @@ namespace Cocosoft.Finance.LoanControl.Dal.Model.V2.Migrations
                     b.Property<decimal>("InterestCollected")
                         .HasColumnType("TEXT")
                         .HasColumnName("INTEREST_COLLECTED")
-                        .HasColumnOrder(13);
+                        .HasColumnOrder(14);
 
                     b.Property<bool>("IsClosed")
                         .HasColumnType("INTEGER")
                         .HasColumnName("IS_CLOSED")
-                        .HasColumnOrder(14);
+                        .HasColumnOrder(15);
 
                     b.Property<bool>("IsCurrent")
                         .HasColumnType("INTEGER")
@@ -204,7 +259,7 @@ namespace Cocosoft.Finance.LoanControl.Dal.Model.V2.Migrations
                     b.Property<DateTime?>("LastPaymentDate")
                         .HasColumnType("TEXT")
                         .HasColumnName("LAST_PAYMENT_DATE")
-                        .HasColumnOrder(11);
+                        .HasColumnOrder(12);
 
                     b.Property<string>("LoanNumber")
                         .IsRequired()
@@ -215,11 +270,20 @@ namespace Cocosoft.Finance.LoanControl.Dal.Model.V2.Migrations
                     b.Property<int>("NumberInstalments")
                         .HasColumnType("INTEGER")
                         .HasColumnName("NUMBER_INSTALMENTS")
-                        .HasColumnOrder(12);
+                        .HasColumnOrder(13);
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("UpdatedAt");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("UpdatedBy");
 
                     b.HasKey("Id", "Version");
 
-                    b.HasIndex("AccountId", "AccountVersion");
+                    b.HasIndex("CustomerId", "CustomerVersion");
 
                     b.HasIndex(new[] { "LoanNumber" }, "IX_U_LOANS_LOAN_NUMBER")
                         .IsUnique();
@@ -248,6 +312,15 @@ namespace Cocosoft.Finance.LoanControl.Dal.Model.V2.Migrations
                         .HasColumnType("TEXT")
                         .HasColumnName("CAPITAL")
                         .HasColumnOrder(7);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("CreatedAt");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("CreatedBy");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("TEXT")
@@ -284,6 +357,15 @@ namespace Cocosoft.Finance.LoanControl.Dal.Model.V2.Migrations
                         .HasColumnName("NEW_BALANCE")
                         .HasColumnOrder(9);
 
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("UpdatedAt");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("UpdatedBy");
+
                     b.HasKey("Id", "Version");
 
                     b.HasIndex("LoanId", "LoanVersion");
@@ -304,13 +386,13 @@ namespace Cocosoft.Finance.LoanControl.Dal.Model.V2.Migrations
 
             modelBuilder.Entity("Cocosoft.Finance.LoanControl.Dal.Model.V2.Entities.Loan", b =>
                 {
-                    b.HasOne("Cocosoft.Finance.LoanControl.Dal.Model.V2.Entities.Account", "Account")
+                    b.HasOne("Cocosoft.Finance.LoanControl.Dal.Model.V2.Entities.Customer", "Customer")
                         .WithMany("Loans")
-                        .HasForeignKey("AccountId", "AccountVersion")
+                        .HasForeignKey("CustomerId", "CustomerVersion")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Account");
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("Cocosoft.Finance.LoanControl.Dal.Model.V2.Entities.Payment", b =>
@@ -324,14 +406,11 @@ namespace Cocosoft.Finance.LoanControl.Dal.Model.V2.Migrations
                     b.Navigation("Loan");
                 });
 
-            modelBuilder.Entity("Cocosoft.Finance.LoanControl.Dal.Model.V2.Entities.Account", b =>
-                {
-                    b.Navigation("Loans");
-                });
-
             modelBuilder.Entity("Cocosoft.Finance.LoanControl.Dal.Model.V2.Entities.Customer", b =>
                 {
                     b.Navigation("Accounts");
+
+                    b.Navigation("Loans");
                 });
 
             modelBuilder.Entity("Cocosoft.Finance.LoanControl.Dal.Model.V2.Entities.Loan", b =>

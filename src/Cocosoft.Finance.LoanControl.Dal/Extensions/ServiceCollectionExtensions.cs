@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Cocosoft.Finance.LoanControl.Dal.V2.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,7 +11,13 @@ public static class ServiceCollectionExtensions
         => services.AddRepository<Model.LoanDbContext, IRepository, Repository>();
 
     public static IServiceCollection AddRepositoryV2(this IServiceCollection services)
-        => services.AddRepository<Model.V2.LoanDbContext, V2.IRepository, V2.Repository>();
+    {
+        services.AddRepository<Model.V2.LoanDbContext, V2.Repositories.IRepository, V2.Repositories.Repository>();
+
+        return services.AddScoped<ICustomerRepository, CustomerRepository>()
+            .AddScoped<ILoanRepository, LoanRepository>()
+            .AddAutoMapper(config => config.AddMaps(AppDomain.CurrentDomain.GetAssemblies()));
+    }
 
     private static IServiceCollection AddRepository<TDbContext, TRepository, TRepositoryImpl>(this IServiceCollection services)
         where TDbContext : DbContext
@@ -35,6 +42,6 @@ public static class ServiceCollectionExtensions
                 }
                 options.UseSqlite($"Data Source={dataSource}");
             });
-        return services.AddScoped<TRepository, TRepositoryImpl>();
+        return services.AddTransient<TRepository, TRepositoryImpl>();
     }
 }

@@ -1,5 +1,9 @@
 ﻿namespace Cocosoft.Finance.LoanControl.Domain.Customers;
 
+/// <summary>
+/// The CustomerDto class represents a data transfer object for customer information.
+/// This class is used to transfer customer data between different layers of the application.
+/// </summary>
 public class CustomerDto
 {
     /// <summary>
@@ -27,6 +31,14 @@ public class CustomerDto
     public string? Email { get; set; }
 
     /// <summary>
+    /// Gets or sets the name of the customer. This property represents the first name or given name of the customer.
+    /// </summary>
+    /// <value>
+    /// Teh name of the customer.
+    /// </value>
+    public required string FirstName { get; set; }
+
+    /// <summary>
     /// Gets or sets the unique identifier for the customer. This property is used as the primary key in the database.
     /// </summary>
     /// <value>
@@ -44,12 +56,12 @@ public class CustomerDto
     public required string IdentificationNumber { get; set; }
 
     /// <summary>
-    /// Gets or sets the name of the customer. This property represents the first name or given name of the customer.
+    /// Gets or sets the last name of the customer. This property represents the last name or family name of the customer.
     /// </summary>
     /// <value>
-    /// Teh name of the customer.
+    /// The last name of the customer.
     /// </value>
-    public required string Name { get; set; }
+    public required string LastName { get; set; }
 
     /// <summary>
     /// Gets or sets the phone number of the customer.
@@ -58,12 +70,4 @@ public class CustomerDto
     /// The phone number of the customer.
     /// </value>
     public required string PhoneNumber { get; set; }
-
-    /// <summary>
-    /// Gets or sets the surname of the customer. This property represents the last name or family name of the customer.
-    /// </summary>
-    /// <value>
-    /// The surname of the customer.
-    /// </value>
-    public required string Surname { get; set; }
 }

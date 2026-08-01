@@ -1,12 +1,13 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="using:Cocosoft.Finance.LoanControl.App.Avalonia.ViewModels"
+             xmlns:dvm="using:Cocosoft.Finance.LoanControl.App.Avalonia.DesignTimeSupport"
              xmlns:models="using:Cocosoft.Finance.LoanControl.Domain.Loans"
              xmlns:ctrl="using:Cocosoft.Finance.LoanControl.App.Avalonia.Controls"
              x:Class="Cocosoft.Finance.LoanControl.App.Avalonia.Views.LoansView"
              x:DataType="vm:LoansViewModel">
   <Design.DataContext>
-    <vm:LoansViewModel />
+    <dvm:DesignLoansViewModel />
   </Design.DataContext>
 
   <Panel>
@@ -52,7 +53,7 @@
                       Content="🔍" />
               <TextBox x:Name="SearchBox"
                        AutomationProperties.Name="Buscar préstamo"
-                       PlaceholderText="Buscar por número de préstamo, nombre o identificación..."
+                       PlaceholderText="Buscar por número de préstamo o identificación..."
                        Text="{Binding SearchText}"
                        Margin="0,0,12,0">
                 <TextBox.KeyBindings>
@@ -69,19 +70,19 @@
               <Border Classes="card" Margin="8" Height="120">
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="8">
                   <TextBlock Text="Créditos Activos" FontSize="14" Foreground="{StaticResource TextSecondaryBrush}" HorizontalAlignment="Center" />
-                  <TextBlock Text="{Binding ActiveLoansCount}" FontSize="36" FontWeight="Bold" Foreground="{StaticResource AccentBrush}" HorizontalAlignment="Center" />
+                  <TextBlock Text="{Binding ActiveLoansCount^, FallbackValue='Cargando...'}" FontSize="36" FontWeight="Bold" Foreground="{StaticResource AccentBrush}" HorizontalAlignment="Center" />
                 </StackPanel>
               </Border>
               <Border Classes="card" Margin="8" Height="120">
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="8">
                   <TextBlock Text="Deuda Total" FontSize="14" Foreground="{StaticResource TextSecondaryBrush}" HorizontalAlignment="Center" />
-                  <TextBlock Text="{Binding TotalDebt, StringFormat=C0}" FontSize="36" FontWeight="Bold" Foreground="{StaticResource DangerBrush}" HorizontalAlignment="Center" />
+                  <TextBlock Text="{Binding TotalDebt^, FallbackValue='Cargando...', StringFormat=C0}" FontSize="36" FontWeight="Bold" Foreground="{StaticResource DangerBrush}" HorizontalAlignment="Center" />
                 </StackPanel>
               </Border>
               <Border Classes="card" Margin="8" Height="120">
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="8">
                   <TextBlock Text="Interés Recolectado" FontSize="14" Foreground="{StaticResource TextSecondaryBrush}" HorizontalAlignment="Center" />
-                  <TextBlock Text="{Binding TotalInterestCollected, StringFormat=C0}" FontSize="36" FontWeight="Bold" Foreground="{StaticResource SuccessBrush}" HorizontalAlignment="Center" />
+                  <TextBlock Text="{Binding TotalInterestCollected^, FallbackValue='Cargando...', StringFormat=C0}" FontSize="36" FontWeight="Bold" Foreground="{StaticResource SuccessBrush}" HorizontalAlignment="Center" />
                 </StackPanel>
               </Border>
             </WrapPanel>

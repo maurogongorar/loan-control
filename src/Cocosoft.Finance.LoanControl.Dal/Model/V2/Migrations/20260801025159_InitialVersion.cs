@@ -24,7 +24,12 @@ namespace Cocosoft.Finance.LoanControl.Dal.Model.V2.Migrations
                     PHONE_NUMBER = table.Column<string>(type: "TEXT", nullable: false),
                     EMAIL = table.Column<string>(type: "TEXT", nullable: true),
                     CITY = table.Column<string>(type: "TEXT", nullable: false),
-                    ADDRESS = table.Column<string>(type: "TEXT", nullable: false)
+                    ADDRESS = table.Column<string>(type: "TEXT", nullable: false),
+                    IS_DELETED = table.Column<bool>(type: "INTEGER", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    CreatedBy = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -42,7 +47,11 @@ namespace Cocosoft.Finance.LoanControl.Dal.Model.V2.Migrations
                     CUSTOMER_ID = table.Column<int>(type: "INTEGER", nullable: false),
                     CUSTOMER_VERSION = table.Column<int>(type: "INTEGER", nullable: false),
                     IS_LOCKED = table.Column<bool>(type: "INTEGER", nullable: false),
-                    IS_DELETED = table.Column<bool>(type: "INTEGER", nullable: false)
+                    IS_DELETED = table.Column<bool>(type: "INTEGER", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    CreatedBy = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -63,25 +72,30 @@ namespace Cocosoft.Finance.LoanControl.Dal.Model.V2.Migrations
                     VERSION = table.Column<int>(type: "INTEGER", nullable: false),
                     IS_CURRENT = table.Column<bool>(type: "INTEGER", nullable: false),
                     LOAN_NUMBER = table.Column<string>(type: "TEXT", nullable: false),
-                    ACCOUNT_ID = table.Column<int>(type: "INTEGER", nullable: false),
-                    ACCOUNT_VERSION = table.Column<int>(type: "INTEGER", nullable: false),
+                    CUSTOMER_ID = table.Column<int>(type: "INTEGER", nullable: false),
+                    CUSTOMER_VERSION = table.Column<int>(type: "INTEGER", nullable: false),
                     INITIAL_AMOUNT = table.Column<decimal>(type: "TEXT", nullable: false),
                     DISBURSEMENT_DATE = table.Column<DateTime>(type: "TEXT", nullable: false),
                     CURRENT_BALANCE = table.Column<decimal>(type: "TEXT", nullable: false),
                     FEE = table.Column<decimal>(type: "TEXT", nullable: false),
+                    DUE_DAY = table.Column<int>(type: "INTEGER", nullable: false),
                     ANNUAL_INTEREST = table.Column<double>(type: "REAL", nullable: false),
                     LAST_PAYMENT_DATE = table.Column<DateTime>(type: "TEXT", nullable: true),
                     NUMBER_INSTALMENTS = table.Column<int>(type: "INTEGER", nullable: false),
                     INTEREST_COLLECTED = table.Column<decimal>(type: "TEXT", nullable: false),
-                    IS_CLOSED = table.Column<bool>(type: "INTEGER", nullable: false)
+                    IS_CLOSED = table.Column<bool>(type: "INTEGER", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    CreatedBy = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_LOANS", x => new { x.ID, x.VERSION });
                     table.ForeignKey(
-                        name: "FK_LOANS_ACCOUNTS_ACCOUNT_ID_ACCOUNT_VERSION",
-                        columns: x => new { x.ACCOUNT_ID, x.ACCOUNT_VERSION },
-                        principalTable: "ACCOUNTS",
+                        name: "FK_LOANS_CUSTOMERS_CUSTOMER_ID_CUSTOMER_VERSION",
+                        columns: x => new { x.CUSTOMER_ID, x.CUSTOMER_VERSION },
+                        principalTable: "CUSTOMERS",
                         principalColumns: new[] { "ID", "VERSION" },
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -100,7 +114,11 @@ namespace Cocosoft.Finance.LoanControl.Dal.Model.V2.Migrations
                     CAPITAL = table.Column<decimal>(type: "TEXT", nullable: false),
                     INTEREST = table.Column<decimal>(type: "TEXT", nullable: false),
                     NEW_BALANCE = table.Column<decimal>(type: "TEXT", nullable: false),
-                    IS_DELETED = table.Column<bool>(type: "INTEGER", nullable: false)
+                    IS_DELETED = table.Column<bool>(type: "INTEGER", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    CreatedBy = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -131,9 +149,9 @@ namespace Cocosoft.Finance.LoanControl.Dal.Model.V2.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_LOANS_ACCOUNT_ID_ACCOUNT_VERSION",
+                name: "IX_LOANS_CUSTOMER_ID_CUSTOMER_VERSION",
                 table: "LOANS",
-                columns: new[] { "ACCOUNT_ID", "ACCOUNT_VERSION" });
+                columns: new[] { "CUSTOMER_ID", "CUSTOMER_VERSION" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_U_LOANS_LOAN_NUMBER",
@@ -151,13 +169,13 @@ namespace Cocosoft.Finance.LoanControl.Dal.Model.V2.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "ACCOUNTS");
+
+            migrationBuilder.DropTable(
                 name: "PAYMENTS");
 
             migrationBuilder.DropTable(
                 name: "LOANS");
-
-            migrationBuilder.DropTable(
-                name: "ACCOUNTS");
 
             migrationBuilder.DropTable(
                 name: "CUSTOMERS");

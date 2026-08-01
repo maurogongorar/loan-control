@@ -1,5 +1,10 @@
 using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Cocosoft.Finance.LoanControl.Core.Services.V2;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.Logging;
 
 namespace Cocosoft.Finance.LoanControl.App.Avalonia.ViewModels;
 
@@ -11,39 +16,23 @@ namespace Cocosoft.Finance.LoanControl.App.Avalonia.ViewModels;
 /// </summary>
 /// <param name="serviceProvider">The service provider used for dependency injection and service resolution.</param>
 /// <seealso cref="Cocosoft.Finance.LoanControl.App.Avalonia.ViewModels.ViewModelBase" />
-public partial class DashboardViewModel : ViewModelBase
+public partial class DashboardViewModel(ILoanService loanService, ILogger<DashboardViewModel> logger) : ViewModelBase
 {
+    private readonly IDictionary<string, CancellationTokenSource?> _ctSources =
+        new Dictionary<string, CancellationTokenSource?>
+        {
+            [nameof(DashboardViewModel.GetCapitalAngleAsync)] = null,
+            [nameof(DashboardViewModel.GetPendingDuePercentageAsync)] = null,
+            [nameof(DashboardViewModel.GetPendingDuePercentageFormattedAsync)] = null,
+            [nameof(DashboardViewModel.GetTotalCollectedFormattedAsync)] = null,
+            [nameof(DashboardViewModel.GetTotalCurrentDuePaymentAmountAsync)] = null,
+            [nameof(DashboardViewModel.GetTotalLoansGrantedFormattedAsync)] = null
+        };
+
     /// <summary>
     /// Gets the sweep angle in degrees representing the capital portion of the pie chart.
     /// </summary>
-    public double CapitalAngle => this.TotalCollected > 0
-        ? (double)(this.CollectedCapital / this.TotalCollected) * 360.0
-        : 180.0;
-
-    /// <summary>
-    /// Gets or sets the total collected capital amount.
-    /// </summary>
-    public decimal CollectedCapital { get; set; } = 52_500_000m;
-
-    /// <summary>
-    /// Gets the collected capital formatted as currency.
-    /// </summary>
-    public string CollectedCapitalFormatted => this.CollectedCapital.ToString("C0");
-
-    /// <summary>
-    /// Gets or sets the total collected interest amount.
-    /// </summary>
-    public decimal CollectedInterest { get; set; } = 35_000_000m;
-
-    /// <summary>
-    /// Gets the collected interest formatted as currency.
-    /// </summary>
-    public string CollectedInterestFormatted => this.CollectedInterest.ToString("C0");
-
-    /// <summary>
-    /// Gets the sweep angle in degrees representing the interest portion of the pie chart.
-    /// </summary>
-    public double InterestAngle => 360.0 - this.CapitalAngle;
+    public Task<double> CapitalAngle => this.GetCapitalAngleAsync();
 
     /// <summary>
     /// Gets or sets the action to navigate to the new loan view.
@@ -56,46 +45,202 @@ public partial class DashboardViewModel : ViewModelBase
     public Action? NavigateToSearchLoanAction { get; set; }
 
     /// <summary>
-    /// Gets or sets the pending due amount.
-    /// </summary>
-    public decimal PendingDueAmount { get; set; } = 4_800_000m;
-
-    /// <summary>
     /// Gets the pending due amount as a percentage of the total due amount.
     /// </summary>
-    public double PendingDuePercentage => this.TotalDueAmount > 0
-        ? (double)(this.PendingDueAmount / this.TotalDueAmount) * 100.0
-        : 0;
+    public Task<double> PendingDuePercentage => this.GetPendingDuePercentageAsync();
 
     /// <summary>
     /// Gets the pending due percentage formatted with one decimal place.
     /// </summary>
-    public string PendingDuePercentageFormatted => $"{this.PendingDuePercentage:F1}%";
-
-    /// <summary>
-    /// Gets or sets the total amount collected from all loans.
-    /// </summary>
-    public decimal TotalCollected { get; set; } = 87_500_000m;
+    public Task<string> PendingDuePercentageFormatted => this.GetPendingDuePercentageFormattedAsync();
 
     /// <summary>
     /// Gets the total collected amount formatted as currency.
     /// </summary>
-    public string TotalCollectedFormatted => this.TotalCollected.ToString("C0");
+    public Task<string> TotalCollectedFormatted => this.GetTotalCollectedFormattedAsync();
 
     /// <summary>
     /// Gets or sets the total due amount.
     /// </summary>
-    public decimal TotalDueAmount { get; set; } = 12_000_000m;
-
-    /// <summary>
-    /// Gets or sets the total amount of loans granted.
-    /// </summary>
-    public decimal TotalLoansGranted { get; set; } = 150_000_000m;
+    public Task<decimal> TotalDueAmount => this.GetTotalCurrentDuePaymentAmountAsync();
 
     /// <summary>
     /// Gets the total loans granted formatted as currency.
     /// </summary>
-    public string TotalLoansGrantedFormatted => this.TotalLoansGranted.ToString("C0");
+    public Task<string> TotalLoansGrantedFormatted => this.GetTotalLoansGrantedFormattedAsync();
+
+    private async Task<double> GetCapitalAngleAsync()
+    {
+        this._ctSources[nameof(this.GetCapitalAngleAsync)]?.Cancel();
+        var cts = new CancellationTokenSource();
+        this._ctSources[nameof(this.GetCapitalAngleAsync)] = cts;
+        var cancellationToken = cts.Token;
+
+        try
+        {
+            var totalCollected = await loanService.GetTotalCollectedAsync(cancellationToken);
+
+            if (totalCollected <= 0)
+            {
+                return 180;
+            }
+
+            var collectedCapital = await loanService.GetTotalCapitalCollectedAsync(cancellationToken);
+            var capitalAngle = (double)(collectedCapital / totalCollected) * 360.0;
+            return capitalAngle;
+        }
+        catch (OperationCanceledException)
+        {
+            logger.LogInformation("GetCapitalAngle operation was canceled.");
+            return 180;
+        }
+        catch (Exception ex)
+        {
+            // TODO: Handle the exception appropriately (e.g., show an error message to the user)
+            logger.LogError(ex, "An error occurred while getting the capital percentage angle.");
+            return 180;
+        }
+    }
+
+    private async Task<double> GetPendingDuePercentageAsync()
+    {
+        this._ctSources[nameof(this.GetPendingDuePercentageAsync)]?.Cancel();
+        var cts = new CancellationTokenSource();
+        this._ctSources[nameof(this.GetPendingDuePercentageAsync)] = cts;
+        var cancellationToken = cts.Token;
+
+        try
+        {
+            var totalDueAmount = await loanService.GetTotalCurrentDuePaymentAmountAsync(cancellationToken);
+
+            if (totalDueAmount <= 0)
+            {
+                return 0;
+            }
+
+            var pendingDueAmount = await loanService.GetTotalCurrentPendingPaymentDueAmountAsync(cancellationToken);
+            var pendingDuePercentage = (double)(pendingDueAmount / totalDueAmount) * 100.0;
+            return pendingDuePercentage;
+        }
+        catch (OperationCanceledException)
+        {
+            logger.LogInformation("GetPendingDuePercentage operation was canceled.");
+            return 0;
+        }
+        catch (Exception ex)
+        {
+            // TODO: Handle the exception appropriately (e.g., show an error message to the user)
+            logger.LogError(ex, "An error occurred while getting the pending due value.");
+            return 0;
+        }
+    }
+
+    private async Task<string> GetPendingDuePercentageFormattedAsync()
+    {
+        this._ctSources[nameof(this.GetPendingDuePercentageFormattedAsync)]?.Cancel();
+        var cts = new CancellationTokenSource();
+        this._ctSources[nameof(this.GetPendingDuePercentageFormattedAsync)] = cts;
+        var cancellationToken = cts.Token;
+
+        try
+        {
+            var totalDueAmount = await loanService.GetTotalCurrentDuePaymentAmountAsync(cancellationToken);
+
+            if (totalDueAmount <= 0)
+            {
+                return "0.0%";
+            }
+
+            var pendingDueAmount = await loanService.GetTotalCurrentPendingPaymentDueAmountAsync(cancellationToken);
+            var pendingDuePercentage = (double)(pendingDueAmount / totalDueAmount) * 100.0;
+            return $"{pendingDuePercentage:F1}%";
+        }
+        catch (OperationCanceledException)
+        {
+            logger.LogInformation("GetPendingDuePercentageFormatted operation was canceled.");
+            return "Canceled";
+        }
+        catch (Exception ex)
+        {
+            // TODO: Handle the exception appropriately (e.g., show an error message to the user)
+            logger.LogError(ex, "An error occurred while getting the pending due percentage.");
+            return "Ups!";
+        }
+    }
+
+    private async Task<string> GetTotalCollectedFormattedAsync()
+    {
+        this._ctSources[nameof(this.GetTotalCollectedFormattedAsync)]?.Cancel();
+        var cts = new CancellationTokenSource();
+        this._ctSources[nameof(this.GetTotalCollectedFormattedAsync)] = cts;
+        var cancellationToken = cts.Token;
+
+        try
+        {
+            var totalCollected = await loanService.GetTotalCollectedAsync(cancellationToken);
+            return totalCollected.ToString("C0");
+        }
+        catch (OperationCanceledException)
+        {
+            logger.LogInformation("GetTotalCollectedFormatted operation was canceled.");
+            return "Canceled";
+        }
+        catch (Exception ex)
+        {
+            // TODO: Handle the exception appropriately (e.g., show an error message to the user)
+            logger.LogError(ex, "An error occurred while getting the total collected.");
+            return "Ups!";
+        }
+    }
+
+    private async Task<decimal> GetTotalCurrentDuePaymentAmountAsync()
+    {
+        this._ctSources[nameof(this.GetTotalCurrentDuePaymentAmountAsync)]?.Cancel();
+        var cts = new CancellationTokenSource();
+        this._ctSources[nameof(this.GetTotalCurrentDuePaymentAmountAsync)] = cts;
+        var cancellationToken = cts.Token;
+
+        try
+        {
+            return await loanService.GetTotalCurrentDuePaymentAmountAsync(cancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+            logger.LogInformation("GetTotalCurrentDuePaymentAmountAsync operation was canceled.");
+            return 0;
+        }
+        catch (Exception ex)
+        {
+            // TODO: Handle the exception appropriately (e.g., show an error message to the user)
+            logger.LogError(ex, "An error occurred while getting the total current due payment amount.");
+            return 0;
+        }
+    }
+
+    private async Task<string> GetTotalLoansGrantedFormattedAsync()
+    {
+        this._ctSources[nameof(this.GetTotalLoansGrantedFormattedAsync)]?.Cancel();
+        var cts = new CancellationTokenSource();
+        this._ctSources[nameof(this.GetTotalLoansGrantedFormattedAsync)] = cts;
+        var cancellationToken = cts.Token;
+
+        try
+        {
+            var totalLoanGranted = await loanService.GetTotalLoansGrantedAsync(cancellationToken);
+            return totalLoanGranted.ToString("C0");
+        }
+        catch (OperationCanceledException)
+        {
+            logger.LogInformation("GetTotalLoansGrantedFormattedAsync operation was canceled.");
+            return "Canceled";
+        }
+        catch (Exception ex)
+        {
+            // TODO: Handle the exception appropriately (e.g., show an error message to the user)
+            logger.LogError(ex, "An error occurred while getting the total loans granted.");
+            return "Ups!";
+        }
+    }
 
     [RelayCommand]
     private void NewLoan()

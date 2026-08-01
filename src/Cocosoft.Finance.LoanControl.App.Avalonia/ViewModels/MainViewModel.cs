@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Cocosoft.Finance.LoanControl.App.Avalonia.ViewModels;
 
@@ -73,23 +72,11 @@ public partial class MainViewModel : ViewModelBase
         : SidebarCollapsedWidth;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="MainViewModel"/> class
-    /// using default view models (design-time support).
-    /// </summary>
-    // Parameterless constructor for design-time support
-    public MainViewModel() : this(new DashboardViewModel(), new LoansViewModel())
-    {
-    }
-
-    /// <summary>
     /// Initializes a new instance of the <see cref="MainViewModel"/> class.
     /// </summary>
     /// <param name="dashboard">The dashboard view model.</param>
     /// <param name="loans">The loans view model.</param>
-    [ActivatorUtilitiesConstructor]
-    public MainViewModel(
-        DashboardViewModel dashboard,
-        LoansViewModel loans)
+    public MainViewModel(DashboardViewModel dashboard, LoansViewModel loans)
     {
         this.Dashboard = dashboard;
         this.Loans = loans;
