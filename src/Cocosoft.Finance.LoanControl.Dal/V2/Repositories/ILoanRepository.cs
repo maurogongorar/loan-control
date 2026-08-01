@@ -41,16 +41,6 @@ public interface ILoanRepository
     ValueTask<LoanDto?> FindByNumberAsync(string loanNumber, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Asynchronously retrieves all active loans from the repository.
-    /// </summary>
-    /// <param name="cancellationToken">A token to cancel the operation.</param>
-    /// <returns>
-    /// A <see cref="ValueTask{T}"/> that represents the asynchronous operation.
-    /// The task result contains a collection of all active loans in the repository.
-    /// </returns>
-    ValueTask<IEnumerable<LoanDto>> GetActiveAsync(CancellationToken cancellationToken = default);
-
-    /// <summary>
     /// Asynchronously retrieves the count of all active loans in the repository.
     /// </summary>
     /// <param name="cancellationToken">A token to cancel the operation.</param>
@@ -59,16 +49,6 @@ public interface ILoanRepository
     /// The task result contains the count of all active loans in the repository.
     /// </returns>
     ValueTask<int> GetActiveLoanCountsAsync(CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Asynchronously retrieves all loans from the repository.
-    /// </summary>
-    /// <param name="cancellationToken">A token to cancel the operation.</param>
-    /// <returns>
-    /// A <see cref="ValueTask{T}"/> that represents the asynchronous operation.
-    /// The task result contains a collection of all loans in the repository.
-    /// </returns>
-    ValueTask<IEnumerable<LoanDto>> GetAllAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Asynchronously calculates the total debt amount across all active loans in the repository.

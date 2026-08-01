@@ -40,27 +40,10 @@ internal class LoanRepository(IRepository repository, IMapper mapper) : ILoanRep
     }
 
     /// <inheritdoc />
-    public async ValueTask<IEnumerable<LoanDto>> GetActiveAsync(CancellationToken cancellationToken = default)
-    {
-        return await repository.Set<Loan>()
-            .Where(l => l.IsCurrent && !l.IsClosed)
-            .Select(l => mapper.Map<LoanDto>(l))
-            .ToListAsync(cancellationToken);
-    }
-
-    /// <inheritdoc />
     public async ValueTask<int> GetActiveLoanCountsAsync(CancellationToken cancellationToken = default)
     {
         return await repository.Set<Loan>()
             .CountAsync(l => l.IsCurrent && !l.IsClosed, cancellationToken);
-    }
-
-    /// <inheritdoc />
-    public async ValueTask<IEnumerable<LoanDto>> GetAllAsync(CancellationToken cancellationToken = default)
-    {
-        return await repository.Set<Loan>()
-            .Select(l => mapper.Map<LoanDto>(l))
-            .ToListAsync(cancellationToken);
     }
 
     /// <inheritdoc />
