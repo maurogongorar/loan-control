@@ -5,7 +5,8 @@ using Microsoft.Extensions.Caching.Memory;
 namespace Cocosoft.Finance.LoanControl.Core.Services.V2;
 
 /// <summary>
-/// Th
+/// The <c>LoanService</c> class provides methods for managing loans, including retrieval, counting, and searching of loan records.
+/// It utilizes caching to improve performance for frequently accessed data.
 /// </summary>
 /// <seealso cref="Cocosoft.Finance.LoanControl.Core.Services.V2.ILoanService" />
 internal class LoanService(ILoanRepository repository, IMemoryCache cache) : ILoanService
@@ -17,12 +18,12 @@ internal class LoanService(ILoanRepository repository, IMemoryCache cache) : ILo
     }
 
     /// <inheritdoc />
-    public async ValueTask<int> GetActiveLoanCountsAsync(CancellationToken cancellationToken = default)
+    public async ValueTask<int> GetActiveLoansCountAsync(CancellationToken cancellationToken = default)
     {
-        var cached = await cache.GetOrCreateAsync("core.services.loan.active_loan_counts", async entry =>
+        var cached = await cache.GetOrCreateAsync(CacheEntryKeys.ActiveLoans, async entry =>
         {
             entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30);
-            return await repository.GetActiveLoanCountsAsync(cancellationToken);
+            return await repository.GetActiveLoansCountAsync(cancellationToken);
         });
 
         return cached;
@@ -31,7 +32,7 @@ internal class LoanService(ILoanRepository repository, IMemoryCache cache) : ILo
     /// <inheritdoc />
     public async ValueTask<decimal> GetTotalActiveDebtAsync(CancellationToken cancellationToken = default)
     {
-        var cached = await cache.GetOrCreateAsync("core.services.loan.total_debt", async entry =>
+        var cached = await cache.GetOrCreateAsync(CacheEntryKeys.TotalDebt, async entry =>
         {
             entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30);
             return await repository.GetTotalActiveDebtAsync(cancellationToken);
@@ -43,7 +44,7 @@ internal class LoanService(ILoanRepository repository, IMemoryCache cache) : ILo
     /// <inheritdoc />
     public async ValueTask<decimal> GetTotalCapitalCollectedAsync(CancellationToken cancellationToken = default)
     {
-        var cached = await cache.GetOrCreateAsync("core.services.loan.total_capital_collected", async entry =>
+        var cached = await cache.GetOrCreateAsync(CacheEntryKeys.CapitalCollected, async entry =>
         {
             entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30);
             return await repository.GetTotalCapitalCollectedAsync(cancellationToken);
@@ -55,7 +56,7 @@ internal class LoanService(ILoanRepository repository, IMemoryCache cache) : ILo
     /// <inheritdoc />
     public async ValueTask<decimal> GetTotalCollectedAsync(CancellationToken cancellationToken = default)
     {
-        var cached = await cache.GetOrCreateAsync("core.services.loan.total_collected", async entry =>
+        var cached = await cache.GetOrCreateAsync(CacheEntryKeys.TotalCollected, async entry =>
         {
             entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30);
             return await repository.GetTotalCollectedAsync(cancellationToken);
@@ -66,7 +67,7 @@ internal class LoanService(ILoanRepository repository, IMemoryCache cache) : ILo
     /// <inheritdoc />
     public async ValueTask<decimal> GetTotalCurrentDuePaymentAmountAsync(CancellationToken cancellationToken = default)
     {
-        var cached = await cache.GetOrCreateAsync("core.services.loan.total_current_due_payment_amount", async entry =>
+        var cached = await cache.GetOrCreateAsync(CacheEntryKeys.CurrentDuePaymentAmount, async entry =>
         {
             entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30);
             return await repository.GetTotalCurrentDuePaymentAmountAsync(cancellationToken: cancellationToken);
@@ -76,11 +77,11 @@ internal class LoanService(ILoanRepository repository, IMemoryCache cache) : ILo
     }
 
     /// <inheritdoc />
-    public async ValueTask<decimal> GetTotalCurrentPendingPaymentDueAmountAsync(
+    public async ValueTask<decimal> GetTotalCurrentPendingDuePaymentAmountAsync(
         CancellationToken cancellationToken = default)
     {
         var cached = await cache.GetOrCreateAsync(
-            "core.services.loan.total_current_pending_payment_due_amount",
+            CacheEntryKeys.CurrentPendingDuePaymentAmount,
             async entry =>
             {
                 entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30);
@@ -94,7 +95,7 @@ internal class LoanService(ILoanRepository repository, IMemoryCache cache) : ILo
     /// <inheritdoc />
     public async ValueTask<decimal> GetTotalInterestCollectedAsync(CancellationToken cancellationToken = default)
     {
-        var cached = await cache.GetOrCreateAsync("core.services.loan.total_interest_collected", async entry =>
+        var cached = await cache.GetOrCreateAsync(CacheEntryKeys.TotalInterestCollected, async entry =>
         {
             entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30);
             return await repository.GetTotalInterestCollectedAsync(cancellationToken);
@@ -106,7 +107,7 @@ internal class LoanService(ILoanRepository repository, IMemoryCache cache) : ILo
     /// <inheritdoc />
     public async ValueTask<decimal> GetTotalLoansGrantedAsync(CancellationToken cancellationToken = default)
     {
-        var cached = await cache.GetOrCreateAsync("core.services.loan.total_loans_granted", async entry =>
+        var cached = await cache.GetOrCreateAsync(CacheEntryKeys.TotalLoansGranted, async entry =>
         {
             entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30);
             return await repository.GetTotalLoansGrantedAsync(cancellationToken);

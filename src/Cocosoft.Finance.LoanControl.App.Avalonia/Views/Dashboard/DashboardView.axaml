@@ -4,7 +4,7 @@
              xmlns:dvm="using:Cocosoft.Finance.LoanControl.App.Avalonia.DesignTimeSupport"
              xmlns:chart="using:Cocosoft.Finance.LoanControl.App.Avalonia.Views.Charts"
              xmlns:designtimesupport="using:Cocosoft.Finance.LoanControl.App.Avalonia.DesignTimeSupport"
-             x:Class="Cocosoft.Finance.LoanControl.App.Avalonia.Views.DashboardView"
+             x:Class="Cocosoft.Finance.LoanControl.App.Avalonia.Views.Dashboard.DashboardView"
              x:DataType="vm:DashboardViewModel">
   <Design.DataContext>
     <dvm:DesignDashboardViewModel />

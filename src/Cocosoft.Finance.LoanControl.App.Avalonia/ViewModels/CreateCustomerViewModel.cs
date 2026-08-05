@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
 namespace Cocosoft.Finance.LoanControl.App.Avalonia.ViewModels;
@@ -22,7 +23,10 @@ public partial class CreateCustomerViewModel(
     /// The address.
     /// </value>
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [NotifyCanExecuteChangedFor(nameof(SubmitCommand))]
+    [Required(ErrorMessage = "La dirección es obligatoria.")]
+    [MinLength(5, ErrorMessage = "La dirección debe tener al menos 5 caracteres.")]
     public partial string Address { get; set; } = string.Empty;
 
     /// <summary>
@@ -32,7 +36,9 @@ public partial class CreateCustomerViewModel(
     /// The city.
     /// </value>
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [NotifyCanExecuteChangedFor(nameof(SubmitCommand))]
+    [Required(ErrorMessage = "La ciudad es obligatoria.")]
     public partial string City { get; set; } = string.Empty;
 
     /// <summary>
@@ -42,7 +48,10 @@ public partial class CreateCustomerViewModel(
     /// The document number.
     /// </value>
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [NotifyCanExecuteChangedFor(nameof(SubmitCommand))]
+    [Required(ErrorMessage = "El número de documento es obligatorio.")]
+    [MinLength(5, ErrorMessage = "El número de documento debe tener al menos 5 caracteres.")]
     public partial string DocumentNumber { get; set; } = string.Empty;
 
     /// <summary>
@@ -52,7 +61,10 @@ public partial class CreateCustomerViewModel(
     /// The email.
     /// </value>
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [NotifyCanExecuteChangedFor(nameof(SubmitCommand))]
+    [Required(ErrorMessage = "El correo electrónico es obligatorio.")]
+    [EmailAddress(ErrorMessage = "El correo electrónico no es válido.")]
     public partial string Email { get; set; } = string.Empty;
 
     /// <summary>
@@ -62,7 +74,10 @@ public partial class CreateCustomerViewModel(
     /// The first name.
     /// </value>
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [NotifyCanExecuteChangedFor(nameof(SubmitCommand))]
+    [Required(ErrorMessage = "El nombre es obligatorio.")]
+    [MinLength(2, ErrorMessage = "El nombre debe tener al menos 2 caracteres.")]
     public partial string FirstName { get; set; } = string.Empty;
 
     /// <summary>
@@ -84,7 +99,10 @@ public partial class CreateCustomerViewModel(
     /// The last name.
     /// </value>
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [NotifyCanExecuteChangedFor(nameof(SubmitCommand))]
+    [Required(ErrorMessage = "El apellido es obligatorio.")]
+    [MinLength(2, ErrorMessage = "El apellido debe tener al menos 2 caracteres.")]
     public partial string LastName { get; set; } = string.Empty;
 
     /// <summary>
@@ -94,7 +112,10 @@ public partial class CreateCustomerViewModel(
     /// The phone number.
     /// </value>
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [NotifyCanExecuteChangedFor(nameof(SubmitCommand))]
+    [Required(ErrorMessage = "El número de celular es obligatorio.")]
+    [Phone(ErrorMessage = "El número de celular no es válido.")]
     public partial string PhoneNumber { get; set; } = string.Empty;
 
     /// <summary>
@@ -102,18 +123,12 @@ public partial class CreateCustomerViewModel(
     /// </summary>
     public event Action? CustomerCreated;
 
-    private bool CanSubmit()
-    {
-        return !string.IsNullOrWhiteSpace(this.Address) && !string.IsNullOrWhiteSpace(this.City)
-            && !string.IsNullOrWhiteSpace(this.DocumentNumber) && !string.IsNullOrWhiteSpace(this.Email)
-            && !string.IsNullOrWhiteSpace(this.FirstName) && !string.IsNullOrWhiteSpace(this.LastName)
-            && !string.IsNullOrWhiteSpace(this.PhoneNumber);
-    }
+    private bool CanSubmit() => !this.HasErrors && this.IsDirty;
 
     /// <summary>
     /// Resets all form fields to their default empty values.
     /// </summary>
-    public void Reset()
+    public override void Reset()
     {
         this.Address = string.Empty;
         this.City = string.Empty;
@@ -122,6 +137,7 @@ public partial class CreateCustomerViewModel(
         this.FirstName = string.Empty;
         this.LastName = string.Empty;
         this.PhoneNumber = string.Empty;
+        this.ClearErrors();
     }
 
     [RelayCommand(CanExecute = nameof(CanSubmit))]

@@ -27,7 +27,7 @@ public interface ILoanService
     /// A <see cref="ValueTask{T}"/> that represents the asynchronous operation.
     /// The task result contains the count of all active loans.
     /// </returns>
-    ValueTask<int> GetActiveLoanCountsAsync(CancellationToken cancellationToken = default);
+    ValueTask<int> GetActiveLoansCountAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Asynchronously calculates the total debt amount across all active loans.
@@ -77,7 +77,7 @@ public interface ILoanService
     /// A <see cref="ValueTask{T}"/> that represents the asynchronous operation.
     /// The task result contains the total current pending payment due amount.
     /// </returns>
-    ValueTask<decimal> GetTotalCurrentPendingPaymentDueAmountAsync(CancellationToken cancellationToken = default);
+    ValueTask<decimal> GetTotalCurrentPendingDuePaymentAmountAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Gets the total interest collected asynchronous.

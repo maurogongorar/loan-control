@@ -12,7 +12,7 @@ internal class DesignLoanService : ILoanService
     private const int SimulatedDelayMilliseconds = 0;
 
     /// <inheritdoc />
-    public async ValueTask<int> GetActiveLoanCountsAsync(CancellationToken cancellationToken = default)
+    public async ValueTask<int> GetActiveLoansCountAsync(CancellationToken cancellationToken = default)
     {
         await Task.Delay(SimulatedDelayMilliseconds, cancellationToken); // Simulate some async work
         return 12;
@@ -33,7 +33,7 @@ internal class DesignLoanService : ILoanService
     }
 
     /// <inheritdoc />
-    public async ValueTask<decimal> GetTotalCurrentPendingPaymentDueAmountAsync(
+    public async ValueTask<decimal> GetTotalCurrentPendingDuePaymentAmountAsync(
         CancellationToken cancellationToken = default)
     {
         await Task.Delay(SimulatedDelayMilliseconds, cancellationToken); // Simulate some async work

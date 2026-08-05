@@ -2,7 +2,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:Cocosoft.Finance.LoanControl.App.Avalonia.ViewModels"
         xmlns:dvm="using:Cocosoft.Finance.LoanControl.App.Avalonia.DesignTimeSupport"
-        xmlns:views="using:Cocosoft.Finance.LoanControl.App.Avalonia.Views"
+        xmlns:boardvw="using:Cocosoft.Finance.LoanControl.App.Avalonia.Views.Dashboard"
+        xmlns:loanvw="using:Cocosoft.Finance.LoanControl.App.Avalonia.Views.Loans"
+        xmlns:customervw="using:Cocosoft.Finance.LoanControl.App.Avalonia.Views.Customers"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:designtimesupport="using:Cocosoft.Finance.LoanControl.App.Avalonia.DesignTimeSupport"
         xmlns:emit="using:System.Reflection.Emit"
@@ -124,7 +126,8 @@
                                        IsVisible="{Binding IsSidebarExpanded}" />
                         </StackPanel>
                     </Button>
-                    <Button Classes="nav-button"
+                    <Button Classes="nav-button" Classes.active="{Binding IsCustomersActive}"
+                            Command="{Binding NavigateToCustomersCommand}"
                             AutomationProperties.Name="Clientes">
                         <StackPanel Orientation="Horizontal" Spacing="10">
                             <TextBlock Text="👥" FontSize="16" VerticalAlignment="Center" />
@@ -234,10 +237,13 @@
                     </TransitioningContentControl.PageTransition>
                     <TransitioningContentControl.DataTemplates>
                         <DataTemplate DataType="vm:DashboardViewModel">
-                            <views:DashboardView />
+                            <boardvw:DashboardView />
                         </DataTemplate>
                         <DataTemplate DataType="vm:LoansViewModel">
-                            <views:LoansView />
+                            <loanvw:LoansView />
+                        </DataTemplate>
+                        <DataTemplate DataType="vm:CustomersViewModel">
+                            <customervw:CustomersView />
                         </DataTemplate>
                     </TransitioningContentControl.DataTemplates>
                 </TransitioningContentControl>

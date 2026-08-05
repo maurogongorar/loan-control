@@ -86,7 +86,7 @@ public partial class CreateLoanViewModel(IDialogService dialogService) : ViewMod
     /// <summary>
     /// Resets all form fields to their default empty values.
     /// </summary>
-    public void Reset()
+    public override void Reset()
     {
         this.AnnualInterestRate = string.Empty;
         this.FirstName = string.Empty;

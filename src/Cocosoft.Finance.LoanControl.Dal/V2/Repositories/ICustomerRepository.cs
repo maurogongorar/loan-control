@@ -19,6 +19,36 @@ public interface ICustomerRepository
     ValueTask<CustomerDto> AddAsync(CustomerDto customerDto, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Asynchronously counts the total number of customers in the repository.
+    /// </summary>
+    /// <param name="cancellationToken">A token to cancel the operation.</param>
+    /// <returns>
+    /// A <see cref="ValueTask{T}"/> that represents the asynchronous operation.
+    /// The task result contains the total number of customers.
+    /// </returns>
+    ValueTask<int> CountCustomersAsync(CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Asynchronously counts the number of customers with an active loan in the repository.
+    /// </summary>
+    /// <param name="cancellationToken">A token to cancel the operation.</param>
+    /// <returns>
+    /// A <see cref="ValueTask{T}"/> that represents the asynchronous operation.
+    /// The task result contains the number of customers with an active loan.
+    /// </returns>
+    ValueTask<int> CountCustomersWithLoanAsync(CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Asynchronously counts the number of new customers in the last month in the repository.
+    /// </summary>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>
+    /// A <see cref="ValueTask{T}"/> that represents the asynchronous operation.
+    /// The task result contains the number of new customers in the last month.
+    /// </returns>
+    ValueTask<int> CountNewCustomersAsync(CancellationToken cancellationToken);
+
+    /// <summary>
     /// Asynchronously soft deletes a customer from the repository.
     /// </summary>
     /// <param name="customerId">The ID of the customer to delete.</param>

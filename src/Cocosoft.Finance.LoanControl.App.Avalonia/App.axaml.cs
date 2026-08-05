@@ -38,6 +38,8 @@ public partial class App : Application
             services.AddSingleton<DashboardViewModel>();
             services.AddSingleton<LoansViewModel>()
                 .AddSingleton<CreateLoanViewModel>();
+            services.AddSingleton<CustomersViewModel>()
+                .AddSingleton<CreateCustomerViewModel>();
             services.AddSingleton<MainViewModel>();
             services.AddTransient<ConfirmationDialog>();
 

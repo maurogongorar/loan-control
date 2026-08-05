@@ -118,7 +118,7 @@ public partial class DashboardViewModel(ILoanService loanService, ILogger<Dashbo
                 return 0;
             }
 
-            var pendingDueAmount = await loanService.GetTotalCurrentPendingPaymentDueAmountAsync(cancellationToken);
+            var pendingDueAmount = await loanService.GetTotalCurrentPendingDuePaymentAmountAsync(cancellationToken);
             var pendingDuePercentage = (double)(pendingDueAmount / totalDueAmount) * 100.0;
             return pendingDuePercentage;
         }
@@ -151,7 +151,7 @@ public partial class DashboardViewModel(ILoanService loanService, ILogger<Dashbo
                 return "0.0%";
             }
 
-            var pendingDueAmount = await loanService.GetTotalCurrentPendingPaymentDueAmountAsync(cancellationToken);
+            var pendingDueAmount = await loanService.GetTotalCurrentPendingDuePaymentAmountAsync(cancellationToken);
             var pendingDuePercentage = (double)(pendingDueAmount / totalDueAmount) * 100.0;
             return $"{pendingDuePercentage:F1}%";
         }

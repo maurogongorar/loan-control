@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace Cocosoft.Finance.LoanControl.App.Avalonia.Views;
+namespace Cocosoft.Finance.LoanControl.App.Avalonia.Views.Loans;
 
 /// <summary>
 /// Code-behind for the loans view, providing search, creation, and detail display for loans.

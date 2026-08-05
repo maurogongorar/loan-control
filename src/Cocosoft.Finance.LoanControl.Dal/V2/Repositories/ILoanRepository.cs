@@ -48,7 +48,7 @@ public interface ILoanRepository
     /// A <see cref="Task{T}"/> that represents the asynchronous operation.
     /// The task result contains the count of all active loans in the repository.
     /// </returns>
-    ValueTask<int> GetActiveLoanCountsAsync(CancellationToken cancellationToken = default);
+    ValueTask<int> GetActiveLoansCountAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Asynchronously calculates the total debt amount across all active loans in the repository.

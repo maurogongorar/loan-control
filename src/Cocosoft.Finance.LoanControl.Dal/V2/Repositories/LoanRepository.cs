@@ -40,7 +40,7 @@ internal class LoanRepository(IRepository repository, IMapper mapper) : ILoanRep
     }
 
     /// <inheritdoc />
-    public async ValueTask<int> GetActiveLoanCountsAsync(CancellationToken cancellationToken = default)
+    public async ValueTask<int> GetActiveLoansCountAsync(CancellationToken cancellationToken = default)
     {
         return await repository.Set<Loan>()
             .CountAsync(l => l.IsCurrent && !l.IsClosed, cancellationToken);

@@ -39,9 +39,19 @@ public partial class MainViewModel : ViewModelBase
     public partial ViewModelBase CurrentView { get; set; }
 
     /// <summary>
+    /// Gets the cusomers view model.
+    /// </summary>
+    public CustomersViewModel Customers { get; }
+
+    /// <summary>
     /// Gets the dashboard view model.
     /// </summary>
     public DashboardViewModel Dashboard { get; }
+
+    /// <summary>
+    /// Gets a value indicating whether the customers view is currently active.
+    /// </summary>
+    public bool IsCustomersActive => this.CurrentView == this.Customers;
 
     /// <summary>
     /// Gets a value indicating whether the dashboard view is currently active.
@@ -76,10 +86,12 @@ public partial class MainViewModel : ViewModelBase
     /// </summary>
     /// <param name="dashboard">The dashboard view model.</param>
     /// <param name="loans">The loans view model.</param>
-    public MainViewModel(DashboardViewModel dashboard, LoansViewModel loans)
+    /// <param name="customers">The customers view model.</param>
+    public MainViewModel(DashboardViewModel dashboard, LoansViewModel loans, CustomersViewModel customers)
     {
         this.Dashboard = dashboard;
         this.Loans = loans;
+        this.Customers = customers;
         this.CurrentView = this.Dashboard;
         this.CurrentPageTitle = "Dashboard";
         this.CurrentPageSubtitle = "Resumen general del sistema";
@@ -97,20 +109,21 @@ public partial class MainViewModel : ViewModelBase
     }
 
     [RelayCommand]
+    private void NavigateToCustomers()
+    {
+        this.CurrentView = this.Customers;
+        this.CurrentPageTitle = "Clientes";
+        this.CurrentPageSubtitle = "Gestión de clientes";
+        this.ResetInactiveViews();
+    }
+
+    [RelayCommand]
     private void NavigateToDashboard()
     {
         this.CurrentView = this.Dashboard;
         this.CurrentPageTitle = "Dashboard";
         this.CurrentPageSubtitle = "Resumen general del sistema";
-
-        // Reset the LoansViewModel state when navigating back to the dashboard
-        this.Loans.SearchText = string.Empty;
-        this.Loans.SearchResults.Clear();
-        this.Loans.SelectedSearchResult = null;
-        this.Loans.SelectedLoanDetail = null;
-        this.Loans.IsCreatingLoan = false;
-        this.Loans.IsShowingDetail = false;
-        this.Loans.IsShowingResults = false;
+        this.ResetInactiveViews();
     }
 
     [RelayCommand]
@@ -119,12 +132,32 @@ public partial class MainViewModel : ViewModelBase
         this.CurrentView = this.Loans;
         this.CurrentPageTitle = "Préstamos";
         this.CurrentPageSubtitle = "Gestión de préstamos";
+        this.ResetInactiveViews();
+    }
+
+    private void ResetInactiveViews()
+    {
+        if (this.CurrentView != this.Dashboard)
+        {
+            this.Dashboard.Reset();
+        }
+
+        if (this.CurrentView != this.Loans)
+        {
+            this.Loans.Reset();
+        }
+
+        if (this.CurrentView != this.Customers)
+        {
+            this.Customers.Reset();
+        }
     }
 
     partial void OnCurrentViewChanged(ViewModelBase value)
     {
         this.OnPropertyChanged(nameof(this.IsDashboardActive));
         this.OnPropertyChanged(nameof(this.IsLoansActive));
+        this.OnPropertyChanged(nameof(this.IsCustomersActive));
     }
 
     partial void OnIsSidebarExpandedChanged(bool value)

@@ -24,6 +24,7 @@ Al inicio de cada sesión o cuando recibas una solicitud, **debes**:
 - Siempre antes de generar o modificar código C#, leer los skills en `.agents/skills/` (especialmente `coding-standards/SKILL.md` y `ui-avalonia-engineer/SKILL.md` según aplique) y seguir sus reglas obligatoriamente.
 - Si no existe un skill para el contexto solicitado, aplica las mejores prácticas estándar de .NET 10 y C#.
 - A medida que se agreguen nuevos skills, este mapeo debe extenderse automáticamente.
+- Los métodos en clases e interfaces **deben** estar organizados alfabéticamente.
 
 ## Paleta de Colores Preferida
 

@@ -1,4 +1,7 @@
-﻿namespace Cocosoft.Finance.LoanControl.Dal.V2.Repositories;
+﻿using System.Data;
+using Microsoft.EntityFrameworkCore.Storage;
+
+namespace Cocosoft.Finance.LoanControl.Dal.V2.Repositories;
 
 /// <summary>
 /// The <see cref="IRepository"/> interface defines a contract for a repository that provides basic CRUD operations for entities in a data store.
@@ -24,6 +27,21 @@ internal interface IRepository
     /// <param name="entity">The entity to attach.</param>
     /// <returns>The attached entity.</returns>
     TEntity Attach<TEntity>(TEntity entity) where TEntity : class;
+
+    /// <summary>
+    /// Begins a new database transaction asynchronously.
+    /// </summary>
+    /// <param name="cancellationToken">A token to cancel the operation.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the transaction.</returns>
+    Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Begins a new database transaction asynchronously.
+    /// </summary>
+    /// <param name="isolationLevel">The isolation level for the transaction.</param>
+    /// <param name="cancellationToken">A token to cancel the operation.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the transaction.</returns>
+    Task<IDbContextTransaction> BeginTransactionAsync(IsolationLevel isolationLevel, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Asynchronously finds an entity with the specified primary key values.

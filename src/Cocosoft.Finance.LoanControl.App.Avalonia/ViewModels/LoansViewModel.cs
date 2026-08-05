@@ -129,7 +129,6 @@ public partial class LoansViewModel : ViewModelBase
     /// <param name="dialogService">The dialog service used for confirmation prompts.</param>
     /// <param name="loanService">The loan service used for managing loan data.</param>
     /// <param name="createLoanForm">The view model for the create-loan form.</param>
-    [ActivatorUtilitiesConstructor]
     public LoansViewModel(
         IDialogService dialogService,
         ILoanService loanService,
@@ -141,6 +140,20 @@ public partial class LoansViewModel : ViewModelBase
         this.CreateLoanForm = createLoanForm;
         this.CreateLoanForm.LoanCreated += this.OnLoanCreated;
         this._logger = logger;
+    }
+
+    /// <inheritdoc/>
+    public override void Reset()
+    {
+        this.SearchText = string.Empty;
+        this.SearchResults.Clear();
+        this._selectedSearchResult = null;
+        this.OnPropertyChanged(nameof(this.SelectedSearchResult));
+        this.SelectedLoanDetail = null;
+        this.IsCreatingLoan = false;
+        this.IsShowingDetail = false;
+        this.IsShowingResults = false;
+        this.CreateLoanForm.Reset();
     }
 
     [RelayCommand]
@@ -176,7 +189,7 @@ public partial class LoansViewModel : ViewModelBase
 
         try
         {
-            return await this._loanService.GetActiveLoanCountsAsync(cancellationToken);
+            return await this._loanService.GetActiveLoansCountAsync(cancellationToken);
         }
         catch (OperationCanceledException)
         {

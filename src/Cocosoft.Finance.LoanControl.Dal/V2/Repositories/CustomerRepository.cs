@@ -15,10 +15,35 @@ internal class CustomerRepository(IRepository repository, IMapper mapper) : ICus
     ///<inheritdoc />
     public async ValueTask<CustomerDto> AddAsync(CustomerDto customerDto, CancellationToken cancellationToken = default)
     {
+        using var transaction = await repository.BeginTransactionAsync(System.Data.IsolationLevel.Serializable, cancellationToken);
         var entity = mapper.Map<Customer>(customerDto);
+        var maxId = await repository.Set<Customer>()
+            .MaxAsync(c => (int?)c.Id, cancellationToken) ?? 0;
+        entity.Id = maxId + 1;
         entity.Version = 1;
         var newly = await repository.AddAsync(entity, cancellationToken);
+        await repository.SaveChangesAsync(cancellationToken);
+        await transaction.CommitAsync(cancellationToken);
         return mapper.Map<CustomerDto>(newly);
+    }
+
+    ///<inheritdoc />
+    public async ValueTask<int> CountCustomersAsync(CancellationToken cancellationToken)
+        => await repository.Set<Customer>()
+            .CountAsync(c => c.IsCurrent && !c.IsDeleted, cancellationToken);
+
+    ///<inheritdoc />
+    public async ValueTask<int> CountCustomersWithLoanAsync(CancellationToken cancellationToken)
+        => await repository.Set<Customer>()
+            .CountAsync(c => c.IsCurrent && !c.IsDeleted && c.Loans.Any(l => l.IsCurrent && !l.IsClosed), cancellationToken);
+
+    ///<inheritdoc />
+    public async ValueTask<int> CountNewCustomersAsync(CancellationToken cancellationToken)
+    {
+        var now = DateTime.UtcNow;
+        var startDate = new DateTime(now.Year, now.Month, 1, 0, 0, 0, DateTimeKind.Utc);
+        return await repository.Set<Customer>()
+            .CountAsync(c => c.IsCurrent && !c.IsDeleted && EF.Property<DateTime>(c, "CreatedAt") >= startDate, cancellationToken);
     }
 
     ///<inheritdoc />

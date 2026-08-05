@@ -4,7 +4,7 @@
              xmlns:dvm="using:Cocosoft.Finance.LoanControl.App.Avalonia.DesignTimeSupport"
              xmlns:models="using:Cocosoft.Finance.LoanControl.Domain.Loans"
              xmlns:ctrl="using:Cocosoft.Finance.LoanControl.App.Avalonia.Controls"
-             x:Class="Cocosoft.Finance.LoanControl.App.Avalonia.Views.LoansView"
+             x:Class="Cocosoft.Finance.LoanControl.App.Avalonia.Views.Loans.LoansView"
              x:DataType="vm:LoansViewModel">
   <Design.DataContext>
     <dvm:DesignLoansViewModel />
